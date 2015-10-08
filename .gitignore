@@ -10,6 +10,8 @@
 # eclipse project files #
 .project
 .classpath
-.settings/**.*
+/.settings
+rebel.xml
 
 target/**.*
+/target/
