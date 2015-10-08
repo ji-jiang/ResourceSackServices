@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.startup.bookapp.usermanager.domain.User;
 import com.startup.bookapp.usermanager.service.UserService;
 import com.stripe.Stripe;
 import com.stripe.exception.APIConnectionException;
@@ -33,7 +34,14 @@ public class BookController {
 		Map<String, Object> chargeParams = new HashMap<String, Object>();
 
 		Map<String, Object> tokenMap = (Map<String, Object>) chargeMap.get("token");
-		chargeParams.put("source", tokenMap.get("id")); // obtained with														// Stripe.js
+		String email = (String)tokenMap.get("email");
+		
+		User existUser = userService.getUserByEmail(email);
+		if(existUser!=null){
+			
+		}
+		
+		chargeParams.put("source", tokenMap.get("id")); // obtained with Stripe.js
 		chargeParams.put("amount", 1000);
 		chargeParams.put("currency", "usd");
 
