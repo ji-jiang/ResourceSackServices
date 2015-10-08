@@ -1,3 +1,5 @@
+*.DS_Store
+
 *.class
 
 # Package Files #
@@ -6,8 +8,8 @@
 *.ear
 
 # eclipse project files #
-*.project
-*.classpath
-*.seetings/**.*
+.project
+.classpath
+.settings/**.*
 
 target/**.*
