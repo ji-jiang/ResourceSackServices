@@ -1,8 +1,15 @@
 package com.startup.bookapp;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import org.springframework.boot.test.TestRestTemplate;
+import org.springframework.http.HttpHeaders;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * Unit test for simple App.
@@ -10,7 +17,10 @@ import junit.framework.TestSuite;
 public class AppTest 
     extends TestCase
 {
-    /**
+    
+	RestTemplate template = new TestRestTemplate();
+	
+	/**
      * Create the test case 
      *
      * @param testName name of the test case
@@ -33,6 +43,12 @@ public class AppTest
      */
     public void testApp()
     {
+    	Map request = new HashMap();
+    	Map tokenMap = new HashMap();
+    	tokenMap.put("email", "edison_cyh@hotmail.com");
+    	request.put("token",tokenMap);
+    	HttpHeaders headers = template.postForEntity("http://localhost:8080/book/buy",request,java.lang.String.class).getHeaders();
+    	System.out.println(headers);
         assertTrue( true );
     }
 }

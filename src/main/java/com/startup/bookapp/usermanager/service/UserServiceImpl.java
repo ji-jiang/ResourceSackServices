@@ -1,15 +1,20 @@
 package com.startup.bookapp.usermanager.service;
 
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
+import com.startup.bookapp.core.util.CryptUtil;
 import com.startup.bookapp.usermanager.domain.User;
 import com.startup.bookapp.usermanager.repository.UserRepository;
 
 @Service
 public class UserServiceImpl implements UserService {
+	
+
 
 	@Autowired
 	private UserRepository userRepository;
@@ -37,5 +42,7 @@ public class UserServiceImpl implements UserService {
 	public List<User> getAllUsers() {
 		return userRepository.findAll();
 	}
+
+
 
 }
