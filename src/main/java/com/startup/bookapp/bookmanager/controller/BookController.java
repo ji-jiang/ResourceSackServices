@@ -83,42 +83,42 @@ public class BookController {
 
 			userService.addUser(newBuyer);
 			
-//			chargeParams.put("source", tokenMap.get("id")); // obtained with
-//															// Stripe.js
-//			chargeParams.put("amount", 1000);
-//			chargeParams.put("currency", "usd");
-//			
-//			
-//			//finish the charge request
-//			try {
-//				Charge.create(chargeParams);
-//			} catch (AuthenticationException e) {
-//				if (logger.isDebugEnabled()) {
-//					logger.debug("Charge failed because authentication failed");
-//				}
-//				response.put("errorCode", "CHARGE_AUTHENTICATION_FAILURE");
-//			} catch (InvalidRequestException e) {
-//				if (logger.isDebugEnabled()) {
-//					logger.debug("Charge failed because the request is invalid");
-//				}
-//				response.put("errorCode", "CHARGE_INVALID_REQUEST");
-//			} catch (APIConnectionException e) {
-//				if (logger.isDebugEnabled()) {
-//					logger.debug("Charge failed because the request is invalid");
-//				}
-//				response.put("errorCode", "CHARGE_INVALID_REQUEST");
-//			} catch (CardException e) {
-//				if (logger.isDebugEnabled()) {
-//					logger.debug("Charge failed because of card exception");
-//				}
-//				response.put("errorCode", "CHARGE_CARD_EXCEPTION");
-//			} catch (APIException e) {
-//				if (logger.isDebugEnabled()) {
-//					logger.debug("Charge failed because of API exception");
-//				}
-//				response.put("errorCode", "CHARGE_API_EXCEPTION");
-//			}
-//			
+			chargeParams.put("source", tokenMap.get("id")); // obtained with
+															// Stripe.js
+			chargeParams.put("amount", 1000);
+			chargeParams.put("currency", "usd");
+			
+			
+			//finish the charge request
+			try {
+				Charge.create(chargeParams);
+			} catch (AuthenticationException e) {
+				if (logger.isDebugEnabled()) {
+					logger.debug("Charge failed because authentication failed");
+				}
+				response.put("errorCode", "CHARGE_AUTHENTICATION_FAILURE");
+			} catch (InvalidRequestException e) {
+				if (logger.isDebugEnabled()) {
+					logger.debug("Charge failed because the request is invalid");
+				}
+				response.put("errorCode", "CHARGE_INVALID_REQUEST");
+			} catch (APIConnectionException e) {
+				if (logger.isDebugEnabled()) {
+					logger.debug("Charge failed because the request is invalid");
+				}
+				response.put("errorCode", "CHARGE_INVALID_REQUEST");
+			} catch (CardException e) {
+				if (logger.isDebugEnabled()) {
+					logger.debug("Charge failed because of card exception");
+				}
+				response.put("errorCode", "CHARGE_CARD_EXCEPTION");
+			} catch (APIException e) {
+				if (logger.isDebugEnabled()) {
+					logger.debug("Charge failed because of API exception");
+				}
+				response.put("errorCode", "CHARGE_API_EXCEPTION");
+			}
+			
 			if(response.containsKey("errorCode")){
 				//if any error happened, delete the newly created user
 				userService.deleteUser(newBuyer.getId());
@@ -129,7 +129,7 @@ public class BookController {
 		            public void prepare(MimeMessage mimeMessage) throws Exception {
 		                MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
 		                message.setTo(newBuyer.getEmail());
-		                message.setFrom("webmaster@csonth.gov.uk"); // could be parameterized...
+		                message.setFrom("edison.chen@shiningsys.com"); // could be parameterized...
 		                Map model = new HashMap();
 		                Map userMap = new HashMap();
 		                userMap.put("email", newBuyer.getEmail());
