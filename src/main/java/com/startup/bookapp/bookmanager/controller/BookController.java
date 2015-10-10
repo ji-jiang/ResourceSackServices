@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.startup.bookapp.core.security.UserRole;
 import com.startup.bookapp.core.util.CryptUtil;
 import com.startup.bookapp.usermanager.domain.User;
 import com.startup.bookapp.usermanager.service.UserService;
@@ -67,15 +68,16 @@ public class BookController {
 			//create a new account for the new buyer
 			final User newBuyer = new User();
 			newBuyer.setEmail(email);
+			newBuyer.setRole(UserRole.VIP_USER.name());
 			final String password = CryptUtil.generatePassword();
+			newBuyer.setPassword(password);
 			
 			//TODO remove this log after production deployment
 			if (logger.isDebugEnabled()) {
 				logger.debug("The generated password for account "+email+" is: "
 						+ password);
 			}
-			String cryptedPwd = CryptUtil.crypt(password, newBuyer.getEmail());
-			newBuyer.setPassword(cryptedPwd);
+			
 			
 			
 
@@ -141,7 +143,7 @@ public class BookController {
 						}
 		            }
 		        };
-		        this.mailSender.send(preparator);
+//		        this.mailSender.send(preparator);
 			}
 		}
 
