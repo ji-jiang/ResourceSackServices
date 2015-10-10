@@ -9,8 +9,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
+import com.startup.bookapp.core.util.CryptUtil;
 import com.startup.bookapp.usermanager.domain.User;
 import com.startup.bookapp.usermanager.repository.UserRepository;
 
@@ -19,8 +21,10 @@ public class AuthUserDetailService implements UserDetailsService{
 
 	@Autowired
 	private UserRepository userRepository;
+
+
 	private UserDetails userDetails;
-	
+		
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 	    boolean enabled = true;
 	    boolean accountNonExpired = true;
@@ -29,9 +33,10 @@ public class AuthUserDetailService implements UserDetailsService{
 		
 		User user = userRepository.findOneByEmail(email);
 		System.out.println(user);
+		System.out.println(CryptUtil.crypt(user.getPassword(), user.getEmail()));
 		
 		userDetails = new org.springframework.security.core.userdetails.User (user.getEmail(),
-                user.getPassword(),
+                user.getPassword(), 
                 enabled,
                 accountNonExpired,
                 credentialsNonExpired,

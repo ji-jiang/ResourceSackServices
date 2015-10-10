@@ -1,21 +1,21 @@
 package com.startup.bookapp.usermanager.service;
 
 import java.util.List;
-import java.util.Random;
 
+import org.eclipse.jetty.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
-import com.startup.bookapp.core.util.CryptUtil;
+import com.startup.bookapp.core.security.UserRole;
 import com.startup.bookapp.usermanager.domain.User;
 import com.startup.bookapp.usermanager.repository.UserRepository;
 
 @Service
 public class UserServiceImpl implements UserService {
 	
-
-
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	@Autowired
 	private UserRepository userRepository;
 
@@ -28,6 +28,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public User addUser(User user) {
+		if(StringUtil.isBlank(user.getRole())){
+			user.setRole(UserRole.USER.name());
+		}
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		return userRepository.save(user);
 	}
 
