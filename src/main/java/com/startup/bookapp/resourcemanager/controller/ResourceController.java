@@ -22,10 +22,11 @@ public class ResourceController {
 	@RequestMapping(method = RequestMethod.POST)
 	public Map<String, Object> createResource(@RequestBody Map<String, Object> resourceMap) {
 		Resource resource = new Resource();
-		resource.setTilte((String)resourceMap.get("title"));
+		resource.setTitle((String)resourceMap.get("title"));
 		resource.setType((String)resourceMap.get("type"));
 		resource.setUrl((String)resourceMap.get("url"));
 		resource.setDescription((String)resourceMap.get("description"));
+		resource.setImage((String)resourceMap.get("image"));
 		
 		resourceService.addResource(resource);
 

@@ -5,16 +5,18 @@ import org.springframework.data.annotation.Id;
 public class Resource {
 	@Id
 	private String id;
-	private String tilte;
+	private String title;
 	private String url;
 	private String type;
 	private String description;
-	public String getTilte() {
-		return tilte;
+	private String image;
+	public String getImage() {
+		return image;
 	}
-	public void setTilte(String tilte) {
-		this.tilte = tilte;
+	public void setImage(String image) {
+		this.image = image;
 	}
+
 	public String getUrl() {
 		return url;
 	}
@@ -33,4 +35,11 @@ public class Resource {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	
 }
