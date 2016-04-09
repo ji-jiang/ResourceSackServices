@@ -6,8 +6,9 @@ public class User {
 	@Id
 	private String id;
 	private String email;
-	private String password;
 	private String role;
+	private String tokenKey;
+	private String userName;
 
 	public String getId() {
 		return id;
@@ -25,14 +26,6 @@ public class User {
 		this.email = email;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
 	public String getRole() {
 		return role;
 	}
@@ -43,6 +36,22 @@ public class User {
 
 	@Override
 	public String toString() {
-		return String.format("User[id=%s,email='%s',password='$s',role='$s']", id, email, password, role);
+		return String.format("User[id=%s,name='%s',email='%s',role='$s',token='$s']", id, userName,email, role,tokenKey);
+	}
+
+	public String getTokenKey() {
+		return tokenKey;
+	}
+
+	public void setTokenKey(String tokenKey) {
+		this.tokenKey = tokenKey;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 }

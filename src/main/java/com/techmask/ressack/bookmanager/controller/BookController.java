@@ -56,7 +56,7 @@ public class BookController {
 		String email = (String) tokenMap.get("email");
 		
 		//check if the email account already exist in the system
-		User existUser = userService.getUserByEmail(email);
+		User existUser = userService.loadUserByTokenKey(email);
 		if (existUser != null) {
 			if (logger.isDebugEnabled()) {
 				logger.debug("The account already exists, cannot buy again, account name: "
@@ -70,7 +70,7 @@ public class BookController {
 			newBuyer.setEmail(email);
 			newBuyer.setRole(UserRole.VIP_USER.name());
 			final String password = CryptUtil.generatePassword();
-			newBuyer.setPassword(password);
+
 			
 			//TODO remove this log after production deployment
 			if (logger.isDebugEnabled()) {
@@ -121,7 +121,7 @@ public class BookController {
 			
 			if(response.containsKey("errorCode")){
 				//if any error happened, delete the newly created user
-				userService.deleteUser(newBuyer.getId());
+				userService.invalidateUser(newBuyer.getId());
 			}else{
 				//if no errors, send notification email to user
 				
