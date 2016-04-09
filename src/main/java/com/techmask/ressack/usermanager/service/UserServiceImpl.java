@@ -19,32 +19,41 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserRepository userRepository;
 
-	public User getUserById(String userId) {
-		return userRepository.findOne(userId);
+
+	@Override
+	public User loadUserById(String userId) {
+		return userRepository.loadUserById(userId);
 	}
 
-	public User getUserByEmail(String email) {
-		return userRepository.findOneByEmail(email);
+	@Override
+	public User loadUserByTokenKey(String tokenKey) {
+		return userRepository.loadUserByTokenKey(tokenKey);
 	}
 
+	@Override
 	public User addUser(User user) {
 		if(StringUtil.isBlank(user.getRole())){
 			user.setRole(UserRole.USER.name());
 		}
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		return userRepository.save(user);
+
+		return userRepository.addUser(user); 
 	}
 
+	@Override
 	public User updateUser(User user) {
-		return userRepository.save(user);
+		return userRepository.updateUser(user);
 	}
 
-	public void deleteUser(String userId) {
-		userRepository.delete(userId);
+	@Override
+	public void invalidateUser(String userId) {
+		userRepository.invalidateUser(userId);
 	}
 
-	public List<User> getAllUsers() {
-		return userRepository.findAll();
+	
+
+	@Override
+	public List<User> loadAllUser() {
+		return userRepository.loadAllUser();
 	}
 
 

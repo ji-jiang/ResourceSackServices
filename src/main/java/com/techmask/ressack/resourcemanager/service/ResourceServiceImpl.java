@@ -13,28 +13,28 @@ public class ResourceServiceImpl implements ResourceService{
 	@Autowired
 	private ResourceRepository resourceRepository;
 	@Override
-	public Resource getResourceById(String resourceId) {
-		return resourceRepository.findOne(resourceId);
+	public Resource loadResourceById(String resourceId) {
+		return resourceRepository.loadResourceById(resourceId);
 	}
 
 	@Override
 	public Resource addResource(Resource resource) {
-		return resourceRepository.save(resource);
+		return resourceRepository.addResource(resource);
 	}
 
 	@Override
 	public Resource updateResource(Resource resource) {
-		return resourceRepository.save(resource);
+		return resourceRepository.updateResource(resource);
 	}
 
 	@Override
 	public void deleteResource(String resourceId) {
-		resourceRepository.delete(resourceId);
+		resourceRepository.deleteResource(resourceId);
 	}
 
 	@Override
-	public List<Resource> getAllResources() {
-		return resourceRepository.findAll();
+	public List<Resource> laodAllResource() {
+		return resourceRepository.loadAllResource();
 	}
 
 }

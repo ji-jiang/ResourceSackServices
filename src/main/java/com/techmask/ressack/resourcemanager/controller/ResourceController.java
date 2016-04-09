@@ -20,13 +20,10 @@ public class ResourceController {
 	private ResourceService resourceService;
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public Map<String, Object> createResource(@RequestBody Map<String, Object> resourceMap) {
+	public Map<String, Object> addResource(@RequestBody Map<String, Object> resourceMap) {
 		Resource resource = new Resource();
 		resource.setTitle((String)resourceMap.get("title"));
-		resource.setType((String)resourceMap.get("type"));
-		resource.setUrl((String)resourceMap.get("url"));
-		resource.setDescription((String)resourceMap.get("description"));
-		resource.setImage((String)resourceMap.get("image"));
+
 		
 		resourceService.addResource(resource);
 
@@ -39,7 +36,7 @@ public class ResourceController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public Map<String, Object> getAllResource() {
-		List<Resource> resources = resourceService.getAllResources();
+		List<Resource> resources = resourceService.laodAllResource();
 
 		Map<String, Object> response = new LinkedHashMap<String, Object>();
 		response.put("totalResources", resources.size());

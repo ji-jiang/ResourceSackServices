@@ -17,42 +17,40 @@ import com.techmask.ressack.usermanager.domain.User;
 import com.techmask.ressack.usermanager.repository.UserRepository;
 
 @Repository
-public class AuthUserDetailService implements UserDetailsService{
+public class AuthUserDetailService implements UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepository;
 
-
 	private UserDetails userDetails;
-		
-	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-	    boolean enabled = true;
-	    boolean accountNonExpired = true;
-	    boolean credentialsNonExpired = true;
-	    boolean accountNonLocked = true;
-		
-		User user = userRepository.findOneByEmail(email);
+
+	public UserDetails loadUserByUsername(String tokenKey) throws UsernameNotFoundException {
+		boolean enabled = true;
+		boolean accountNonExpired = true;
+		boolean credentialsNonExpired = true;
+		boolean accountNonLocked = true;
+		System.out.println("11111111111111");
+		User user = null;
+		try {
+			user = userRepository.loadUserByTokenKey(tokenKey);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("22222222222");
 		System.out.println(user);
-		System.out.println(CryptUtil.crypt(user.getPassword(), user.getEmail()));
-		
-		userDetails = new org.springframework.security.core.userdetails.User (user.getEmail(),
-                user.getPassword(), 
-                enabled,
-                accountNonExpired,
-                credentialsNonExpired,
-                accountNonLocked,
-                getAuthorities(user)
-                );
-		
+
+		userDetails = new org.springframework.security.core.userdetails.User(user.getTokenKey(), user.getTokenKey(),
+				enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, getAuthorities(user));
+
 		return userDetails;
 	}
-	
+
 	protected List<GrantedAuthority> getAuthorities(User user) {
-	    String role = user.getRole();
-	    
-	    List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
-	    authList.add(new SimpleGrantedAuthority(role));
-	    
-	    return authList;
-	  }
+		String role = user.getRole();
+
+		List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
+		authList.add(new SimpleGrantedAuthority(role));
+
+		return authList;
+	}
 }

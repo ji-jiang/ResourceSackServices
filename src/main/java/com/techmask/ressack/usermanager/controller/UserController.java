@@ -21,26 +21,22 @@ import com.techmask.ressack.usermanager.service.UserService;
 public class UserController {
 	@Autowired
 	private UserService userService;
-
-	@RequestMapping(method = RequestMethod.POST)
-	public Map<String, Object> createUserAccount(@RequestBody Map<String, Object> userMap) {
-		User user = new User();
-		user.setEmail((String) userMap.get("email"));
-		user.setPassword((String)userMap.get("password"));
-		user.setRole(UserRole.valueOf((String)userMap.get("role")).name());
-		
-		userService.addUser(user);
+	
+	@RequestMapping(method = RequestMethod.GET)
+	public Map<String, Object> loadAllUser() {
+		List<User> users = userService.loadAllUser();
 
 		Map<String, Object> response = new LinkedHashMap<String, Object>();
-		response.put("message", "User created successfully");
-		response.put("uer", user);
+		response.put("totalUsers", users.size());
+		response.put("users", users);
 
 		return response;
-	}
 
+	}
+	
 	@RequestMapping(method = RequestMethod.GET, value = "/{userId}")
-	public User getUserDetails(@PathVariable("userId") String userId) {
-		return userService.getUserById(userId);
+	public User loadUserDetails(@PathVariable("userId") String userId) {
+		return userService.loadUserById(userId);
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, value = "/{userId}")
@@ -49,7 +45,7 @@ public class UserController {
 		User user = new User();
 		user.setId(userId);
 		user.setEmail((String) userMap.get("email"));
-		user.setPassword((String)userMap.get("password"));
+
 
 		Map<String, Object> response = new LinkedHashMap<String, Object>();
 		response.put("message", "User updated successfully");
@@ -59,25 +55,28 @@ public class UserController {
 
 	@RequestMapping(method = RequestMethod.DELETE, value = "/{userId}")
 	public Map<String, String> deleteUser(@PathVariable("userId") String userId) {
-		userService.deleteUser(userId);
+		userService.invalidateUser(userId);
 
 		Map<String, String> response = new HashMap<String, String>();
 		response.put("message", "User deleted successfully");
 
 		return response;
-
 	}
 
-	@RequestMapping(method = RequestMethod.GET)
-	public Map<String, Object> getAllUser() {
-		List<User> users = userService.getAllUsers();
+	@RequestMapping(method = RequestMethod.POST)
+	public Map<String, Object> addUser(@RequestBody Map<String, Object> userMap) {
+		User user = new User();
+
+
+		user.setRole(UserRole.valueOf((String)userMap.get("role")).name());
+		
+		userService.addUser(user);
 
 		Map<String, Object> response = new LinkedHashMap<String, Object>();
-		response.put("totalUsers", users.size());
-		response.put("users", users);
+		response.put("message", "User created successfully");
+		response.put("uer", user);
 
 		return response;
-
 	}
 
 }
