@@ -1,10 +1,12 @@
 package com.techmask.ressack.resourcemanager.controller;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,10 +36,18 @@ public class ResourceController {
 		return response;
 	}
 	
-	@RequestMapping(method = RequestMethod.GET)
-	public Map<String, Object> getAllResource() {
-		List<Resource> resources = resourceService.laodAllResource();
+	@RequestMapping(method = RequestMethod.GET,value = "/{category}/{subCategory}/{pageNo}")
+	public Map<String, Object> loadAllResource(@PathVariable("category") String category,@PathVariable("subCategory") String subCategory,@PathVariable("pageNo") String pageNo) {
+		
+		Map<String,Object>requestMap = new HashMap<String,Object>();
+		requestMap.put("category", category);
+		requestMap.put("subCategory", subCategory);
+		requestMap.put("pageNo", pageNo);
+		
+		System.out.println(requestMap);
+		List<Resource> resources = resourceService.loadAllResource(requestMap); 
 
+		
 		Map<String, Object> response = new LinkedHashMap<String, Object>();
 		response.put("totalResources", resources.size());
 		response.put("resources", resources);
