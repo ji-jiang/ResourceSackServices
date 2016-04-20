@@ -31,7 +31,7 @@ public class CORSResponseFilter implements Filter {
 		HttpServletResponse response = (HttpServletResponse) res;
 		HttpServletRequest request = (HttpServletRequest) req;
 		//TODO add settings based on trusted hosts
-		response.setHeader("Access-Control-Allow-Origin", "http://localhost:9000");
+		response.setHeader("Access-Control-Allow-Origin", "http://localhost:5757");
 		response.setHeader("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE");
 		response.setHeader("Access-Control-Allow-Headers", "accept, authorization,x-requested-with,x-auth-token,content-type,X-XSRF-TOKEN");
 		response.setHeader("Access-Control-Max-Age", "3600");
