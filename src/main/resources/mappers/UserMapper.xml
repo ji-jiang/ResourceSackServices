@@ -3,4 +3,4 @@
 
 <mapper namespace="com.techmask.ressack.mappers.UserRepository">
    
-</mapper>
+</mapper> 

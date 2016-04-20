@@ -53,6 +53,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<User> loadAllUser() {
+		
+		System.out.println(userRepository.loadAllUser());
+		
 		return userRepository.loadAllUser();
 	}
 

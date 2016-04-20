@@ -61,21 +61,17 @@ public class BookController {
 			if (logger.isDebugEnabled()) {
 				logger.debug("The account already exists, cannot buy again, account name: "
 						+ email);
-			}
+			} 
 			response.put("errorCode", "ACCOUNT_EXIST");
 		} else {
-
 			//create a new account for the new buyer
 			final User newBuyer = new User();
 			newBuyer.setEmail(email);
 			newBuyer.setRole(UserRole.VIP_USER.name());
 			final String password = CryptUtil.generatePassword();
-
-			
 			//TODO remove this log after production deployment
 			if (logger.isDebugEnabled()) {
-				logger.debug("The generated password for account "+email+" is: "
-						+ password);
+				logger.debug("The generated password for account "+email+" is: "+ password);
 			}
 			
 			
@@ -124,7 +120,6 @@ public class BookController {
 				userService.invalidateUser(newBuyer.getId());
 			}else{
 				//if no errors, send notification email to user
-				
 				MimeMessagePreparator preparator = new MimeMessagePreparator() {
 		            public void prepare(MimeMessage mimeMessage) throws Exception {
 		                MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
@@ -135,8 +130,7 @@ public class BookController {
 		                userMap.put("email", newBuyer.getEmail());
 		                userMap.put("password", password);
 		                model.put("user", newBuyer);
-		                String text = VelocityEngineUtils.mergeTemplateIntoString(
-		                        velocityEngine, "mail/registration-confirmation.vm","UTF-8", model);
+		                String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "mail/registration-confirmation.vm","UTF-8", model);
 		                message.setText(text, true);
 		                if (logger.isDebugEnabled()) {
 							logger.debug("Notification :" +text);

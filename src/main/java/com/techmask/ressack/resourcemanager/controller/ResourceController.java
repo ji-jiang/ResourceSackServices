@@ -10,14 +10,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.techmask.ressack.feedback.domain.FeedBack;
+import com.techmask.ressack.feedback.service.FeedBackService;
 import com.techmask.ressack.resourcemanager.domain.Resource;
 import com.techmask.ressack.resourcemanager.service.ResourceService;
+import com.techmask.ressack.usermanager.repository.UserRepository;
 
 @RestController
 @RequestMapping("/resource")
 public class ResourceController {
 	@Autowired
 	private ResourceService resourceService;
+	
+	@Autowired
+	private UserRepository userRepository;
+	@Autowired
+	private FeedBackService feedBackService;
+	
+	
+//	@Autowired
+//	private VelocityEngine velocityEngine;
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public Map<String, Object> addResource(@RequestBody Map<String, Object> resourceMap) {
@@ -35,12 +47,23 @@ public class ResourceController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public Map<String, Object> getAllResource() {
-		List<Resource> resources = resourceService.laodAllResource();
+	public Map<String, Object>  getAllResource() {
+		
+		
+		
+		List<FeedBack> bakcBacks = feedBackService.loadAllFeedBack();
+
+		System.out.println("com in");
+		
 
 		Map<String, Object> response = new LinkedHashMap<String, Object>();
-		response.put("totalResources", resources.size());
-		response.put("resources", resources);
+		response.put("totalResources", bakcBacks.size());
+		response.put("resources", bakcBacks);
+		
+		
+		response.put("seven", "seven");
+
+		
 
 		return response;
 
