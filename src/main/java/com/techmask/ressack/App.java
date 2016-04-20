@@ -30,7 +30,6 @@ public class App {
 	   sqlSessionFactoryBean.setDataSource(dataSource);
 
 
-
 	   return sqlSessionFactoryBean.getObject();
 	}
 }

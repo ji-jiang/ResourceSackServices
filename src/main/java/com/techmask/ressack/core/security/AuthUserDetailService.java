@@ -9,10 +9,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
-import com.techmask.ressack.core.util.CryptUtil;
 import com.techmask.ressack.usermanager.domain.User;
 import com.techmask.ressack.usermanager.repository.UserRepository;
 
@@ -29,7 +27,10 @@ public class AuthUserDetailService implements UserDetailsService {
 		boolean accountNonExpired = true;
 		boolean credentialsNonExpired = true;
 		boolean accountNonLocked = true;
+		System.out.println("tokenKey"+tokenKey);
 		System.out.println("11111111111111");
+		
+		
 		User user = null;
 		try {
 			user = userRepository.loadUserByTokenKey(tokenKey);

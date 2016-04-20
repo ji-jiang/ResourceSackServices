@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.techmask.ressack.usermanager.domain.User;
 import com.techmask.ressack.usermanager.domain.UserRole;
+import com.techmask.ressack.usermanager.repository.UserRepository;
 import com.techmask.ressack.usermanager.service.UserService;
 
 @RestController
@@ -21,9 +22,13 @@ import com.techmask.ressack.usermanager.service.UserService;
 public class UserController {
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private UserRepository userRepository;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public Map<String, Object> loadAllUser() {
+		
+		System.out.println("userService"+userService);
 		List<User> users = userService.loadAllUser();
 
 		Map<String, Object> response = new LinkedHashMap<String, Object>();
