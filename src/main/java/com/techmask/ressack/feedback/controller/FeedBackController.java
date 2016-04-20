@@ -11,20 +11,18 @@
 */
 package com.techmask.ressack.feedback.controller;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.techmask.ressack.feedback.domain.FeedBack;
+import com.techmask.ressack.core.util.ParamVerifiesUntil;
+import com.techmask.ressack.core.util.ResultEntity;
 import com.techmask.ressack.feedback.service.FeedBackService;
-import com.techmask.ressack.resourcemanager.domain.Resource;
 
 @RestController
 @RequestMapping("/feedback")
@@ -32,34 +30,108 @@ public class FeedBackController {
 
 	@Autowired
 	private FeedBackService  feedBackService;
+	@Autowired
+	private ParamVerifiesUntil paramVerifiesUntil;
 	
 	
+	/** 
+	* @MethodName: addFeedBack 
+	* @Description(描叙):   添加意见反馈
+	* @author Wenke 
+	* @param @param feedBackParamMap
+	* @param @return 
+	* @return ResultEntity
+	* @throws
+	* @date 2016年4月19日 下午9:28:54  
+	*/
 	@RequestMapping(method = RequestMethod.POST)
-	public Map<String, Object> addFeedBack(@RequestBody Map<String, Object> resourceMap) {
-		Resource resource = new Resource();
-		resource.setTitle((String)resourceMap.get("title"));
-
+	public ResultEntity addFeedBack(@RequestBody Map<String, Object> feedBackParamMap) {
 		
+		ResultEntity resultEntity = new ResultEntity("seven");
+		
+		String name = feedBackParamMap.get("name")+"";
+		String email = feedBackParamMap.get("email")+"";
+		String content = feedBackParamMap.get("content")+"";
+		String createBy = feedBackParamMap.get("createBy")+"";
+		String updateBy = feedBackParamMap.get("updateBy")+"";
+		
+		if("null".equals(name) || "".equals(name)  ||
+		   "null".equals(content) || "".equals(content) ||
+		   "null".equals(createBy) || "".equals(createBy) ||
+		   "null".equals(updateBy) || "".equals(updateBy)){
+			resultEntity.setCode("101");
+			resultEntity.setMessage("主要参数为空");
+		}else if(paramVerifiesUntil.isEmail(email) == false){
+			resultEntity.setCode("102");
+			resultEntity.setMessage("邮件格式不正确");
+		}else{
+			feedBackService.addFeedBack(name, email, content, createBy, updateBy, resultEntity);
+		}
 
-		Map<String, Object> response = new LinkedHashMap<String, Object>();
-		response.put("message", "Resource created successfully");
-		response.put("resource", resource);
-
-		return response;
+		return resultEntity;
 	}
 	
 	@RequestMapping( method = RequestMethod.GET)
-	public Map<String, Object> getAllFeedBack()
+	public ResultEntity getAllFeedBack()
 	{
-		System.out.println("feedback come in");
-		List<FeedBack> feedBacks = feedBackService.loadAllFeedBack();
 		
-		
-		System.out.println(feedBacks);
-		Map<String, Object> reuslt = new HashMap<String,Object>();
-		reuslt.put("feedback", feedBacks);
-		
-		return reuslt;
+		ResultEntity  resultEntity = new ResultEntity("seven");
+		feedBackService.loadAllFeedBack(resultEntity);
+		return resultEntity;
 	}
+	
+	
+	/** 
+	* @MethodName: updateFeedBack 
+	* @Description(描叙):   修改意见反馈
+	* @author Wenke 
+	* @param @param feedBackId
+	* @param @param feedBackParamMap
+	* @param @return 
+	* @return ResultEntity
+	* @throws
+	* @date 2016年4月19日 下午9:28:30  
+	*/
+	@RequestMapping(method = RequestMethod.PUT, value = "/{feedBackId}")
+	public ResultEntity updateFeedBack(@PathVariable("feedBackId") String feedBackId,@RequestBody Map<String, Object> feedBackParamMap) {
+	
+		ResultEntity resultEntity = new ResultEntity("seven");
+		
+		String content = feedBackParamMap.get("content")+"";
+		if("null".equals(content) || "".equals(content) ||
+		  feedBackId == null || "".equals(feedBackId) ){
+			resultEntity.setCode("101");
+			resultEntity.setMessage("主要参数为空");
+		}else{
+			feedBackService.updateFeedBack(feedBackId, content, resultEntity);
+		}
+		return resultEntity;
+	}
+	
+	
+	/** 
+	* @MethodName: deleteFeedBack 
+	* @Description(描叙):   删除  意见反馈
+	* @author Wenke 
+	* @param @param feedBackId
+	* @param @param feedBackParamMap
+	* @param @return 
+	* @return ResultEntity
+	* @throws
+	* @date 2016年4月19日 下午9:30:23  
+	*/
+	@RequestMapping(method = RequestMethod.DELETE, value = "/{feedBackId}")
+	public ResultEntity deleteFeedBack(@PathVariable("feedBackId") String feedBackId,@RequestBody Map<String, Object> feedBackParamMap) {
+	
+		ResultEntity resultEntity = new ResultEntity("seven");
+		if(feedBackId == null || "".equals(feedBackId) ){
+			resultEntity.setCode("101");
+			resultEntity.setMessage("主要参数为空");
+		}else{
+			feedBackService.deleteFeedBack(feedBackId, resultEntity);
+		}
+		return resultEntity;
+	}
+	
 	
 }

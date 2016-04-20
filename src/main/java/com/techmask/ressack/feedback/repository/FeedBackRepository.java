@@ -13,9 +13,12 @@ package com.techmask.ressack.feedback.repository;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.techmask.ressack.feedback.domain.FeedBack;
 
@@ -37,4 +40,15 @@ public interface FeedBackRepository {
 			 @Result(property = "updatedBy",column = "updated_by"),})
 	@Select("select * from feedback")
 	public List<FeedBack> loadAllFeedBack();
+	
+	
+	@Insert("insert into feedback(name,email,content,created_by,updated_by ) values(#{name},#{email},#{content},#{createdBy},#{updatedBy})")
+	public int addFeedBack(FeedBack feedBack);
+	
+	
+	@Update("update feedback set name = #{name} where feedback_id = #{feedbackId}")
+	public int updateFeedBack(FeedBack feedBack);
+	
+	@Delete("delete from feedback where feedback_id=#{feedbackId}")
+	public int deleteFeedBack(FeedBack feedBack);
 }
