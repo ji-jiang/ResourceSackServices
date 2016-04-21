@@ -27,7 +27,7 @@ import com.stripe.exception.CardException;
 import com.stripe.exception.InvalidRequestException;
 import com.stripe.model.Charge;
 import com.techmask.ressack.core.security.UserRole;
-import com.techmask.ressack.core.util.CryptUtil;
+import com.techmask.ressack.core.utils.CryptUtils;
 import com.techmask.ressack.usermanager.domain.User;
 import com.techmask.ressack.usermanager.service.UserService;
 
@@ -68,7 +68,7 @@ public class BookController {
 			final User newBuyer = new User();
 			newBuyer.setEmail(email);
 			newBuyer.setRole(UserRole.VIP_USER.name());
-			final String password = CryptUtil.generatePassword();
+			final String password = CryptUtils.generatePassword();
 			//TODO remove this log after production deployment
 			if (logger.isDebugEnabled()) {
 				logger.debug("The generated password for account "+email+" is: "+ password);
