@@ -1,10 +1,10 @@
-package com.techmask.ressack.core.util;
+package com.techmask.ressack.core.utils;
 
 import java.util.Random;
 
 import org.apache.commons.codec.digest.Crypt;
 
-public class CryptUtil {
+public class CryptUtils {
 	private static final String SALT_SUFFIX = "rESQ3f";
 	private static final String SALT_PREFIX = "$1$"; //MD5 Crypt
 	
