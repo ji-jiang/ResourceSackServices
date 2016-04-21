@@ -71,6 +71,15 @@ public class FeedBackController {
 		return resultEntity;
 	}
 	
+	/** 
+	* @MethodName: getAllFeedBack 
+	* @Description(描叙):  获取意见反馈信息
+	* @author Wenke 
+	* @param @return 
+	* @return ResultEntity
+	* @throws
+	* @date 2016年4月21日 下午5:48:47  
+	*/
 	@RequestMapping( method = RequestMethod.GET)
 	public ResultEntity getAllFeedBack()
 	{
