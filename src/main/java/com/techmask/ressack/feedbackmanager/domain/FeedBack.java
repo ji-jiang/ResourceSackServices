@@ -1,24 +1,6 @@
-/**  
-* @Copyright (C) 
-* @Title: FeedBack.java 
-* @author WenKe  
-* @Package com.techmask.ressack.feedback 
-* @Description: TODO(用一句话描述该文件做什么)  
-* @date 2016年4月17日 下午9:09:50 
-* @History 历史  
-* <author>     <time>           <version>         <desc>
-* 修改人        时间               版本            描叙    
-*/
-package com.techmask.ressack.feedback.domain;
+package com.techmask.ressack.feedbackmanager.domain;
 
 import org.springframework.data.annotation.Id;
-
-/** 
-* @ClassName: FeedBack 
-* @Description(描叙):   
-* @author Wenke 
-* @date 2016年4月17日 下午9:09:50  
-*/
 public class FeedBack {
 	
 	@Id
