@@ -54,3 +54,4 @@ public interface UserRepository {
 	public User loadUserByOAtuth(User user);
 
 }
+

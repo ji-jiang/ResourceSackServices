@@ -18,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.techmask.ressack.core.error.ValidationException;
-import com.techmask.ressack.feedbackmanager.domain.FeedBack;
 import com.techmask.ressack.feedbackmanager.repository.FeedBackRepository;
 
 @Service

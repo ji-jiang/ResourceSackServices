@@ -4,8 +4,6 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Insert;
 
-import com.techmask.ressack.feedbackmanager.domain.FeedBack;
-
 
 public interface FeedBackRepository {
 	
