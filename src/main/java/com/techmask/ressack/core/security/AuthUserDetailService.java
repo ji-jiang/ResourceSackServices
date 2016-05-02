@@ -27,19 +27,9 @@ public class AuthUserDetailService implements UserDetailsService {
 		boolean accountNonExpired = true;
 		boolean credentialsNonExpired = true;
 		boolean accountNonLocked = true;
-		System.out.println("tokenKey"+tokenKey);
-		System.out.println("11111111111111");
 		
+		User user = userRepository.loadUserByTokenKey(tokenKey);
 		
-		User user = null;
-		try {
-			user = userRepository.loadUserByTokenKey(tokenKey);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		System.out.println("22222222222");
-		System.out.println(user);
-
 		userDetails = new org.springframework.security.core.userdetails.User(user.getTokenKey(), user.getTokenKey(),
 				enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, getAuthorities(user));
 

@@ -1,5 +1,7 @@
 package com.techmask.ressack.usermanager.domain;
 
+import java.util.Date;
+
 import org.springframework.data.annotation.Id;
 
 public class User {
@@ -9,6 +11,43 @@ public class User {
 	private String role;
 	private String tokenKey;
 	private String userName;
+	private String oauthId;
+	private String oauthType;
+	private String oauthName;
+	private String headImgUrl;
+	private Date lastLoginDate;
+
+	public String getOauthType() {
+		return oauthType;
+	}
+
+	public void setOauthType(String oauthType) {
+		this.oauthType = oauthType;
+	}
+
+	public String getOauthName() {
+		return oauthName;
+	}
+
+	public void setOauthName(String oauthName) {
+		this.oauthName = oauthName;
+	}
+
+	public String getHeadImgUrl() {
+		return headImgUrl;
+	}
+
+	public void setHeadImgUrl(String headImgUrl) {
+		this.headImgUrl = headImgUrl;
+	}
+
+	public Date getLastLoginDate() {
+		return lastLoginDate;
+	}
+
+	public void setLastLoginDate(Date lastLoginDate) {
+		this.lastLoginDate = lastLoginDate;
+	}
 
 	public String getId() {
 		return id;
@@ -53,5 +92,13 @@ public class User {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public String getOauthId() {
+		return oauthId;
+	}
+
+	public void setOauthId(String oauthId) {
+		this.oauthId = oauthId;
 	}
 }

@@ -29,7 +29,6 @@ public class App {
 	   SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
 	   sqlSessionFactoryBean.setDataSource(dataSource);
 
-
 	   return sqlSessionFactoryBean.getObject();
 	}
 }
