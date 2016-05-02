@@ -35,13 +35,16 @@ public class UserServiceImpl implements UserService {
 		if(StringUtil.isBlank(user.getRole())){
 			user.setRole(UserRole.USER.name());
 		}
-
-		return userRepository.addUser(user); 
+		
+		int userId = userRepository.addUser(user); 
+		System.out.println(user);
+		return user;
 	}
 
 	@Override
 	public User updateUser(User user) {
-		return userRepository.updateUser(user);
+		userRepository.updateUser(user);
+		return user;
 	}
 
 	@Override
@@ -59,6 +62,16 @@ public class UserServiceImpl implements UserService {
 		return userRepository.loadAllUser();
 	}
 
+	
+	@Override
+	public User loadUserByOAtuth(User user) {
+		return userRepository.loadUserByOAtuth( user);
+	}
+
+	@Override
+	public void updateUserLoginInfo(User user) {
+		userRepository.updateUserLoginInfo(user);
+	}
 
 
 }

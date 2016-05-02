@@ -9,7 +9,9 @@ public interface UserService {
     public User loadUserByTokenKey(String tokenKey);
     public User addUser(User user);
     public User updateUser(User user);
+    public void updateUserLoginInfo(User user);
     public void invalidateUser(String userId);
     public List<User> loadAllUser();
+    public User loadUserByOAtuth(User user);
 
 }

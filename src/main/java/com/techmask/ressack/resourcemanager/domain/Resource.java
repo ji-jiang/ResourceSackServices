@@ -9,6 +9,7 @@ public class Resource {
 	private String id;
 	private String title;
 	private String desc;
+	private String tags;
 	private String origUrl;
 	private String downloadUrl;
 	private String downloadPassword;
@@ -22,6 +23,7 @@ public class Resource {
 	private Date updatedDate;
 	private String updatedBy;
 	private Integer ownerId;
+	private String ownerName;
 	private Integer weight;
 	
 	public String getId() {
@@ -125,6 +127,18 @@ public class Resource {
 	}
 	public void setWeight(Integer weight) {
 		this.weight = weight;
+	}
+	public String getTags() {
+		return tags;
+	}
+	public void setTags(String tags) {
+		this.tags = tags;
+	}
+	public String getOwnerName() {
+		return ownerName;
+	}
+	public void setOwnerName(String ownerName) {
+		this.ownerName = ownerName;
 	}
 	
 	
