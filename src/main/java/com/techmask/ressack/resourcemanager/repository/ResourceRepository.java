@@ -35,13 +35,13 @@ public interface ResourceRepository {
 	public List<Resource> loadResource();
 	
 	
-	@Select("select r.*,u.user_name from resource r,user u where r.owner_id=u.user_id limit #{_startRowIndex}, #{_pageSize}")
+	@Select("select r.*,u.user_name from resource r,user u where (category=#{category} or 'ALL'=#{category}) and (sub_category=#{subCategory} or 'ALL'=#{subCategory}) and r.owner_id=u.user_id limit #{_startRowIndex}, #{_pageSize}")
 	@ResultMap("loadResource-void")
 	public List<Resource> loadAllResource(Map<String,Object> requestMap);
 	
-	@Select("select r.*,u.user_name from resource r,user u where r.owner_id=u.user_id and category=#{category} limit #{_startRowIndex}, #{_pageSize}")
+	@Select("select r.*,u.user_name from resource r,user u where ('ALL'=#{keywords} or MATCH (r.title) AGAINST(#{keywords})) and  r.owner_id=u.user_id limit #{_startRowIndex}, #{_pageSize}")
 	@ResultMap("loadResource-void")
-	public List<Resource> loadAllResourceByCategory(Map<String,Object> requestMap);
+	public List<Resource> loadAllResourceByKeywords(Map<String,Object> requestMap);
 
 	@Insert("insert into resource (resource_name,email,role,token_key) values (#{resourceName},#{email},#{role},#{tokenKey})")
 	public Resource addResource(Resource resource);

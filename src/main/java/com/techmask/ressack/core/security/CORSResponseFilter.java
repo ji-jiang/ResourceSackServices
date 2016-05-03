@@ -28,8 +28,12 @@ public class CORSResponseFilter implements Filter {
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
 			throws IOException, ServletException {
 
+		
+		
 		HttpServletResponse response = (HttpServletResponse) res;
 		HttpServletRequest request = (HttpServletRequest) req;
+
+		
 		//TODO add settings based on trusted hosts
 		response.setHeader("Access-Control-Allow-Origin", "http://jijiangshe.com:5757");
 		response.setHeader("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE");

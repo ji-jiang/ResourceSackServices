@@ -12,4 +12,5 @@ public interface ResourceService {
     public Resource addResource(Resource resource);
 
     public List<Resource> loadAllResource(Map<String, Object> requestMap);
+    public List<Resource> loadAllResourceByKeywords(Map<String, Object> requestMap);
 }

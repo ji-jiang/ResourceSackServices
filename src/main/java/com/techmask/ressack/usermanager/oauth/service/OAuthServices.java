@@ -1,7 +1,6 @@
 package com.techmask.ressack.usermanager.oauth.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,11 +13,14 @@ public class OAuthServices {
     private List<CustomOAuthService> oAuthServices;
     
     public CustomOAuthService getOAuthService(String type){
-        Optional<CustomOAuthService> oAuthService = oAuthServices.stream().filter(o -> o.getoAuthType().equals(type))
-                .findFirst();
-        if(oAuthService.isPresent()){
-            return oAuthService.get();
+       
+        for(int i=0;i<oAuthServices.size();i++){
+        	CustomOAuthService oauthService = (CustomOAuthService)oAuthServices.get(i);
+        	if(oauthService.getoAuthType().equalsIgnoreCase(type)){
+        		return oAuthServices.get(i);
+        	}
         }
+       
         return null; 
     }
     
