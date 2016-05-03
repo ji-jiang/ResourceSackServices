@@ -16,14 +16,15 @@ public class BaseController {
 	
 	public Map<String, Object> handleValidationExcpetion(ValidationException ve, Map<String, Object> resultMap){
 		LogUtils.warn(ve.getMessage());
-		resultMap.put(RESULT_CODE, ResultCode.SYSTEM_ERROR);
+		resultMap.put(RESULT_CODE, ResultCode.VALIDATION_FAILED);
 		resultMap.put(ERROR_MSG,ve.getMessage());
 		return resultMap;
 	}
 	
 	
 	public Map<String, Object> handleException(Exception e, Map<String, Object> resultMap){
-		resultMap.put(RESULT_CODE, ResultCode.VALIDATION_FAILED);
+		e.printStackTrace();
+		resultMap.put(RESULT_CODE, ResultCode.SYSTEM_ERROR);
 		resultMap.put("ERROR_MSG",AppException.UNEXPECTED_ERROR);
 		return resultMap;
 	}

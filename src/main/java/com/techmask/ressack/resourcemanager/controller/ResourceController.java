@@ -36,6 +36,32 @@ public class ResourceController extends BaseController {
 
 		return response;
 	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/search/{keywords}/{pageNo}")
+	public Map<String, Object> loadAllResourceByKeywords(@PathVariable("keywords") String keywords,
+			 @PathVariable("pageNo") String pageNo) {
+
+		Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
+
+		try {
+
+			Map<String, Object> requestMap = new LinkedHashMap<String, Object>();
+			requestMap.put("keywords", keywords);
+			requestMap.put("pageNo", pageNo);
+
+			List<Resource> resources = resourceService.loadAllResourceByKeywords(requestMap);
+			resultMap.put("resources", resources);
+
+		} catch (ValidationException ve) {
+			return this.handleValidationExcpetion(ve, resultMap);
+		} catch (Exception e) {
+			return this.handleException(e, resultMap);
+		}
+
+		
+		return resultMap;
+
+	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/{category}/{subCategory}/{pageNo}")
 	public Map<String, Object> loadAllResource(@PathVariable("category") String category,
