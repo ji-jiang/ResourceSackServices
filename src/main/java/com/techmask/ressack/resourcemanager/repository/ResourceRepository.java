@@ -34,6 +34,8 @@ public interface ResourceRepository {
 	@Select("select r.*,u.user_name from resource r,user u where r.owner_id=u.user_id")
 	public List<Resource> loadResource();
 	
+	@Select("SELECT LAST_INSERT_ID()")
+	public long getLastInsertId();
 	
 	@Select("select r.*,u.user_name from resource r,user u where (category=#{category} or 'ALL'=#{category}) and (sub_category=#{subCategory} or 'ALL'=#{subCategory}) and r.owner_id=u.user_id limit #{_startRowIndex}, #{_pageSize}")
 	@ResultMap("loadResource-void")
@@ -43,8 +45,8 @@ public interface ResourceRepository {
 	@ResultMap("loadResource-void")
 	public List<Resource> loadAllResourceByKeywords(Map<String,Object> requestMap);
 
-	@Insert("insert into resource (resource_name,email,role,token_key) values (#{resourceName},#{email},#{role},#{tokenKey})")
-	public Resource addResource(Resource resource);
+	@Insert("insert into resource(title,description,category,sub_category,tags,status,orig_url,download_url,download_password,download_times,payment_type,payment_amount,owner_id,created_by,updated_by)values(#{title},#{desc},#{category},#{subCategory},#{tags},'PENDING',#{origUrl},#{downloadUrl},#{downloadPassword},0,'NA',null,#{userId},#{userName},#{userName})")
+	public int addResource(Map<String,Object> resourceMap);
 
 	@Select("select * from resource where resource_id=#{resourceId}")
 	@ResultMap("loadResource-void")

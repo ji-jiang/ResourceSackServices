@@ -4,7 +4,9 @@ import java.util.Date;
 
 import org.springframework.data.annotation.Id;
 
-public class User {
+import com.techmask.ressack.core.session.BaseUser;
+
+public class User extends BaseUser{
 	@Id
 	private String id;
 	private String email;
