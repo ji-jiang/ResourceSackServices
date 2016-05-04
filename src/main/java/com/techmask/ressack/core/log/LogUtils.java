@@ -22,6 +22,10 @@ public class LogUtils {
 		logger.warn(msg,t);
 	}
 	
+	public static final void error(String msg){
+		logger.error(msg);
+	}
+	
 	public static final void error(String msg, Throwable t){
 		logger.error(msg,t);
 	}

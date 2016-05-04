@@ -21,8 +21,14 @@ public class ResourceServiceImpl implements ResourceService{
 	}
 
 	@Override
-	public Resource addResource(Resource resource) {
-		return resourceRepository.addResource(resource);
+	public Map<String, Object> addResource(Map<String,Object> resourceMap) {
+		
+		int resourceId =  resourceRepository.addResource(resourceMap);
+		long lastInserId = resourceRepository.getLastInsertId();
+		resourceMap.put("id" , lastInserId);
+		
+		return resourceMap;
+		
 	}
 
 
