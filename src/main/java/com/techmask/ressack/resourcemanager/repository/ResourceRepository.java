@@ -34,6 +34,10 @@ public interface ResourceRepository {
 	@Select("select r.*,u.user_name from resource r,user u where r.owner_id=u.user_id")
 	public List<Resource> loadResource();
 	
+	
+	@Select("SELECT count(*) from resource where created_date>curdate() and owner_id=#{userId}")
+	public int getNewCreatedCount();
+	
 	@Select("SELECT LAST_INSERT_ID()")
 	public long getLastInsertId();
 	

@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Configuration;
 public class AppConfiguration {
 	private String env;
 
+	private int maxResouceAddCount;
+
 	public Environment getEnv() {
 		if(env == null){
 			env = Environment.DEV.name();
@@ -20,5 +22,14 @@ public class AppConfiguration {
 	public void setEnv(String env) {
 		this.env = env;
 	}
+
+	public int getMaxResouceAddCount() {
+		return maxResouceAddCount;
+	}
+
+	public void setMaxResouceAddCount(int maxResouceAddCount) {
+		this.maxResouceAddCount = maxResouceAddCount;
+	}
+
 	
 }

@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.techmask.ressack.core.error.ValidationException;
+import com.techmask.ressack.core.utils.ValidateUtils;
 import com.techmask.ressack.feedbackmanager.repository.FeedBackRepository;
 
 @Service
@@ -30,21 +31,29 @@ public class FeedBackServiceImpl implements FeedBackService {
 	@Override
 	public void addFeedBack(Map<String, Object> feedBackParamMap) { 
 		
-		String name = (String)feedBackParamMap.get("name");
-		String email = (String)feedBackParamMap.get("email");
-		String content = (String)feedBackParamMap.get("content");
+		StringBuffer errorMsg = new StringBuffer();
 		
-		validateAddFeedback(name,email,content);
+
+		
+		validateAddFeedback(errorMsg, feedBackParamMap);
 		
 		feedBackRepository.addFeedBack(feedBackParamMap);
 	
 	}
 	
 	
-	protected void validateAddFeedback(String name, String email,String content){
+	protected void validateAddFeedback(StringBuffer errorMsg, Map<String, Object> feedBackParamMap){
 		
-		if(StringUtils.isBlank(name) || StringUtils.isBlank(email) || StringUtils.isBlank(content)){
-			throw new ValidationException("feedback.add.validateError");
+		String name = (String)feedBackParamMap.get("name");
+		String email = (String)feedBackParamMap.get("email");
+		String content = (String)feedBackParamMap.get("content");
+		
+		ValidateUtils.validateField(errorMsg, "name", name, true, 20);
+		ValidateUtils.validateField(errorMsg, "email", email, true, 50);
+		ValidateUtils.validateField(errorMsg, "content", content, true, 50);
+		
+		if(errorMsg.length()>0){
+			throw new ValidationException(errorMsg.toString());
 		}
 		
 	}
