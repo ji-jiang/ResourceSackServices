@@ -7,7 +7,7 @@ public class FeedBack {
 	private String feedbackId;
 	private String name;
 	private String email;
-	private String content;
+	private String message;
 	private String createdDate;
 	private String createdBy;
 	private String updatedDate;
@@ -30,12 +30,7 @@ public class FeedBack {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getContent() {
-		return content;
-	}
-	public void setContent(String content) {
-		this.content = content;
-	}
+
 	public String getCreatedDate() {
 		return createdDate;
 	}
@@ -61,13 +56,20 @@ public class FeedBack {
 		this.updatedBy = updatedBy;
 	}
 	
+
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
+	}
+	
 	@Override
 	public String toString() {
-		return "FeedBack [feedbackId=" + feedbackId + ", name=" + name + ", email=" + email + ", content=" + content
+		return "FeedBack [feedbackId=" + feedbackId + ", name=" + name + ", email=" + email + ", message=" + message
 				+ ", createdDate=" + createdDate + ", createdBy=" + createdBy + ", updatedDate=" + updatedDate
 				+ ", updatedBy=" + updatedBy + "]";
 	}
-	
 	
 	
 
