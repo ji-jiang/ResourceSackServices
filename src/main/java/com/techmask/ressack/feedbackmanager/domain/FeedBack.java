@@ -1,6 +1,8 @@
 package com.techmask.ressack.feedbackmanager.domain;
 
 import org.springframework.data.annotation.Id;
+
+
 public class FeedBack {
 	
 	@Id
