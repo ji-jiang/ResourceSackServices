@@ -17,6 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.techmask.ressack.core.error.AppException;
 import com.techmask.ressack.core.error.ValidationException;
 import com.techmask.ressack.core.utils.ValidateUtils;
 import com.techmask.ressack.feedbackmanager.repository.FeedBackRepository;
@@ -44,13 +45,18 @@ public class FeedBackServiceImpl implements FeedBackService {
 	
 	protected void validateAddFeedback(StringBuffer errorMsg, Map<String, Object> feedBackParamMap){
 		
+		String userId = (String)feedBackParamMap.get("userId");
+		if(StringUtils.isBlank(userId)){
+			throw new AppException(AppException.PERMISSION_DENIED_ERROR);
+		}
+		
 		String name = (String)feedBackParamMap.get("name");
 		String email = (String)feedBackParamMap.get("email");
-		String content = (String)feedBackParamMap.get("content");
+		String content = (String)feedBackParamMap.get("message");
 		
 		ValidateUtils.validateField(errorMsg, "name", name, true, 20);
 		ValidateUtils.validateField(errorMsg, "email", email, true, 50);
-		ValidateUtils.validateField(errorMsg, "content", content, true, 50);
+		ValidateUtils.validateField(errorMsg, "message", content, true, 50);
 		
 		if(errorMsg.length()>0){
 			throw new ValidationException(errorMsg.toString());

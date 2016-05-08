@@ -14,6 +14,10 @@ import com.techmask.ressack.core.session.impl.UserSessionManagerImpl;
 public abstract class BaseUser implements Serializable {
 	
     
+
+	private static final long serialVersionUID = -2776327615358890474L;
+	
+	
 	private String id;
 	private String userName;
 	private String role;

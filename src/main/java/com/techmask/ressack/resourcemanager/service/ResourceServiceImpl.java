@@ -77,7 +77,7 @@ public class ResourceServiceImpl implements ResourceService{
 		}
 		
 		
-		int newCreatedCount = resourceRepository.getNewCreatedCount();
+		int newCreatedCount = resourceRepository.getNewCreatedCount(resourceMap);
 		int maxResouceAddCount = appConfiguration.getMaxResouceAddCount();
 		int remainAddCount = maxResouceAddCount - newCreatedCount-1;
 		

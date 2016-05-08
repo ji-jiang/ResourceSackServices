@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class CORSResponseFilter implements Filter {
 
-	private final String allowedOrigins = "localhost";
+
 
 	public void destroy() {
 
