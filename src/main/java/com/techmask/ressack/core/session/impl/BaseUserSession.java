@@ -27,23 +27,28 @@ public abstract class BaseUserSession implements UserSession {
         this.sessionId = sessionId;        
     }
 
-    public BaseUser getUser() {
-        return (BaseUser) get(UserSessionIds.CURRENT_USER);
-    }
+   
 
-    protected void setUser(BaseUser netsUser) {        
-        set(UserSessionIds.CURRENT_USER, netsUser);
+    protected void setUser(BaseUser user) {        
+        set(UserSessionIds.USER_ID, user.getId());
+        set(UserSessionIds.USER_NAME, user.getUserName());
+        set(UserSessionIds.USER_ROLE,user.getRole());
     }
 
     public String getUserId() {
-        String userId = getUser().getId();
+        String userId = (String)get(UserSessionIds.USER_ID);
         return userId;
     }
 
-    public String getUserName() {
-        String userName = getUser().getUserName();        
+    public String getUserName() { 
+        String userName = (String)get(UserSessionIds.USER_NAME);    
         return userName;
     }  
+    
+    public String getUserRole() {
+        String userId = (String)get(UserSessionIds.USER_ROLE);   
+        return userId;
+    }
 
     public long getCreationTime() {        
         return creationTime;

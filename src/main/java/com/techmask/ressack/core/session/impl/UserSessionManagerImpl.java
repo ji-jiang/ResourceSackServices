@@ -13,10 +13,9 @@ import com.techmask.ressack.core.session.UserSessionIds;
 import com.techmask.ressack.core.session.UserSessionManager;
 import com.techmask.ressack.core.session.UserSessionManagerAdmin;
 
-public class UserSessionManagerImpl extends UserSessionManager implements
-		UserSessionManagerAdmin {
+public class UserSessionManagerImpl extends UserSessionManager implements UserSessionManagerAdmin {
 
-	private Map<String,UserSession> userSessions = new Hashtable<String,UserSession>();
+	private Map<String, UserSession> userSessions = new Hashtable<String, UserSession>();
 
 	private boolean skipLoadAndAuthenticateUser = true;
 
@@ -24,8 +23,7 @@ public class UserSessionManagerImpl extends UserSessionManager implements
 
 	public void setupByUser(HttpServletRequest request, BaseUser currentUser) {
 
-		UserSession userSession = new HttpUserSession(request.getSession(),
-				currentUser);
+		UserSession userSession = new HttpUserSession(request.getSession(), currentUser);
 		String httpSessionId = request.getSession().getId();
 
 		userSessions.put(httpSessionId, userSession);
@@ -38,10 +36,11 @@ public class UserSessionManagerImpl extends UserSessionManager implements
 		if (userSessions.containsKey(httpSessionId)) {
 			userSession = (HttpUserSession) userSessions.get(httpSessionId);
 		} else {
-			BaseUser currentUser = (BaseUser) request.getSession()
-					.getAttribute(UserSessionIds.CURRENT_USER);
+			String userId = (String) request.getSession().getAttribute(UserSessionIds.USER_ID);
 
-			if (currentUser == null && isSkipLoadAndAuthenticateUser()) {
+			BaseUser currentUser = null;
+
+			if (userId == null && isSkipLoadAndAuthenticateUser()) {
 				currentUser = new DefaultUser();
 				if (request.getUserPrincipal() == null) {
 					currentUser.setUserName(ANONYMOUS_USER_NAME);
@@ -68,8 +67,7 @@ public class UserSessionManagerImpl extends UserSessionManager implements
 		return skipLoadAndAuthenticateUser;
 	}
 
-	public void setSkipLoadAndAuthenticateUser(
-			boolean skipLoadAndAuthenticateUser) {
+	public void setSkipLoadAndAuthenticateUser(boolean skipLoadAndAuthenticateUser) {
 		this.skipLoadAndAuthenticateUser = skipLoadAndAuthenticateUser;
 	}
 
