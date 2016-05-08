@@ -78,10 +78,6 @@ public class User extends BaseUser{
 		this.role = role;
 	}
 
-	@Override
-	public String toString() {
-		return String.format("User[id=%s,name='%s',email='%s',role='$s',token='$s']", id, userName,email, role,tokenKey);
-	}
 
 	public String getTokenKey() {
 		return tokenKey;
