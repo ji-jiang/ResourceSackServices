@@ -27,8 +27,7 @@ public class UserController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public Map<String, Object> loadAllUser() {
-		
-		System.out.println("userService"+userService);
+
 		List<User> users = userService.loadAllUser();
 
 		Map<String, Object> response = new LinkedHashMap<String, Object>();
