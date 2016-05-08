@@ -56,7 +56,7 @@ public class FeedBackServiceImpl implements FeedBackService {
 		
 		ValidateUtils.validateField(errorMsg, "name", name, true, 20);
 		ValidateUtils.validateField(errorMsg, "email", email, true, 50);
-		ValidateUtils.validateField(errorMsg, "message", content, true, 50);
+		ValidateUtils.validateField(errorMsg, "message", content, true, 500);
 		
 		if(errorMsg.length()>0){
 			throw new ValidationException(errorMsg.toString());
