@@ -12,8 +12,13 @@
 .classpath
 .idea
 .idea/**.*
+
 /.settings
 rebel.xml
 
 target/**.*
 /target/
+
+
+config/**.*
+/config/
