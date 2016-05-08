@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.eclipse.jetty.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.techmask.ressack.core.security.UserRole;
@@ -14,8 +13,6 @@ import com.techmask.ressack.usermanager.repository.UserRepository;
 @Service
 public class UserServiceImpl implements UserService {
 	
-	@Autowired
-	private PasswordEncoder passwordEncoder;
 	@Autowired
 	private UserRepository userRepository;
 
@@ -36,8 +33,8 @@ public class UserServiceImpl implements UserService {
 			user.setRole(UserRole.USER.name());
 		}
 		
-		int userId = userRepository.addUser(user); 
-		System.out.println(user);
+		userRepository.addUser(user); 
+
 		return user;
 	}
 

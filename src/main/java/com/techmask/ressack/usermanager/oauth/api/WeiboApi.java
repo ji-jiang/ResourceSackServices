@@ -1,12 +1,10 @@
 package com.techmask.ressack.usermanager.oauth.api;
 
 import org.scribe.builder.api.DefaultApi20;
-import org.scribe.extractors.*;
-import org.scribe.model.*;
+import org.scribe.model.OAuthConfig;
 import org.scribe.oauth.OAuthService;
-import org.scribe.utils.*;
+import org.scribe.utils.OAuthEncoder;
 
-import com.techmask.ressack.usermanager.oauth.service.GitHubOAuthService;
 import com.techmask.ressack.usermanager.oauth.service.WeiboOAuthService;
 
 public class WeiboApi extends DefaultApi20 {

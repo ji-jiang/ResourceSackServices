@@ -10,7 +10,7 @@ public interface UserSession {
     public String getUserName();
     public boolean has(String key);
     public Object get(String key);
-    public Iterator getKeyNames();
+    public Iterator<String> getKeyNames();
     public void set(String key, Object value);
     public void remove(String key);
     public long getCreationTime();
