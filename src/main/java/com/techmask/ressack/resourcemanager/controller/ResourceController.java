@@ -41,10 +41,10 @@ public class ResourceController extends BaseController {
 		try {
 			
 			UserSession userSession = UserSessionManager.getInstance().getUserSession(request);
-			BaseUser currentUser = userSession.getUser();
+		
 			
-			resourceMap.put("userId", currentUser.getId());
-			resourceMap.put("userName", currentUser.getUserName());
+			resourceMap.put("userId", userSession.getUserId());
+			resourceMap.put("userName", userSession.getUserName());
 			
 			resourceMap = resourceService.addResource(resourceMap);
 

@@ -32,10 +32,9 @@ public class FeedBackController extends BaseController{
 		Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
 		try{
 			UserSession userSession = UserSessionManager.getInstance().getUserSession(request);
-			BaseUser currentUser = userSession.getUser();
 			
-			feedBackParamMap.put("userId", currentUser.getId());
-			feedBackParamMap.put("userName", currentUser.getUserName());
+			feedBackParamMap.put("userId", userSession.getUserId());
+			feedBackParamMap.put("userName", userSession.getUserName());
 			
 			
 			feedBackService.addFeedBack(feedBackParamMap);
