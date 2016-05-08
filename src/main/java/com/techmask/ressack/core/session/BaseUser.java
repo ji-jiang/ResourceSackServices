@@ -6,8 +6,8 @@ import java.io.Serializable;
 
 public abstract class BaseUser implements Serializable {
 	
-  
-	private static final long serialVersionUID = -2776327615358890474L;
+
+	private static final long serialVersionUID = -2772339211606024312L;
 	
 	
 	private String id;

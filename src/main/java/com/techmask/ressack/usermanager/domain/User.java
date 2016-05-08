@@ -8,8 +8,8 @@ import com.techmask.ressack.core.session.BaseUser;
 
 public class User extends BaseUser{
 
-	private static final long serialVersionUID = -5134352662536798791L;
-	
+	private static final long serialVersionUID = 820319387340452732L;
+
 	@Id
 	private String id;
 	private String email;
