@@ -7,8 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-
-
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +20,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.techmask.ressack.core.controller.BaseController;
 import com.techmask.ressack.core.error.ValidationException;
+import com.techmask.ressack.core.session.BaseUser;
+import com.techmask.ressack.core.session.UserSession;
+import com.techmask.ressack.core.session.UserSessionManager;
 import com.techmask.ressack.core.utils.NumberUtils;
 import com.techmask.ressack.resourcemanager.domain.Resource;
 import com.techmask.ressack.resourcemanager.service.ResourceService;
@@ -33,13 +35,16 @@ public class ResourceController extends BaseController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public Map<String, Object> addResource(
-			@RequestBody Map<String, Object> resourceMap) {
+			HttpServletRequest request, @RequestBody Map<String, Object> resourceMap) {
 		
 		Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
 		try {
 			
-			resourceMap.put("userId", "1");
-			resourceMap.put("userName", "ji-jiang");
+			UserSession userSession = UserSessionManager.getInstance().getUserSession(request);
+			BaseUser currentUser = userSession.getUser();
+			
+			resourceMap.put("userId", currentUser.getId());
+			resourceMap.put("userName", currentUser.getUserName());
 			
 			resourceMap = resourceService.addResource(resourceMap);
 

@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 
@@ -80,10 +79,17 @@ public class ResourceServiceImpl implements ResourceService{
 		
 		int newCreatedCount = resourceRepository.getNewCreatedCount();
 		int maxResouceAddCount = appConfiguration.getMaxResouceAddCount();
+		int remainAddCount = maxResouceAddCount - newCreatedCount-1;
 		
-		System.out.println(maxResouceAddCount);
-		if(maxResouceAddCount > newCreatedCount){
+		
+		System.out.println(resourceMap);
+		System.out.println(newCreatedCount);
+		
+		
+		if( remainAddCount<0){
 			throw new ValidationException("error.resouce.exceedAddLimit");
+		}else{
+			resourceMap.put("remainAddCount", remainAddCount);
 		}
 		
 	}
