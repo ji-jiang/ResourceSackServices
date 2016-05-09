@@ -35,7 +35,13 @@ public class CORSResponseFilter implements Filter {
 
 		
 		//TODO add settings based on trusted hosts
-		response.setHeader("Access-Control-Allow-Origin", "http://jijiangshe.com");
+		String allowedOrigin = "http://www.jijiangshe.com";
+		String origin = request.getHeader("Origin");
+		if(origin.equalsIgnoreCase("http://jijiangshe.com")){
+			allowedOrigin = origin;
+		}
+		
+		response.setHeader("Access-Control-Allow-Origin", allowedOrigin);
 		response.setHeader("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE");
 		response.setHeader("Access-Control-Allow-Headers", "accept, authorization,x-requested-with,x-auth-token,content-type,X-XSRF-TOKEN");
 		response.setHeader("Access-Control-Max-Age", "3600");
