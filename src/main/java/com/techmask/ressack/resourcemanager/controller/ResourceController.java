@@ -1,15 +1,20 @@
 package com.techmask.ressack.resourcemanager.controller;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
+import org.imgscalr.Scalr;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.techmask.ressack.core.configuration.AppConfiguration;
 import com.techmask.ressack.core.controller.BaseController;
 import com.techmask.ressack.core.error.ValidationException;
 import com.techmask.ressack.core.session.BaseUser;
@@ -28,10 +34,13 @@ import com.techmask.ressack.resourcemanager.domain.Resource;
 import com.techmask.ressack.resourcemanager.service.ResourceService;
 
 @RestController
+@Configuration
 @RequestMapping("/resource")
 public class ResourceController extends BaseController {
 	@Autowired
 	private ResourceService resourceService;
+	@Autowired
+	AppConfiguration appConfiguration;
 
 	@RequestMapping(method = RequestMethod.POST)
 	public Map<String, Object> addResource(
@@ -75,12 +84,19 @@ public class ResourceController extends BaseController {
 				resourceId = String.valueOf(NumberUtils.toLong(resourceId));
 			}
 			
-			String filePath = "D:\\Program Files (x86)\\XAMPP\\htdocs\\jijiangshe\\static\\resources\\"+resourceId+".png";
+			String filePath = appConfiguration.getResourceImageUploadPath();
 			
-			BufferedOutputStream stream =
-			        new BufferedOutputStream(new FileOutputStream(new File(filePath)));
-			    stream.write(uploadfile.getBytes());
-			    stream.close();
+			
+			BufferedImage origImage = ImageIO.read(new ByteArrayInputStream(uploadfile.getBytes()));
+            
+            BufferedImage thumbnail_md = Scalr.resize(origImage, Scalr.Method.SPEED, Scalr.Mode.FIT_EXACT,
+                    285, 254, Scalr.OP_ANTIALIAS);
+            
+            System.out.println(filePath+"R00000"+resourceId+"_md.png");
+            File thumbnailMdFile = new File(filePath+"R00000"+resourceId+"_md.png");
+            ImageIO.write(thumbnail_md, "png", thumbnailMdFile);    
+			
+
 			
 		} catch (ValidationException ve) {
 			return this.handleValidationExcpetion(ve, resultMap);

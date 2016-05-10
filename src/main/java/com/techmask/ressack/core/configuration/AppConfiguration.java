@@ -9,8 +9,8 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix="app")
 public class AppConfiguration {
 	private String env;
-
 	private int maxResouceAddCount;
+	private String resourceImageUploadPath;
 
 	public Environment getEnv() {
 		if(env == null){
@@ -29,6 +29,14 @@ public class AppConfiguration {
 
 	public void setMaxResouceAddCount(int maxResouceAddCount) {
 		this.maxResouceAddCount = maxResouceAddCount;
+	}
+
+	public String getResourceImageUploadPath() {
+		return resourceImageUploadPath;
+	}
+
+	public void setResourceImageUploadPath(String resourceImageUploadPath) {
+		this.resourceImageUploadPath = resourceImageUploadPath;
 	}
 
 	

@@ -25,6 +25,7 @@ public class Resource {
 	private Integer ownerId;
 	private String ownerName;
 	private Integer weight;
+	private String imageUrl;
 	
 	public String getId() {
 		return id;
@@ -139,6 +140,12 @@ public class Resource {
 	}
 	public void setOwnerName(String ownerName) {
 		this.ownerName = ownerName;
+	}
+	public String getImageUrl() {
+		return imageUrl;
+	}
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 	
 	
