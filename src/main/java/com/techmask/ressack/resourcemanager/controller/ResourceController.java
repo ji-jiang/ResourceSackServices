@@ -94,18 +94,22 @@ public class ResourceController extends BaseController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/search/{keywords}/{pageNo}")
-	public Map<String, Object> loadAllResourceByKeywords(
+	public Map<String, Object> loadAllResourceByKeywords(HttpServletRequest request, 
 			@PathVariable("keywords") String keywords,
 			@PathVariable("pageNo") String pageNo) {
 
 		Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
+		Map<String, Object> requestMap = new LinkedHashMap<String, Object>();
+		
+		requestMap.put("keywords", keywords);
+		requestMap.put("pageNo", pageNo);
+		
+		UserSession userSession = UserSessionManager.getInstance().getUserSession(request);
+		
+		requestMap.put("userId", userSession.getUserId());
+		requestMap.put("userName", userSession.getUserName());
 
 		try {
-
-			Map<String, Object> requestMap = new LinkedHashMap<String, Object>();
-			requestMap.put("keywords", keywords);
-			requestMap.put("pageNo", pageNo);
-
 			List<Resource> resources = resourceService
 					.loadAllResourceByKeywords(requestMap);
 			resultMap.put("resources", resources);
@@ -121,19 +125,26 @@ public class ResourceController extends BaseController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/{category}/{subCategory}/{pageNo}")
-	public Map<String, Object> loadAllResource(
+	public Map<String, Object> loadAllResource(HttpServletRequest request, 
 			@PathVariable("category") String category,
 			@PathVariable("subCategory") String subCategory,
 			@PathVariable("pageNo") String pageNo) {
 
 		Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
+		Map<String, Object> requestMap = new LinkedHashMap<String, Object>();
+		
+		requestMap.put("category", category);
+		requestMap.put("subCategory", subCategory);
+		requestMap.put("pageNo", pageNo);
+		
+		UserSession userSession = UserSessionManager.getInstance().getUserSession(request);
+		
+		requestMap.put("userId", userSession.getUserId());
+		requestMap.put("userName", userSession.getUserName());
 
 		try {
 
-			Map<String, Object> requestMap = new LinkedHashMap<String, Object>();
-			requestMap.put("category", category);
-			requestMap.put("subCategory", subCategory);
-			requestMap.put("pageNo", pageNo);
+			
 
 			List<Resource> resources = resourceService
 					.loadAllResource(requestMap);
