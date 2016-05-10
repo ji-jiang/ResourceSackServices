@@ -25,6 +25,7 @@ public interface ResourceRepository {
 			@Result(property = "paymentAmount", column = "payment_amount"),
 			@Result(property = "ownerId", column = "owner_id"),
 			@Result(property = "ownerName", column = "user_name"),
+			@Result(property = "imageInd", column = "image_ind"),
 			@Result(property = "subCategory", column = "sub_category"),
 			@Result(property = "createdDate", column = "created_date"),
 			@Result(property = "createdBy", column = "created_by"),
@@ -55,6 +56,9 @@ public interface ResourceRepository {
 	@Select("select * from resource where resource_id=#{resourceId}")
 	@ResultMap("loadResource-void")
 	public Resource loadResourceById(String resourceId);
+	
+	@Update("update resource set image_ind='Y' where resource_id=#{resourceId}")
+	public int setImageInd(String resourceId);
 
 	
 }

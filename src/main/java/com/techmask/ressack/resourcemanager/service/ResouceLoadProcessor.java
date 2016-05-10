@@ -2,9 +2,7 @@ package com.techmask.ressack.resourcemanager.service;
 
 import java.util.Map;
 
-
-
-
+import com.techmask.ressack.core.busobjs.BooleanFlag;
 import com.techmask.ressack.core.utils.StringUtils;
 import com.techmask.ressack.resourcemanager.domain.Resource;
 
@@ -27,8 +25,13 @@ public class ResouceLoadProcessor {
 			resource.setDownloadPassword("XXXXXXXXX");
 		}
 		
-		String resourceId = resource.getId();
-		resource.setImageUrl("/static/resources/R00000"+resourceId+"_md.png");
+		if(BooleanFlag.getInstance(resource.getImageInd()).booleanValue()){
+			String resourceId = resource.getId();
+			resource.setImageUrl("/static/resources/R00000"+resourceId+"_md.png");
+		}else{
+			resource.setImageUrl("/img/portfolio-page-5/default.png");
+		}
+		
 	}
 	
 

@@ -156,4 +156,10 @@ public class ResourceServiceImpl implements ResourceService{
 		}
 	}
 
+	@Override
+	public void setResourceImageInd(String resourceId) {
+		resourceRepository.setImageInd(resourceId);
+		
+	}
+
 }

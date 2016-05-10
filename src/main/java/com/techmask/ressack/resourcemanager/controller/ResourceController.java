@@ -12,7 +12,7 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
-import org.imgscalr.Scalr;
+import org.imgscalr.Scalr;  
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -90,13 +90,13 @@ public class ResourceController extends BaseController {
 			BufferedImage origImage = ImageIO.read(new ByteArrayInputStream(uploadfile.getBytes()));
             
             BufferedImage thumbnail_md = Scalr.resize(origImage, Scalr.Method.SPEED, Scalr.Mode.FIT_EXACT,
-                    285, 254, Scalr.OP_ANTIALIAS);
+                    400, 300, Scalr.OP_ANTIALIAS);
             
-            System.out.println(filePath+"R00000"+resourceId+"_md.png");
+
             File thumbnailMdFile = new File(filePath+"R00000"+resourceId+"_md.png");
             ImageIO.write(thumbnail_md, "png", thumbnailMdFile);    
 			
-
+            resourceService.setResourceImageInd(resourceId);
 			
 		} catch (ValidationException ve) {
 			return this.handleValidationExcpetion(ve, resultMap);
