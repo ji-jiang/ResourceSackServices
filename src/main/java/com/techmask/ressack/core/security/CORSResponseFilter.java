@@ -37,7 +37,7 @@ public class CORSResponseFilter implements Filter {
 		//TODO add settings based on trusted hosts
 		String allowedOrigin = "http://www.jijiangshe.com";
 		String origin = request.getHeader("Origin");
-		if(origin.equalsIgnoreCase("http://jijiangshe.com")){
+		if(origin!=null && origin.equalsIgnoreCase("http://jijiangshe.com")){
 			allowedOrigin = origin;
 		}
 		

@@ -116,6 +116,7 @@ public class ResourceServiceImpl implements ResourceService{
 		
 		
 		resources =  resourceRepository.loadAllResource(requestMap);
+		postProcessResources(resources,requestMap);
 		
 		return resources;
 	}
@@ -136,8 +137,23 @@ public class ResourceServiceImpl implements ResourceService{
 		
 		
 		resources =  resourceRepository.loadAllResourceByKeywords(requestMap);
+		postProcessResources(resources,requestMap);
 		
 		return resources;
+	}
+	
+	protected void postProcessResources(List<Resource> resources, Map<String, Object> requestMap){
+		
+		if(resources != null){
+			
+			ResouceLoadProcessor rlp = new ResouceLoadProcessor(requestMap);
+			
+			for(int i=0;i<resources.size();i++){
+				Resource resource = resources.get(i);
+				rlp.postProcessResource(resource);
+				
+			}
+		}
 	}
 
 }
