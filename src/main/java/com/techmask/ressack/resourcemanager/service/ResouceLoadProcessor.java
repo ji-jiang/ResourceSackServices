@@ -26,6 +26,9 @@ public class ResouceLoadProcessor {
 		if(!this.isAuthenticatedUser()){
 			resource.setDownloadPassword("XXXXXXXXX");
 		}
+		
+		String resourceId = resource.getId();
+		resource.setImageUrl("/static/resources/R00000"+resourceId+"_md.png");
 	}
 	
 

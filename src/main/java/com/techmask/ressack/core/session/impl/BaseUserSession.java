@@ -29,10 +29,14 @@ public abstract class BaseUserSession implements UserSession {
 
    
 
-    protected void setUser(BaseUser user) {        
-        set(UserSessionIds.USER_ID, user.getId());
-        set(UserSessionIds.USER_NAME, user.getUserName());
-        set(UserSessionIds.USER_ROLE,user.getRole());
+    protected void setUser(BaseUser user) {   
+    	
+    	if(user!=null){
+    		set(UserSessionIds.USER_ID, user.getId());
+            set(UserSessionIds.USER_NAME, user.getUserName());
+            set(UserSessionIds.USER_ROLE,user.getRole());
+    	}
+        
     }
 
     public String getUserId() {
