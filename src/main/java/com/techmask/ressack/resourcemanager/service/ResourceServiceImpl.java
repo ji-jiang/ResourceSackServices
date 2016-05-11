@@ -68,7 +68,7 @@ public class ResourceServiceImpl implements ResourceService{
 		ValidateUtils.validateField(errorMsg, "subCategory", subCategory, true, 20);
 		ValidateUtils.validateField(errorMsg, "desc", desc, true, 300);
 		ValidateUtils.validateField(errorMsg, "origUrl", origUrl, true, 100);
-		ValidateUtils.validateField(errorMsg, "downloadUrl", downloadUrl, true, 100);
+		ValidateUtils.validateField(errorMsg, "downloadUrl", downloadUrl, false, 100);
 		ValidateUtils.validateField(errorMsg, "downloadPassword", downloadPassword, false, 100);
 		ValidateUtils.validateField(errorMsg, "tags", tags, false, 100);
 		
