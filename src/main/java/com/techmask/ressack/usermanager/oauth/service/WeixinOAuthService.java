@@ -1,5 +1,7 @@
 package com.techmask.ressack.usermanager.oauth.service;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.scribe.builder.api.DefaultApi20;
 import org.scribe.model.*;
 import org.scribe.oauth.OAuth20ServiceImpl;
@@ -17,6 +19,8 @@ public class WeixinOAuthService extends OAuth20ServiceImpl implements CustomOAut
     private final String authorizationUrl;
     private static final String WIXIN_GET_USER_URL = "https://api.weixin.qq.com/sns/userinfo?";
     
+    private final Log logger = LogFactory.getLog(getClass());
+    
     public WeixinOAuthService(DefaultApi20 api, OAuthConfig config) {
         super(api, config);
         this.api = api;
@@ -33,6 +37,9 @@ public class WeixinOAuthService extends OAuth20ServiceImpl implements CustomOAut
       if(config.hasScope()) request.addQuerystringParameter(OAuthConstants.SCOPE, config.getScope());
       Response response = request.send();
       String responceBody = response.getBody();
+      if(logger.isDebugEnabled()){
+			logger.debug("weixin get getAccessToken responceBody is: "+response.getBody());
+		}
       Object result = JSON.parse(responceBody);
       return new Token(JSONPath.eval(result, "$.access_token").toString(), "", responceBody);
     }
@@ -41,10 +48,16 @@ public class WeixinOAuthService extends OAuth20ServiceImpl implements CustomOAut
 	public User getOAuthUser(Token accessToken) {
 
 		Object result = JSON.parse(accessToken.getRawResponse());
+		 if(logger.isDebugEnabled()){
+				logger.debug("weixin get getAccessToken result is: "+accessToken.getRawResponse());
+			}
 		OAuthRequest request = new OAuthRequest(api.getAccessTokenVerb(), WIXIN_GET_USER_URL);
-		request.addQuerystringParameter("appid", JSONPath.eval(result, "$.openid").toString());
+		request.addQuerystringParameter("openid", JSONPath.eval(result, "$.openid").toString());
 		request.addQuerystringParameter("access_token", accessToken.getToken());
 		Response response = request.send();
+		  if(logger.isDebugEnabled()){
+				logger.debug("weixin get userinfo responceBody is: "+response.getBody());
+			}
 		Object userResult = JSON.parse(response.getBody());
 		User user = new User();
 		user.setOauthType(getoAuthType());
