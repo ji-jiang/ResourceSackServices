@@ -48,9 +48,6 @@ public class WeixinOAuthService extends OAuth20ServiceImpl implements CustomOAut
 	public User getOAuthUser(Token accessToken) {
 
 		Object result = JSON.parse(accessToken.getRawResponse());
-		 if(logger.isDebugEnabled()){
-				logger.debug("weixin get getAccessToken result is: "+accessToken.getRawResponse());
-			}
 		OAuthRequest request = new OAuthRequest(api.getAccessTokenVerb(), WIXIN_GET_USER_URL);
 		request.addQuerystringParameter("openid", JSONPath.eval(result, "$.openid").toString());
 		request.addQuerystringParameter("access_token", accessToken.getToken());
