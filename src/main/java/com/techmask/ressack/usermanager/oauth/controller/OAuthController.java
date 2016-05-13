@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.scribe.model.Token;
 import org.scribe.model.Verifier;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,7 +30,7 @@ import com.techmask.ressack.usermanager.service.UserService;
 @RestController
 public class OAuthController extends BaseController {
 
-	public static final Logger logger = LoggerFactory.getLogger(OAuthController.class);
+	public static final Log logger = LogFactory.getLog(OAuthController.class);
 
 	@Autowired
 	private OAuthServices oAuthServices;
