@@ -1,10 +1,12 @@
 package com.techmask.ressack.usermanager.oauth.controller;
 
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.scribe.model.Token;
 import org.scribe.model.Verifier;
 import org.slf4j.Logger;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONPath;
 import com.techmask.ressack.core.busobjs.ResultCode;
 import com.techmask.ressack.core.controller.BaseController;
 import com.techmask.ressack.core.error.ValidationException;
@@ -36,7 +40,6 @@ public class OAuthController extends BaseController {
 	@Autowired
 	private UserService userService;
 
-
 	// index login test
 	@RequestMapping(value = { "", "/login" }, method = RequestMethod.GET)
 	public Map<String, Object> showLogin(Model model) {
@@ -54,26 +57,64 @@ public class OAuthController extends BaseController {
 		return authorizationUrlList;
 	}
 
+	/*
+	 * 
+	 * 因token具有唯一性，可以利用token判断数据库中是否存在当前token的用户，
+	 * 如果存在则直接返回数据库的用户信息，如果不存在则重新获取用户信息 ； 重新获取用户信息以后，还需要再根据用户的aouthid来判断是否是存量客户
+	 * 如果是存量客户则直接更新数据库的token信息，如果是非存量客户则需要新增客户 ；
+	 *
+	 * 所有的access_token过期以后都需要用户重新在授权，没过期的情况下会自动验证通过。目前暂不涉及自动刷新token的功能 补充如下： -
+	 * QQ的access_token有效期是30天；
+	 *
+	 * - weibo的access_token有效期是7天；
+	 *
+	 * - 微信有2个token： 1. 一个是access_token有效期是2个小时，在获取用户信息的时候使用； 2.
+	 * 一个是refresh_token，其作用仅用于延续access_token的有效期，其有效期是30天 3.
+	 * 因现在的需求比较简单，暂时使用refresh_token 最为数据库的唯一token，后期如果有其他需求在留存access_token
+	 * 
+	 * 
+	 * 
+	 * -
+	 * gitHub的access_token，目前从google的结果上看github是的token是不过期的，其设计的目的是尽量减少github的压力
+	 * ，暂时未找到官方的说明文档。
+	 * http://stackoverflow.com/questions/26902600/whats-the-lifetime-of-github-
+	 * oauth-api-access-token
+	 *
+	 * 
+	 * 
+	 **/
+
 	@RequestMapping(value = "/oauth/{type}/callback", method = RequestMethod.GET)
 	public Map<String, Object> callBack(@RequestParam(value = "code", required = true) String code,
 			@PathVariable(value = "type") String type, HttpServletRequest request) {
 
 		Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
 		try {
-		
+
 			CustomOAuthService oAuthService = oAuthServices.getOAuthService(type);
 			Token accessToken = oAuthService.getAccessToken(null, new Verifier(code));
-
-			User userAuthInfo = oAuthService.getOAuthUser(accessToken);
-			User user = userService.loadUserByOAtuth(userAuthInfo);
+			String tokenKey = accessToken.getToken();
+			User user = null;
+			user = userService.loadUserByAccessTokenAndOauthType(tokenKey, type);
 
 			if (user == null) {
-				user = userService.addUser(userAuthInfo);
+				User userAuthInfo = oAuthService.getOAuthUser(accessToken);
+				user = userService.loadUserByOAtuth(userAuthInfo);
+				userAuthInfo.setLastLoginDate(new Date());
+				
+				if (user == null) {
+					user = userService.addUser(userAuthInfo);
+				} else {
+					//refresh token
+					user.setTokenKey(tokenKey);
+					user.setLastLoginDate(new Date());
+					user = userService.updateUser(user);
+				}
 			}
-			
+
 			resultMap.put("tokenKey", user.getTokenKey());
 			resultMap.put(RESULT_CODE, ResultCode.SUCCESS);
-			
+
 		} catch (ValidationException ve) {
 			ve.printStackTrace();
 			return this.handleValidationExcpetion(ve, resultMap);
@@ -83,7 +124,6 @@ public class OAuthController extends BaseController {
 		}
 
 		return resultMap;
-
 
 	}
 

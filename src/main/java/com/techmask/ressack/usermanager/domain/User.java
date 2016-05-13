@@ -102,4 +102,19 @@ public class User extends BaseUser{
 	public void setOauthId(String oauthId) {
 		this.oauthId = oauthId;
 	}
+	
+	@Override
+	public String toString(){
+		return "{"+
+				"id="+this.id+
+				"email="+this.email+
+				"tokenKey="+this.tokenKey+
+				"userName="+this.userName+
+				"oauthId="+this.oauthId+
+				"oauthType="+this.oauthType+
+				"oauthName="+this.oauthName+
+				"headImgUrl="+this.headImgUrl+
+				"}";
+		
+	}
 }
