@@ -70,11 +70,8 @@ public class OAuthController extends BaseController {
 	 *
 	 * - 微信有2个token： 1. 一个是access_token有效期是2个小时，在获取用户信息的时候使用； 2.
 	 * 一个是refresh_token，其作用仅用于延续access_token的有效期，其有效期是30天 3.
-	 * 因现在的需求比较简单，暂时使用refresh_token 最为数据库的唯一token，后期如果有其他需求在留存access_token
 	 * 
-	 * 
-	 * 
-	 * -
+	 * 但发现为此登陆通过code得到的token都不同，所以就还是留存access_token -
 	 * gitHub的access_token，目前从google的结果上看github是的token是不过期的，其设计的目的是尽量减少github的压力
 	 * ，暂时未找到官方的说明文档。
 	 * http://stackoverflow.com/questions/26902600/whats-the-lifetime-of-github-
@@ -101,15 +98,17 @@ public class OAuthController extends BaseController {
 				User userAuthInfo = oAuthService.getOAuthUser(accessToken);
 				user = userService.loadUserByOAtuth(userAuthInfo);
 				userAuthInfo.setLastLoginDate(new Date());
-				
 				if (user == null) {
 					user = userService.addUser(userAuthInfo);
 				} else {
-					//refresh token
+					// refresh token
 					user.setTokenKey(tokenKey);
 					user.setLastLoginDate(new Date());
 					user = userService.updateUser(user);
 				}
+			} else {
+				user.setLastLoginDate(new Date());
+				user = userService.updateUser(user);
 			}
 
 			resultMap.put("tokenKey", user.getTokenKey());
