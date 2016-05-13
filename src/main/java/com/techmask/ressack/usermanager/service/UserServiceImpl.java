@@ -12,10 +12,9 @@ import com.techmask.ressack.usermanager.repository.UserRepository;
 
 @Service
 public class UserServiceImpl implements UserService {
-	
+
 	@Autowired
 	private UserRepository userRepository;
-
 
 	@Override
 	public User loadUserById(String userId) {
@@ -29,11 +28,11 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User addUser(User user) {
-		if(StringUtil.isBlank(user.getRole())){
+		if (StringUtil.isBlank(user.getRole())) {
 			user.setRole(UserRole.USER.name());
 		}
-		
-		userRepository.addUser(user); 
+
+		userRepository.addUser(user);
 
 		return user;
 	}
@@ -49,20 +48,17 @@ public class UserServiceImpl implements UserService {
 		userRepository.invalidateUser(userId);
 	}
 
-	
-
 	@Override
 	public List<User> loadAllUser() {
-		
+
 		System.out.println(userRepository.loadAllUser());
-		
+
 		return userRepository.loadAllUser();
 	}
 
-	
 	@Override
 	public User loadUserByOAtuth(User user) {
-		return userRepository.loadUserByOAtuth( user);
+		return userRepository.loadUserByOAtuth(user);
 	}
 
 	@Override
@@ -70,6 +66,9 @@ public class UserServiceImpl implements UserService {
 		userRepository.updateUserLoginInfo(user);
 	}
 
+	@Override
+	public User loadUserByAccessTokenAndOauthType(String tokenKey, String oauthType) {
+		return userRepository.loadUserByAccessTokenAndOauthType(tokenKey, oauthType);
+	}
 
 }
-

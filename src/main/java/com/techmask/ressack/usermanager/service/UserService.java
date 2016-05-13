@@ -13,5 +13,6 @@ public interface UserService {
     public void invalidateUser(String userId);
     public List<User> loadAllUser();
     public User loadUserByOAtuth(User user);
+    public User loadUserByAccessTokenAndOauthType(String tokenKey,String oauthType);
 
 }

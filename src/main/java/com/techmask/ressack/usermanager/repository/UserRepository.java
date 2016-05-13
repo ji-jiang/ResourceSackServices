@@ -52,6 +52,10 @@ public interface UserRepository {
 	@Select("select * from user where oauth_id=#{oauthId} and oauth_type=#{oauthType} ")
 	@ResultMap("loadAllUser-void")
 	public User loadUserByOAtuth(User user);
+	
+	@Select("select * from user where token_key=#{0} and oauth_type=#{1} ")
+	@ResultMap("loadAllUser-void")
+	public User loadUserByAccessTokenAndOauthType(String tokenKey, String oauthType);
 
 }
 
