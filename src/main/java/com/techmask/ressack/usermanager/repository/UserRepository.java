@@ -29,7 +29,7 @@ public interface UserRepository {
 	@Select("select * from user")
 	public List<User> loadAllUser();
 	
-	@Insert("insert into user (user_name,email,role,token_key,oauth_id,oauth_type,oauth_name,head_img_url,status) values (#{userName},#{email},#{role},#{tokenKey},#{oauthId},#{oauthType},#{oauthName},#{headImgUrl},'VALID')")
+	@Insert("insert into user (user_name,email,role,token_key,oauth_id,oauth_type,oauth_name,head_img_url,status,last_login_date) values (#{userName},#{email},#{role},#{tokenKey},#{oauthId},#{oauthType},#{oauthName},#{headImgUrl},'VALID',#{lastLoginDate})")
 	public int addUser(User user);
 
 	@Select("select * from user where user_id=#{userId}")
