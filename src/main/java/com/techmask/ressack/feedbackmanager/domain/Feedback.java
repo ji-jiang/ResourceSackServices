@@ -3,7 +3,7 @@ package com.techmask.ressack.feedbackmanager.domain;
 import org.springframework.data.annotation.Id;
 
 
-public class FeedBack {
+public class Feedback {
 	
 	@Id
 	private String feedbackId;
@@ -14,6 +14,7 @@ public class FeedBack {
 	private String createdBy;
 	private String updatedDate;
 	private String updatedBy;
+	private String ownerId;
 	public String getFeedbackId() {
 		return feedbackId;
 	}
@@ -71,6 +72,12 @@ public class FeedBack {
 		return "FeedBack [feedbackId=" + feedbackId + ", name=" + name + ", email=" + email + ", message=" + message
 				+ ", createdDate=" + createdDate + ", createdBy=" + createdBy + ", updatedDate=" + updatedDate
 				+ ", updatedBy=" + updatedBy + "]";
+	}
+	public String getOwnerId() {
+		return ownerId;
+	}
+	public void setOwnerId(String ownerId) {
+		this.ownerId = ownerId;
 	}
 	
 	

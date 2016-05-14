@@ -39,6 +39,9 @@ public interface ResourceRepository {
 	@Select("SELECT count(*) from resource where created_date>curdate() and owner_id=#{userId}")
 	public int getNewCreatedCount(Map<String,Object> requestMap);
 	
+	@Select("SELECT count(*) from resource where orig_url=#{origUrl}")
+	public int getSameOrigUrlCount(Map<String,Object> requestMap);
+	
 	@Select("SELECT LAST_INSERT_ID()")
 	public long getLastInsertId();
 	

@@ -14,17 +14,16 @@ import org.springframework.web.bind.annotation.RestController;
 import com.techmask.ressack.core.busobjs.ResultCode;
 import com.techmask.ressack.core.controller.BaseController;
 import com.techmask.ressack.core.error.ValidationException;
-import com.techmask.ressack.core.session.BaseUser;
 import com.techmask.ressack.core.session.UserSession;
 import com.techmask.ressack.core.session.UserSessionManager;
-import com.techmask.ressack.feedbackmanager.service.FeedBackService;
+import com.techmask.ressack.feedbackmanager.service.FeedbackService;
 
 @RestController
 @RequestMapping("/feedback")
-public class FeedBackController extends BaseController{
+public class FeedbackController extends BaseController{
 
 	@Autowired
-	private FeedBackService  feedBackService;
+	private FeedbackService  feedbackService;
 
 
 	@RequestMapping(method = RequestMethod.POST)
@@ -37,7 +36,7 @@ public class FeedBackController extends BaseController{
 			feedBackParamMap.put("userName", userSession.getUserName());
 			
 			
-			feedBackService.addFeedBack(feedBackParamMap);
+			feedbackService.addFeedback(feedBackParamMap);
 		}catch(ValidationException ve){
 			return this.handleValidationExcpetion(ve, resultMap);
 		}catch(Exception e){

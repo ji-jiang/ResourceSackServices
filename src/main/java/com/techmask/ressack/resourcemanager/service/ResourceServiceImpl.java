@@ -81,15 +81,16 @@ public class ResourceServiceImpl implements ResourceService{
 		int maxResouceAddCount = appConfiguration.getMaxResouceAddCount();
 		int remainAddCount = maxResouceAddCount - newCreatedCount-1;
 		
-		
-		System.out.println(resourceMap);
-		System.out.println(newCreatedCount);
-		
-		
 		if( remainAddCount<0){
 			throw new ValidationException("error.resouce.exceedAddLimit");
 		}else{
 			resourceMap.put("remainAddCount", remainAddCount);
+		}
+		
+		
+		int sameOrigUrlCount = resourceRepository.getSameOrigUrlCount(resourceMap);
+		if(sameOrigUrlCount>0){
+			throw new ValidationException("error.resouce.sameOrigUrl");
 		}
 		
 	}

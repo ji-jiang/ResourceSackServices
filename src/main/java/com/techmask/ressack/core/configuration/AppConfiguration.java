@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 public class AppConfiguration {
 	private String env;
 	private int maxResouceAddCount;
+	private int maxFeedbackAddCount;
 	private String resourceImageUploadPath;
 
 	public Environment getEnv() {
@@ -37,6 +38,14 @@ public class AppConfiguration {
 
 	public void setResourceImageUploadPath(String resourceImageUploadPath) {
 		this.resourceImageUploadPath = resourceImageUploadPath;
+	}
+
+	public int getMaxFeedbackAddCount() {
+		return maxFeedbackAddCount;
+	}
+
+	public void setMaxFeedbackAddCount(int maxFeedbackAddCount) {
+		this.maxFeedbackAddCount = maxFeedbackAddCount;
 	}
 
 	
