@@ -72,16 +72,24 @@ public class ResourceController extends BaseController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/imageupload/{resourceId}")
-	public Map<String, Object> uploadResourceImage(
+	public Map<String, Object> uploadResourceImage(HttpServletRequest request,
 			@RequestParam("file") MultipartFile uploadfile,@PathVariable("resourceId") String resourceId) {
 		
 		Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
 		try {
 			
+			UserSession userSession = UserSessionManager.getInstance().getUserSession(request);
 			
 			if(NumberUtils.isNumber(resourceId)){
 				resourceId = String.valueOf(NumberUtils.toLong(resourceId));
 			}
+			
+			
+			Resource resource = resourceService.loadResourceById(resourceId);
+			if(resource == null || !String.valueOf(resource.getOwnerId()).equalsIgnoreCase(userSession.getUserId())){
+				throw new ValidationException("error.resource.notOwnResource");
+			}
+			
 			
 			String filePath = appConfiguration.getResourceImageUploadPath();
 			
