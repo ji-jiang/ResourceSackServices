@@ -23,4 +23,4 @@ target/**.*
 config/**.*
 /config/
 
-src/main/resources/application.properties
+#src/main/resources/application.properties
