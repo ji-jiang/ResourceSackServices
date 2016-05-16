@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -45,7 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		if (appConfiguration.getEnv().equals(Environment.DEV)) {
 			http.httpBasic().and().authorizeRequests()
-					.antMatchers("/", "/currentuser", "/book/buy","/resource/**","/oauth/**")
+					.antMatchers(HttpMethod.GET,new String[]{"/","/resource/**","/oauth/**"})
 					.permitAll().anyRequest().authenticated()
 					.and()
 					.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessHandler(logoutSuccessHandler)
@@ -53,8 +54,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 					.disable();
 		} else {
 			http.httpBasic().and().authorizeRequests()
-					.antMatchers("/", "/currentuser", "/resource/**","/oauth/**").permitAll()
-					.anyRequest().authenticated()
+					.antMatchers(HttpMethod.GET,new String[]{"/","/resource/**","/oauth/**"})
+					.permitAll().anyRequest().authenticated()
 					.and()
 					.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessHandler(logoutSuccessHandler)
 					.and()

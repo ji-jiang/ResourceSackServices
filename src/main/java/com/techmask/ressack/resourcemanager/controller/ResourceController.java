@@ -26,7 +26,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.techmask.ressack.core.configuration.AppConfiguration;
 import com.techmask.ressack.core.controller.BaseController;
 import com.techmask.ressack.core.error.ValidationException;
-import com.techmask.ressack.core.session.BaseUser;
 import com.techmask.ressack.core.session.UserSession;
 import com.techmask.ressack.core.session.UserSessionManager;
 import com.techmask.ressack.core.utils.NumberUtils;
