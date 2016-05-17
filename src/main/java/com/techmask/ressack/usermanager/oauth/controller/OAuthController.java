@@ -50,6 +50,8 @@ public class OAuthController extends BaseController {
 		authorizationUrlList.put(OAuthTypes.WEIXIN,
 				oAuthServices.getOAuthService(OAuthTypes.WEIXIN).getAuthorizationUrl());
 		authorizationUrlList.put(OAuthTypes.QQ, oAuthServices.getOAuthService(OAuthTypes.QQ).getAuthorizationUrl());
+		
+		authorizationUrlList.put(OAuthTypes.CODING, oAuthServices.getOAuthService(OAuthTypes.CODING).getAuthorizationUrl());
 
 		return authorizationUrlList;
 	}

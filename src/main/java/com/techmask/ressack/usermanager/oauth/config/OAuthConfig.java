@@ -9,6 +9,7 @@ import com.techmask.ressack.usermanager.oauth.api.GithubApi;
 import com.techmask.ressack.usermanager.oauth.api.QQApi;
 import com.techmask.ressack.usermanager.oauth.api.WeiboApi;
 import com.techmask.ressack.usermanager.oauth.api.WeixinApi;
+import com.techmask.ressack.usermanager.oauth.api.CodingApi;
 import com.techmask.ressack.usermanager.oauth.service.CustomOAuthService;
 
 @Configuration
@@ -48,6 +49,13 @@ public class OAuthConfig {
 	String sinaAppKey;
 	@Value("${oAuth.sina.appSecret}")
 	String sinaAppSecret;
+	
+	// coding
+	@Value("${oAuth.coding.clientID}")
+	String codingClientID;
+	@Value("${oAuth.coding.clientSecret}")
+	String codingClientSecret;
+	
 
 	@Bean
 	public QQApi getQQApi() {
@@ -87,6 +95,12 @@ public class OAuthConfig {
 	public CustomOAuthService getSinaOAuthService() {
 		return (CustomOAuthService) new ServiceBuilder().provider(WeiboApi.class).apiKey(sinaAppKey)
 				.apiSecret(sinaAppSecret).callback(String.format(CALLBACK_URL, host, OAuthTypes.SINA_WEIBO)).build();
+	}
+	
+	@Bean
+	public CustomOAuthService getCodingOAuthService() {
+		return (CustomOAuthService) new ServiceBuilder().provider(CodingApi.class).apiKey(codingClientID)
+				.apiSecret(codingClientSecret).callback(String.format(CALLBACK_URL, host, OAuthTypes.CODING)).build();
 	}
 
 }
