@@ -28,6 +28,7 @@ public class ResouceLoadProcessor {
 		if(BooleanFlag.getInstance(resource.getImageInd()).booleanValue()){
 			String resourceId = resource.getId();
 			resource.setImageUrl("/static/resources/R00000"+resourceId+"_md.png");
+			resource.setImageSmUrl("/static/resources/R00000"+resourceId+"_sm.png");
 		}else{
 			resource.setImageUrl("/img/portfolio-page-5/default.png");
 		}

@@ -27,6 +27,7 @@ public class Resource {
 	private Integer weight;
 	private String imageInd;
 	private String imageUrl;
+	private String imageSmUrl;
 	
 	public String getId() {
 		return id;
@@ -153,6 +154,12 @@ public class Resource {
 	}
 	public void setImageInd(String imageInd) {
 		this.imageInd = imageInd;
+	}
+	public String getImageSmUrl() {
+		return imageSmUrl;
+	}
+	public void setImageSmUrl(String imageSmUrl) {
+		this.imageSmUrl = imageSmUrl;
 	}
 	
 	
