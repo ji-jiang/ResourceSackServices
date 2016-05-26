@@ -19,6 +19,9 @@ rebel.xml
 target/**.*
 /target/
 
+applog/**.*
+/applog/
+
 
 config/**.*
 /config/

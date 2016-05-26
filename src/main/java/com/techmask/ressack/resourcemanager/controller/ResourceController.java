@@ -96,7 +96,7 @@ public class ResourceController extends BaseController {
 			
 			BufferedImage origImage = ImageIO.read(new ByteArrayInputStream(uploadfile.getBytes()));
             
-            BufferedImage thumbnail_md = Scalr.resize(origImage, Scalr.Method.SPEED, Scalr.Mode.FIT_EXACT,
+            BufferedImage thumbnail_md = Scalr.resize(origImage, Scalr.Method.QUALITY, Scalr.Mode.FIT_EXACT,
                     400, 300, Scalr.OP_ANTIALIAS);
             
 
