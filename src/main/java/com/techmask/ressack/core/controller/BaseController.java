@@ -24,6 +24,7 @@ public class BaseController {
 	
 	public Map<String, Object> handleException(Exception e, Map<String, Object> resultMap){
 		e.printStackTrace();
+		LogUtils.error(e.getMessage(),e);
 		resultMap.put(RESULT_CODE, ResultCode.SYSTEM_ERROR);
 		resultMap.put("ERROR_MSG",AppException.UNEXPECTED_ERROR);
 		return resultMap;
