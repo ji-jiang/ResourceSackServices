@@ -163,7 +163,7 @@
 							<mainClass>com.techmask.ressack.App</mainClass>
 						</manifest>
 					</archive>
-					<outputDirectory>/opt/test/</outputDirectory>
+					<outputDirectory>/opt/appscr/jijiangshe/temp/app/</outputDirectory>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -177,7 +177,7 @@
 							<goal>copy-dependencies</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>/opt/test/lib</outputDirectory>
+							<outputDirectory>/opt/appscr/jijiangshe/temp/lib/</outputDirectory>
 						</configuration>
 					</execution>
 				</executions>
