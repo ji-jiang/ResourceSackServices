@@ -147,7 +147,7 @@ public class ResourceServiceImpl implements ResourceService{
 		
 		if(resources != null){
 			
-			ResouceLoadProcessor rlp = new ResouceLoadProcessor(requestMap);
+			ResouceLoadProcessor rlp = new ResouceLoadProcessor(requestMap,appConfiguration);
 			
 			for(int i=0;i<resources.size();i++){
 				Resource resource = resources.get(i);

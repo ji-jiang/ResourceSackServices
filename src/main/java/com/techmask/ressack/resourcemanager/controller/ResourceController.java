@@ -1,10 +1,8 @@
 package com.techmask.ressack.resourcemanager.controller;
 
 import java.awt.image.BufferedImage;
-import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +10,7 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
-import org.imgscalr.Scalr;  
+import org.imgscalr.Scalr;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +26,7 @@ import com.techmask.ressack.core.controller.BaseController;
 import com.techmask.ressack.core.error.ValidationException;
 import com.techmask.ressack.core.session.UserSession;
 import com.techmask.ressack.core.session.UserSessionManager;
+import com.techmask.ressack.core.storagemanager.service.StorageService;
 import com.techmask.ressack.core.utils.NumberUtils;
 import com.techmask.ressack.resourcemanager.domain.Resource;
 import com.techmask.ressack.resourcemanager.service.ResourceService;
@@ -40,6 +39,8 @@ public class ResourceController extends BaseController {
 	private ResourceService resourceService;
 	@Autowired
 	AppConfiguration appConfiguration;
+	@Autowired
+	private StorageService storageService;
 
 	@RequestMapping(method = RequestMethod.POST)
 	public Map<String, Object> addResource(
@@ -101,12 +102,19 @@ public class ResourceController extends BaseController {
             BufferedImage thumbnail_sm = Scalr.resize(origImage, Scalr.Method.SPEED, Scalr.Mode.FIT_EXACT,
                     40, 30, Scalr.OP_ANTIALIAS);
             
-
+            
             File thumbnailMdFile = new File(filePath+"R00000"+resourceId+"_md.png");
             ImageIO.write(thumbnail_md, "png", thumbnailMdFile);    
             
+            String cloudStorageMdFileName = "img/upload/resources/R00000"+resourceId+"_md.png";
+            storageService.upload(thumbnailMdFile.getPath(), cloudStorageMdFileName);
+            
+            
             File thumbnailSmFile = new File(filePath+"R00000"+resourceId+"_sm.png");
             ImageIO.write(thumbnail_sm, "png", thumbnailSmFile); 
+            
+            String cloudStorageSmFileName = "img/upload/resources/R00000"+resourceId+"_sm.png";
+            storageService.upload(thumbnailSmFile.getPath(), cloudStorageSmFileName);
 			
             resourceService.setResourceImageInd(resourceId);
 			

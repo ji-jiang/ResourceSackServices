@@ -3,20 +3,23 @@ package com.techmask.ressack.resourcemanager.service;
 import java.util.Map;
 
 import com.techmask.ressack.core.busobjs.BooleanFlag;
+import com.techmask.ressack.core.configuration.AppConfiguration;
 import com.techmask.ressack.core.utils.StringUtils;
 import com.techmask.ressack.resourcemanager.domain.Resource;
 
 public class ResouceLoadProcessor {
-	
+	private AppConfiguration appConfiguration;
 	private Map<String, Object> requestMap;
 	private boolean isAuthenticatedUser = false;
 
-	public ResouceLoadProcessor(Map<String, Object> requestMap) {
+	public ResouceLoadProcessor(Map<String, Object> requestMap,AppConfiguration appConfiguration) {
 		this.setRequestMap(requestMap);
 		
 		if(this.getRequestMap().containsKey("userId") && (!StringUtils.isBlank((String)this.getRequestMap().get("userId")))){
 			this.setAuthenticatedUser(true);
 		}
+		
+		this.appConfiguration = appConfiguration;
 	}
 	
 	
@@ -25,13 +28,25 @@ public class ResouceLoadProcessor {
 			resource.setDownloadPassword("XXXXXXXXX");
 		}
 		
-		if(BooleanFlag.getInstance(resource.getImageInd()).booleanValue()){
-			String resourceId = resource.getId();
-			resource.setImageUrl("/static/resources/R00000"+resourceId+"_md.png");
-			resource.setImageSmUrl("/static/resources/R00000"+resourceId+"_sm.png");
+		if(appConfiguration.isUseCloudStorage()){
+			if(BooleanFlag.getInstance(resource.getImageInd()).booleanValue()){
+				String resourceId = resource.getId();
+				resource.setImageUrl(appConfiguration.getCloudStorageImgUploadPath()+"resources/R00000"+resourceId+"_md.png");
+				resource.setImageSmUrl(appConfiguration.getCloudStorageImgUploadPath()+"resources/R00000"+resourceId+"_sm.png");
+			}else{
+				resource.setImageUrl("/img/portfolio-page-5/default.png");
+			}
+			
 		}else{
-			resource.setImageUrl("/img/portfolio-page-5/default.png");
+			if(BooleanFlag.getInstance(resource.getImageInd()).booleanValue()){
+				String resourceId = resource.getId();
+				resource.setImageUrl("/static/resources/R00000"+resourceId+"_md.png");
+				resource.setImageSmUrl("/static/resources/R00000"+resourceId+"_sm.png");
+			}else{
+				resource.setImageUrl("/img/portfolio-page-5/default.png");
+			}
 		}
+		
 		
 	}
 	

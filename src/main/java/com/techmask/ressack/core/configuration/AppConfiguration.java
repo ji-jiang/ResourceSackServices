@@ -12,6 +12,8 @@ public class AppConfiguration {
 	private int maxResouceAddCount;
 	private int maxFeedbackAddCount;
 	private String resourceImageUploadPath;
+	private boolean useCloudStorage;
+	private String cloudStorageImgUploadPath;
 
 	public Environment getEnv() {
 		if(env == null){
@@ -46,6 +48,22 @@ public class AppConfiguration {
 
 	public void setMaxFeedbackAddCount(int maxFeedbackAddCount) {
 		this.maxFeedbackAddCount = maxFeedbackAddCount;
+	}
+
+	public boolean isUseCloudStorage() {
+		return useCloudStorage;
+	}
+
+	public void setUseCloudStorage(boolean useCloudStorage) {
+		this.useCloudStorage = useCloudStorage;
+	}
+
+	public String getCloudStorageImgUploadPath() {
+		return cloudStorageImgUploadPath;
+	}
+
+	public void setCloudStorageImgUploadPath(String cloudStorageImgUploadPath) {
+		this.cloudStorageImgUploadPath = cloudStorageImgUploadPath;
 	}
 
 	
