@@ -1,6 +1,8 @@
 package com.techmask.ressack.usermanager.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.jetty.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,7 +70,10 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User loadUserByAccessTokenAndOauthType(String tokenKey, String oauthType) {
-		return userRepository.loadUserByAccessTokenAndOauthType(tokenKey, oauthType);
+		Map<String,Object> authMap = new HashMap<String,Object>();
+		authMap.put("tokenKey", tokenKey);
+		authMap.put("oauthType", oauthType);
+		return userRepository.loadUserByAccessTokenAndOauthType(authMap);
 	}
 
 }

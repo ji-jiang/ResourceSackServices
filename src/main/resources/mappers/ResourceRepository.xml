@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.techmask.ressack.resourcemanager.repository.ResourceRepository">
+   
+   <resultMap id="ResourceResultMap" type="Resource">
+        <id column="resource_id" property="id" />
+        <result column="description" property="desc" />
+        <result column="orig_url" property="origUrl" />
+        <result column="download_url" property="downloadUrl" />
+        <result column="download_password" property="downloadPassword" />
+        <result column="payment_type" property="paymentType" />
+        <result column="payment_amount" property="paymentAmount" />
+        <result column="owner_id" property="ownerId" />
+        <result column="owner_name" property="ownerName" />
+        <result column="image_ind" property="imageInd" />
+        <result column="sub_category" property="subCategory" />
+        <result column="created_date" property="createdDate" />
+        <result column="updated_date" property="updatedDate" />
+        <result column="updated_by" property="updatedBy" />
+    </resultMap>
+    
+    <select id="loadResource" resultMap="ResourceResultMap">
+        select r.*,u.user_name from resource r,user u where r.owner_id=u.user_id
+    </select>
+
+	<select id="getNewCreatedCount" parameterType="map" resultType="int">
+        <![CDATA[
+        SELECT count(*) from resource where created_date>curdate() and owner_id=#{userId}
+        ]]>
+    </select>
+	
+	<select id="getSameOrigUrlCount" parameterType="map" resultType="int">
+        SELECT count(*) from resource where orig_url=#{origUrl}
+    </select>
+	
+	<select id="getLastInsertId" resultType="long">
+        SELECT LAST_INSERT_ID()
+    </select>
+	
+	<select id="loadAllResource" parameterType="map" resultMap="ResourceResultMap">
+        select r.*,u.user_name from resource r,user u where r.status='VALID' and (category=#{category} or 'ALL'=#{category}) and (sub_category=#{subCategory} or 'ALL'=#{subCategory}) and r.owner_id=u.user_id order by weight desc, created_date desc limit #{_startRowIndex}, #{_pageSize}
+    </select>
+
+	<select id="loadAllResourceByKeywords" parameterType="map" resultMap="ResourceResultMap">
+        select r.*,u.user_name from resource r,user u where r.status='VALID' and ('ALL'=#{keywords} or MATCH (r.title) AGAINST(#{keywords})) and  r.owner_id=u.user_id order by weight desc, created_date desc limit #{_startRowIndex}, #{_pageSize}
+    </select>
+    
+	<insert id="addResource" parameterType="map">
+        insert into resource(title,description,category,sub_category,tags,status,orig_url,download_url,download_password,download_times,payment_type,payment_amount,owner_id,created_by,updated_by)values(#{title},#{desc},#{category},#{subCategory},#{tags},'VALID',#{origUrl},#{downloadUrl},#{downloadPassword},0,'NA',null,#{userId},#{userName},#{userName})
+    </insert>
+
+    
+    <select id="loadResourceById" parameterType="string" resultMap="ResourceResultMap">
+        select * from resource where resource_id=#{resourceId}
+    </select>
+
+	<update id="setImageInd" parameterType="string">
+        update resource set image_ind='Y' where resource_id=#{resourceId}
+    </update>
+
+    
+    
+</mapper> 

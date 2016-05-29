@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.techmask.ressack.usermanager.repository.UserRepository">
+   
+   <resultMap id="UserResultMap" type="User">
+        <id column="user_id" property="id" />
+        <result column="user_name" property="userName" />
+        <result column="description" property="desc" />
+        <result column="token_key" property="tokenKey" />
+        <result column="role" property="role" />
+        <result column="oauth_id" property="oauthId" />
+        <result column="oauth_type" property="oauthType" />
+        <result column="oauth_name" property="oauthName" />
+        <result column="head_img_url" property="headImgUrl" />
+        <result column="last_login_date" property="lastLoginDate" />
+    </resultMap>
+    
+
+	<select id="loadAllUser" resultMap="UserResultMap">
+        select * from user
+    </select>
+    
+    <insert id="addUser" parameterType="map">
+        insert into user (user_name,email,role,token_key,oauth_id,oauth_type,oauth_name,head_img_url,status,last_login_date) values (#{userName},#{email},#{role},#{tokenKey},#{oauthId},#{oauthType},#{oauthName},#{headImgUrl},'VALID',#{lastLoginDate})
+    </insert>
+	
+	<select id="loadUserById" parameterType="map" resultMap="UserResultMap">
+        select * from user where user_id=#{userId}
+    </select>
+
+	<select id="loadUserByTokenKey" parameterType="string" resultMap="UserResultMap">
+        select * from user where token_key=#{tokenKey} and status='VALID'
+    </select>
+    
+    <update id="updateUser" parameterType="User">
+       update user set token_key=#{tokenKey},last_login_date=#{lastLoginDate} where user_id=#{id}
+    </update>
+
+	<update id="invalidateUser" parameterType="string">
+       update user set status='INVALID' where user_id=#{id}
+    </update>
+
+	<update id="updateUserLoginInfo" parameterType="User">
+       update user set last_login_date=now() where user_id=#{id}
+    </update>
+    
+    <select id="loadUserByOAtuth" parameterType="User" resultMap="UserResultMap">
+        select * from user where oauth_id=#{oauthId} and oauth_type=#{oauthType}
+    </select>
+	
+	<select id="loadUserByAccessTokenAndOauthType" parameterType="String" resultMap="UserResultMap">
+        select * from user where token_key=#{0} and oauth_type=#{1}
+    </select>
+	
+
+    
+    
+</mapper> 

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.techmask.ressack.feedbackmanager.repository.FeedbackRepository">
+   
+
+	<insert id="addFeedback" parameterType="map">
+        insert into feedback(name,email,subject,message,created_by,updated_by,owner_id ) values(#{name},#{email},#{subject},#{message},#{userName},#{userName},#{userId})
+    </insert>
+
+	<select id="getNewFeedbackCount" resultType="int">
+        <![CDATA[
+        SELECT count(*) from feedback where created_date>curdate() and owner_id=#{userId}
+        ]]>
+    </select>
+
+    
+</mapper> 

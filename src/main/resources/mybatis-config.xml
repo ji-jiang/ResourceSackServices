@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+        <package name="com.techmask.ressack.usermanager.domain"/>
+        <package name="com.techmask.ressack.resourcemanager.domain"/>
+        
+    </typeAliases>
+    <mappers>
+        <mapper resource="mappers/UserRepository.xml"/>
+        <mapper resource="mappers/ResourceRepository.xml"/>
+        <mapper resource="mappers/FeedbackRepository.xml"/>
+    </mappers>
+</configuration>
