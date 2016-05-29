@@ -10,6 +10,7 @@ public interface ResourceService {
 	
 	public Resource loadResourceById(String resourceId);
     public Map<String, Object> addResource(Map<String,Object> resourceMap);
+    public Map<String, Object> updateResource(Map<String,Object> resourceMap);
     public void setResourceImageInd(String resourceId);
     
     public List<Resource> loadAllResource(Map<String, Object> requestMap);

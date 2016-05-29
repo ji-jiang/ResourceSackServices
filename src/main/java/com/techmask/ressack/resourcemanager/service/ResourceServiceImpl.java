@@ -34,17 +34,28 @@ public class ResourceServiceImpl implements ResourceService {
 	@Override
 	public Map<String, Object> addResource(Map<String, Object> resourceMap) {
 
-		validateAddResource(resourceMap);
+		validateAddOrUpdateResource(resourceMap,true);
 
-		int resourceId = resourceRepository.addResource(resourceMap);
+		resourceRepository.addResource(resourceMap);
 		long lastInserId = resourceRepository.getLastInsertId();
 		resourceMap.put("id", lastInserId);
 
 		return resourceMap;
 
 	}
+	
+	@Override
+	public Map<String, Object> updateResource(Map<String, Object> resourceMap) {
 
-	protected void validateAddResource(Map<String, Object> resourceMap) {
+		validateAddOrUpdateResource(resourceMap,false);
+
+		resourceRepository.updateResource(resourceMap);
+	
+		return resourceMap;
+
+	}
+
+	protected void validateAddOrUpdateResource(Map<String, Object> resourceMap, boolean isAddResource) {
 
 		String userId = (String) resourceMap.get("userId");
 		if (StringUtils.isBlank(userId)) {
@@ -81,20 +92,25 @@ public class ResourceServiceImpl implements ResourceService {
 			resourceMap.remove("downloadUrl");
 		}
 
-		int newCreatedCount = resourceRepository.getNewCreatedCount(resourceMap);
-		int maxResouceAddCount = appConfiguration.getMaxResouceAddCount();
-		int remainAddCount = maxResouceAddCount - newCreatedCount - 1;
+		if(isAddResource){
+			int newCreatedCount = resourceRepository.getNewCreatedCount(resourceMap);
+			int maxResouceAddCount = appConfiguration.getMaxResouceAddCount();
+			int remainAddCount = maxResouceAddCount - newCreatedCount - 1;
 
-		if (remainAddCount < 0) {
-			throw new ValidationException("error.resouce.exceedAddLimit");
-		} else {
-			resourceMap.put("remainAddCount", remainAddCount);
-		}
 
-		int sameOrigUrlCount = resourceRepository.getSameOrigUrlCount(resourceMap);
-		if (sameOrigUrlCount > 0) {
-			throw new ValidationException("error.resouce.sameOrigUrl");
+			if (remainAddCount < 0) {
+				throw new ValidationException("error.resouce.exceedAddLimit");
+			} else {
+				resourceMap.put("remainAddCount", remainAddCount);
+			}
+
+			int sameOrigUrlCount = resourceRepository.getSameOrigUrlCount(resourceMap);
+			if (sameOrigUrlCount > 0) {
+				throw new ValidationException("error.resouce.sameOrigUrl");
+			}
 		}
+		
+		
 
 	}
 

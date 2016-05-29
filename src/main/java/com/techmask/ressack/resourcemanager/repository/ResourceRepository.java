@@ -25,6 +25,8 @@ public interface ResourceRepository {
 	public List<Resource> loadAllResourceByKeywords(Map<String,Object> requestMap);
 
 	public int addResource(Map<String,Object> resourceMap);
+	
+	public int updateResource(Map<String,Object> resourceMap);
 
 	public Resource loadResourceById(String resourceId);
 
