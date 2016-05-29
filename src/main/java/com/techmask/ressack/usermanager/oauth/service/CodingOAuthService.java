@@ -70,7 +70,7 @@ public class CodingOAuthService extends OAuth20ServiceImpl implements CustomOAut
 		user.setOauthId(JSONPath.eval(result, "$.id").toString());
 		user.setOauthName(JSONPath.eval(result, "$.global_key").toString());
 		user.setUserName(JSONPath.eval(result, "$.global_key").toString());
-		user.setEmail(JSONPath.eval(result, "$.email").toString());
+		//user.setEmail(JSONPath.eval(result, "$.email").toString());
 		user.setHeadImgUrl(JSONPath.eval(result, "$.gravatar").toString());
 		user.setTokenKey(accessToken.getToken());
 		
