@@ -6,10 +6,13 @@ import org.springframework.data.annotation.Id;
 
 import com.techmask.ressack.core.session.BaseUser;
 
-public class User extends BaseUser{
+import lombok.Data;
 
-	private static final long serialVersionUID = 820319387340452732L;
+public @Data class User extends BaseUser {
 
+	
+	private static final long serialVersionUID = -5007305353575046872L;
+	
 	@Id
 	private String id;
 	private String email;
@@ -22,99 +25,4 @@ public class User extends BaseUser{
 	private String headImgUrl;
 	private Date lastLoginDate;
 
-	public String getOauthType() {
-		return oauthType;
-	}
-
-	public void setOauthType(String oauthType) {
-		this.oauthType = oauthType;
-	}
-
-	public String getOauthName() {
-		return oauthName;
-	}
-
-	public void setOauthName(String oauthName) {
-		this.oauthName = oauthName;
-	}
-
-	public String getHeadImgUrl() {
-		return headImgUrl;
-	}
-
-	public void setHeadImgUrl(String headImgUrl) {
-		this.headImgUrl = headImgUrl;
-	}
-
-	public Date getLastLoginDate() {
-		return lastLoginDate;
-	}
-
-	public void setLastLoginDate(Date lastLoginDate) {
-		this.lastLoginDate = lastLoginDate;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
-	}
-
-
-	public String getTokenKey() {
-		return tokenKey;
-	}
-
-	public void setTokenKey(String tokenKey) {
-		this.tokenKey = tokenKey;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public String getOauthId() {
-		return oauthId;
-	}
-
-	public void setOauthId(String oauthId) {
-		this.oauthId = oauthId;
-	}
-	
-	@Override
-	public String toString(){
-		return "{"+
-				"id="+this.id+
-				"email="+this.email+
-				"tokenKey="+this.tokenKey+
-				"userName="+this.userName+
-				"oauthId="+this.oauthId+
-				"oauthType="+this.oauthType+
-				"oauthName="+this.oauthName+
-				"headImgUrl="+this.headImgUrl+
-				"}";
-		
-	}
 }

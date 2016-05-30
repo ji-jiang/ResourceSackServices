@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.techmask.ressack.flagmanager.repository.FlagRepository">
+   <resultMap id="FlagResultMap" type="Resource">
+        <id column="flag_id" property="id" />
+        <result column="ref_id" property="refId" />
+        <result column="flag_type" property="flagType" />
+        <result column="created_date" property="createdDate" />
+        <result column="owner_id" property="ownerId" />
+    </resultMap>
+
+	<insert id="addFlag" parameterType="map">
+        insert into flag(ref_id,flag_type,owner_id) values(#{refId},#{flagType},#{userId}) where not exist
+        select 1 from flag where ref_id=#{refId} and flag_type=#{flagType} and owner_id=#{userId}
+    </insert>
+
+	<delete id="deleteFlag" >
+        <![CDATA[
+        delete from feedback where ref_id=#{refId} and flag_type=#{flagType} and owner_id=#{userId}
+        ]]>
+    </delete>
+    
+    <select id="loadAllFlagByUser" resultMap="FlagResultMap" parameterType="map">
+        select f.* from flag f where f.owner_id=#{userId} and f.ref_id=#{refId}
+    </select>
+
+    
+</mapper> 

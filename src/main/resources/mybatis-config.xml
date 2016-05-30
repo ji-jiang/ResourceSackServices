@@ -5,11 +5,13 @@
 <configuration>
     <typeAliases>
         <package name="com.techmask.ressack.usermanager.domain"/>
-        <package name="com.techmask.ressack.resourcemanager.domain"/>        
+        <package name="com.techmask.ressack.resourcemanager.domain"/> 
+        <package name="com.techmask.ressack.feedbackmanager.domain"/>         
     </typeAliases>
     <mappers>
         <mapper resource="mappers/UserRepository.xml"/>
         <mapper resource="mappers/ResourceRepository.xml"/>
         <mapper resource="mappers/FeedbackRepository.xml"/>
+        <mapper resource="mappers/FlagRepository.xml"/>
     </mappers>
 </configuration>
