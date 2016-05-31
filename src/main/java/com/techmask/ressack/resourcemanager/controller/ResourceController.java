@@ -72,6 +72,36 @@ public class ResourceController extends BaseController {
 
 	}
 	
+	
+	@RequestMapping(method = RequestMethod.PUT)
+	public Map<String, Object> updateResource(
+			HttpServletRequest request, @RequestBody Map<String, Object> resourceMap) {
+		
+		Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
+		try {
+			
+			UserSession userSession = UserSessionManager.getInstance().getUserSession(request);
+			
+			resourceMap.put("userId", userSession.getUserId());
+			resourceMap.put("userName", userSession.getUserName());
+			
+			resourceMap = resourceService.updateResource(resourceMap);
+
+			
+			resultMap.put(RESULT_CODE, "SUCCESS");
+			resultMap.put("resource", resourceMap);
+			
+		} catch (ValidationException ve) {
+			return this.handleValidationExcpetion(ve, resultMap);
+		} catch (Exception e) {
+			return this.handleException(e, resultMap);
+		}
+
+		return resultMap;
+
+
+	}
+	
 	@RequestMapping(method = RequestMethod.POST, value = "/imageupload/{resourceId}")
 	public Map<String, Object> uploadResourceImage(HttpServletRequest request,
 			@RequestParam("file") MultipartFile uploadfile,@PathVariable("resourceId") String resourceId) {
@@ -180,7 +210,35 @@ public class ResourceController extends BaseController {
 
 		try {
 
-			
+			List<Resource> resources = resourceService
+					.loadAllResource(requestMap);
+			resultMap.put("resources", resources);
+
+		} catch (ValidationException ve) {
+			return this.handleValidationExcpetion(ve, resultMap);
+		} catch (Exception e) {
+			return this.handleException(e, resultMap);
+		}
+
+		return resultMap;
+
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/flag/{flagType}/{pageNo}")
+	public Map<String, Object> loadAllResourceByFlag(HttpServletRequest request, 
+			@PathVariable("flagType") String flagType,
+			@PathVariable("pageNo") String pageNo) {
+
+		Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
+		Map<String, Object> requestMap = new LinkedHashMap<String, Object>();
+		
+		requestMap.put("flagType", flagType);
+		requestMap.put("pageNo", pageNo);
+		
+		UserSession userSession = UserSessionManager.getInstance().getUserSession(request);
+		requestMap.put("userId", userSession.getUserId());
+
+		try {
 
 			List<Resource> resources = resourceService
 					.loadAllResource(requestMap);

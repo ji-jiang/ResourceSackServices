@@ -149,7 +149,7 @@ public class ResourceServiceImpl implements ResourceService {
 			requestMap.put("keywords", keywords);
 		}
 
-		resources = resourceRepository.loadAllResourceByKeywords(requestMap);
+		resources = resourceRepository.loadAllResource(requestMap);
 		postProcessResources(resources, requestMap);
 
 		return resources;

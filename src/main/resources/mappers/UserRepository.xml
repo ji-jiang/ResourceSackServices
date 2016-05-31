@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.techmask.ressack.usermanager.repository.UserRepository">
    
-   <resultMap id="UserResultMap" type="User">
+   <resultMap id="UserResultMap" type="com.techmask.ressack.usermanager.domain.User">
         <id column="user_id" property="id" />
         <result column="user_name" property="userName" />
         <result column="description" property="desc" />
@@ -31,7 +31,7 @@
         select * from user where token_key=#{tokenKey} and status='VALID'
     </select>
     
-    <update id="updateUser" parameterType="User">
+    <update id="updateUser" parameterType="com.techmask.ressack.usermanager.domain.User">
        update user set token_key=#{tokenKey},last_login_date=#{lastLoginDate} where user_id=#{id}
     </update>
 
@@ -39,11 +39,11 @@
        update user set status='INVALID' where user_id=#{id}
     </update>
 
-	<update id="updateUserLoginInfo" parameterType="User">
+	<update id="updateUserLoginInfo" parameterType="com.techmask.ressack.usermanager.domain.User">
        update user set last_login_date=now() where user_id=#{id}
     </update>
     
-    <select id="loadUserByOAtuth" parameterType="User" resultMap="UserResultMap">
+    <select id="loadUserByOAtuth" parameterType="com.techmask.ressack.usermanager.domain.User" resultMap="UserResultMap">
         select * from user where oauth_id=#{oauthId} and oauth_type=#{oauthType}
     </select>
 	

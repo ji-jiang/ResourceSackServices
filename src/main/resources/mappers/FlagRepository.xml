@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.techmask.ressack.flagmanager.repository.FlagRepository">
-   <resultMap id="FlagResultMap" type="Resource">
+   <resultMap id="FlagResultMap" type="com.techmask.ressack.flagmanager.domain.Flag">
         <id column="flag_id" property="id" />
         <result column="ref_id" property="refId" />
         <result column="flag_type" property="flagType" />
