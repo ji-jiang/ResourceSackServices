@@ -88,6 +88,13 @@ public class ResourceServiceImpl implements ResourceService {
 		if (errorMsg.length() > 0) {
 			throw new ValidationException(errorMsg.toString());
 		}
+		
+		
+		if(!StringUtils.isBlank(tags)){
+			tags = StringUtils.replace(tags, "，",",");
+			tags = StringUtils.replace(tags, ";",",");
+			resourceMap.put("tags", tags);
+		}
 
 		if (!StringUtils.isBlank(origUrl) && (!StringUtils.isBlank(downloadUrl))
 				&& origUrl.equalsIgnoreCase(downloadUrl) && StringUtils.isBlank(downloadPassword)) {
