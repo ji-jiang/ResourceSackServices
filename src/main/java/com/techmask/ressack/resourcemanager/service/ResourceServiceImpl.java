@@ -12,6 +12,7 @@ import com.techmask.ressack.core.configuration.AppConfiguration;
 import com.techmask.ressack.core.data.PageHelper;
 import com.techmask.ressack.core.error.AppException;
 import com.techmask.ressack.core.error.ValidationException;
+import com.techmask.ressack.core.utils.NumberUtils;
 import com.techmask.ressack.core.utils.ValidateUtils;
 import com.techmask.ressack.resourcemanager.domain.Resource;
 import com.techmask.ressack.resourcemanager.repository.ResourceRepository;
@@ -107,6 +108,17 @@ public class ResourceServiceImpl implements ResourceService {
 			int sameOrigUrlCount = resourceRepository.getSameOrigUrlCount(resourceMap);
 			if (sameOrigUrlCount > 0) {
 				throw new ValidationException("error.resouce.sameOrigUrl");
+			}
+		}else{
+			String resourceId = (String)resourceMap.get("resourceId");
+			Resource resource = null;
+			if(NumberUtils.isNumber(resourceId)){
+				resourceId = String.valueOf(NumberUtils.toLong(resourceId));
+				resource = loadResourceById(resourceId);
+			}
+			
+			if(resource == null || !String.valueOf(resource.getOwnerId()).equalsIgnoreCase(userSession.getUserId())){
+				throw new ValidationException("error.resource.notOwnResource");
 			}
 		}
 		

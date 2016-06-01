@@ -84,6 +84,7 @@ public class ResourceController extends BaseController {
 			
 			resourceMap.put("userId", userSession.getUserId());
 			resourceMap.put("userName", userSession.getUserName());
+			resourceMap.put("userRole", userSession.getUserRole());
 			
 			resourceMap = resourceService.updateResource(resourceMap);
 
@@ -111,12 +112,13 @@ public class ResourceController extends BaseController {
 			
 			UserSession userSession = UserSessionManager.getInstance().getUserSession(request);
 			
+			
+			Resource resource = null;
 			if(NumberUtils.isNumber(resourceId)){
 				resourceId = String.valueOf(NumberUtils.toLong(resourceId));
+				resource = resourceService.loadResourceById(resourceId);
 			}
 			
-			
-			Resource resource = resourceService.loadResourceById(resourceId);
 			if(resource == null || !String.valueOf(resource.getOwnerId()).equalsIgnoreCase(userSession.getUserId())){
 				throw new ValidationException("error.resource.notOwnResource");
 			}

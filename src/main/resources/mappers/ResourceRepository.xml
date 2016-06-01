@@ -69,7 +69,8 @@
           tags = #{tags},
           orig_url = #{origUrl},
           download_url = #{downloadUrl},
-          download_password = #{downloadPassword}
+          download_password = #{downloadPassword},
+          updated_time=now()
 		  where owner_id = #{userId} and resource_id= #{id}
     </update>
 
