@@ -27,12 +27,20 @@ public class QiniuStorageService implements StorageService {
 	UploadManager uploadManager = new UploadManager();
 	private Auth auth;
 
+	
+	
 	public String getUpToken() {
-		System.out.println(accessKey + "," + secretKey);
 		if (auth == null) {
 			auth = Auth.create(accessKey, secretKey);
 		}
 		return auth.uploadToken(BUCKET_NAME);
+	}
+	
+	public String getUpToken(String key) {
+		if (auth == null) {
+			auth = Auth.create(accessKey, secretKey);
+		}
+		return auth.uploadToken(BUCKET_NAME,key);
 	}
 
 	public void upload(byte[] data, String fileName) throws IOException {
@@ -44,10 +52,16 @@ public class QiniuStorageService implements StorageService {
 
 		}
 	}
-
+	
 	public void upload(String filePath, String fileName) throws IOException {
+		upload(filePath,fileName,false);
+	}
+
+	public void upload(String filePath, String fileName, boolean overide) throws IOException {
 		try {
-			Response res = uploadManager.put(filePath, fileName, getUpToken());
+			
+			String token = overide?getUpToken(fileName):getUpToken();
+			Response res = uploadManager.put(filePath, fileName, token);
 		} catch (QiniuException e) {
 
 			Response r = e.response;

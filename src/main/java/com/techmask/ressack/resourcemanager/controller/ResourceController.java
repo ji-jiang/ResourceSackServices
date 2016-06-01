@@ -150,10 +150,10 @@ public class ResourceController extends BaseController {
             if(appConfiguration.isUseCloudStorage()){
             	
             	String cloudStorageMdFileName = "img/upload/resources/R00000"+resourceId+"_md.png";
-                storageService.upload(thumbnailMdFile.getPath(), cloudStorageMdFileName);
+                storageService.upload(thumbnailMdFile.getPath(), cloudStorageMdFileName,true);
                 
                 String cloudStorageSmFileName = "img/upload/resources/R00000"+resourceId+"_sm.png";
-                storageService.upload(thumbnailSmFile.getPath(), cloudStorageSmFileName);
+                storageService.upload(thumbnailSmFile.getPath(), cloudStorageSmFileName,true);
             	
             }
 			
