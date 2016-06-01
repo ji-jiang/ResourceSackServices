@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 
+import com.techmask.ressack.core.busobjs.UserRole;
 import com.techmask.ressack.core.configuration.AppConfiguration;
 import com.techmask.ressack.core.data.PageHelper;
 import com.techmask.ressack.core.error.AppException;
@@ -59,6 +60,7 @@ public class ResourceServiceImpl implements ResourceService {
 	protected void validateAddOrUpdateResource(Map<String, Object> resourceMap, boolean isAddResource) {
 
 		String userId = (String) resourceMap.get("userId");
+		UserRole userRole = UserRole.getInstance((String) resourceMap.get("userRole"));
 		if (StringUtils.isBlank(userId)) {
 			throw new AppException(AppException.PERMISSION_DENIED_ERROR);
 		}
@@ -110,14 +112,17 @@ public class ResourceServiceImpl implements ResourceService {
 				throw new ValidationException("error.resouce.sameOrigUrl");
 			}
 		}else{
-			String resourceId = (String)resourceMap.get("resourceId");
+			String resourceId = (String)resourceMap.get("id");
+			
 			Resource resource = null;
 			if(NumberUtils.isNumber(resourceId)){
 				resourceId = String.valueOf(NumberUtils.toLong(resourceId));
 				resource = loadResourceById(resourceId);
 			}
+
 			
-			if(resource == null || !String.valueOf(resource.getOwnerId()).equalsIgnoreCase(userSession.getUserId())){
+			if(resource == null ||
+					(!userRole.isAdmin() && !String.valueOf(resource.getOwnerId()).equalsIgnoreCase(userId))){
 				throw new ValidationException("error.resource.notOwnResource");
 			}
 		}

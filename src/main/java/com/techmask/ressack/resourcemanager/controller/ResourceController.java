@@ -143,15 +143,17 @@ public class ResourceController extends BaseController {
             File thumbnailMdFile = new File(filePath+"R00000"+resourceId+"_md.png");
             ImageIO.write(thumbnail_md, "png", thumbnailMdFile);    
             
-            String cloudStorageMdFileName = "img/upload/resources/R00000"+resourceId+"_md.png";
-            storageService.upload(thumbnailMdFile.getPath(), cloudStorageMdFileName);
-            
-            
             File thumbnailSmFile = new File(filePath+"R00000"+resourceId+"_sm.png");
             ImageIO.write(thumbnail_sm, "png", thumbnailSmFile); 
             
-            String cloudStorageSmFileName = "img/upload/resources/R00000"+resourceId+"_sm.png";
-            storageService.upload(thumbnailSmFile.getPath(), cloudStorageSmFileName);
+            if(appConfiguration.isUseCloudStorage()){
+            	String cloudStorageMdFileName = "img/upload/resources/R00000"+resourceId+"_md.png";
+                storageService.upload(thumbnailMdFile.getPath(), cloudStorageMdFileName);
+                
+                String cloudStorageSmFileName = "img/upload/resources/R00000"+resourceId+"_sm.png";
+                storageService.upload(thumbnailSmFile.getPath(), cloudStorageSmFileName);
+            	
+            }
 			
             resourceService.setResourceImageInd(resourceId);
 			
