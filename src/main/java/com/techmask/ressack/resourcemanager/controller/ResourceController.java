@@ -148,6 +148,7 @@ public class ResourceController extends BaseController {
             ImageIO.write(thumbnail_sm, "png", thumbnailSmFile); 
             
             if(appConfiguration.isUseCloudStorage()){
+            	
             	String cloudStorageMdFileName = "img/upload/resources/R00000"+resourceId+"_md.png";
                 storageService.upload(thumbnailMdFile.getPath(), cloudStorageMdFileName);
                 
