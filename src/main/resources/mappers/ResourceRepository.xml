@@ -71,7 +71,7 @@
           download_url = #{downloadUrl},
           download_password = #{downloadPassword},
           updated_date=now()
-		  where owner_id = #{userId} and resource_id= #{id}
+		  where (owner_id = #{userId} || 'ADMIN'=#{userRole}) and resource_id= #{id}
     </update>
 
     
