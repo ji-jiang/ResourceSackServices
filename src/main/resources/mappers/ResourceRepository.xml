@@ -63,6 +63,7 @@
     <update id="updateResource" parameterType="map">
         update resource
           set 
+          title=#{title},
           description = #{desc},
           category = #{category},
           sub_category = #{subCategory},
