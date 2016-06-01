@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.techmask.ressack.core.busobjs.UserRole;
 import com.techmask.ressack.core.configuration.AppConfiguration;
 import com.techmask.ressack.core.controller.BaseController;
 import com.techmask.ressack.core.error.ValidationException;
@@ -111,7 +112,7 @@ public class ResourceController extends BaseController {
 		try {
 			
 			UserSession userSession = UserSessionManager.getInstance().getUserSession(request);
-			
+			UserRole userRole = UserRole.getInstance(userSession.getUserRole());
 			
 			Resource resource = null;
 			if(NumberUtils.isNumber(resourceId)){
@@ -119,7 +120,7 @@ public class ResourceController extends BaseController {
 				resource = resourceService.loadResourceById(resourceId);
 			}
 			
-			if(resource == null || !String.valueOf(resource.getOwnerId()).equalsIgnoreCase(userSession.getUserId())){
+			if(resource == null ||(!userRole.isAdmin() && !String.valueOf(resource.getOwnerId()).equalsIgnoreCase(userSession.getUserId()))){
 				throw new ValidationException("error.resource.notOwnResource");
 			}
 			
