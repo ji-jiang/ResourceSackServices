@@ -46,7 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		if (appConfiguration.getEnv().equals(Environment.DEV)) {
 			http.httpBasic().and().authorizeRequests()
-					.antMatchers(HttpMethod.GET,new String[]{"/","/resource/**","/oauth/**"})
+					.antMatchers(HttpMethod.GET,new String[]{"/","/resource/**","/oauth/**","/flag/**"})
 					.permitAll().anyRequest().authenticated()
 					.and()
 					.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessHandler(logoutSuccessHandler)
@@ -54,7 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 					.disable();
 		} else {
 			http.httpBasic().and().authorizeRequests()
-					.antMatchers(HttpMethod.GET,new String[]{"/","/resource/**","/oauth/**"})
+					.antMatchers(HttpMethod.GET,new String[]{"/","/resource/**","/oauth/**","/flag/**"})
 					.permitAll().anyRequest().authenticated()
 					.and()
 					.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessHandler(logoutSuccessHandler)
