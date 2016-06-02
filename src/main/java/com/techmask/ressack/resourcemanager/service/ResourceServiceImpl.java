@@ -1,5 +1,6 @@
 package com.techmask.ressack.resourcemanager.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +18,7 @@ import com.techmask.ressack.core.utils.NumberUtils;
 import com.techmask.ressack.core.utils.ValidateUtils;
 import com.techmask.ressack.resourcemanager.domain.Resource;
 import com.techmask.ressack.resourcemanager.repository.ResourceRepository;
+import com.techmask.ressack.statisticsmanager.service.StatisticsService;
 
 @Service
 @Configuration
@@ -27,6 +29,9 @@ public class ResourceServiceImpl implements ResourceService {
 
 	@Autowired
 	private ResourceRepository resourceRepository;
+	
+	@Autowired
+	private StatisticsService statisticsService;
 
 	@Override
 	public Resource loadResourceById(String resourceId) {
@@ -41,6 +46,11 @@ public class ResourceServiceImpl implements ResourceService {
 		resourceRepository.addResource(resourceMap);
 		long lastInserId = resourceRepository.getLastInsertId();
 		resourceMap.put("id", lastInserId);
+		
+		Map<String,Object> statisticsMap = new HashMap<String,Object>();
+		statisticsMap.put("refId", lastInserId);
+		statisticsService.addStatistics(statisticsMap);
+		
 
 		return resourceMap;
 

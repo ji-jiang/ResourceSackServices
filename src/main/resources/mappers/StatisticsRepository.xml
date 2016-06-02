@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.techmask.ressack.statisticsmanager.repository.StatisticsRepository">
+   
+
+	<insert id="addStatistics" parameterType="map">
+        insert into statistics(ref_id)values(#{refId})
+    </insert>
+
+	
+	<update id="updateStatistics" parameterType="map">
+       update statistics 
+       
+       <if test="statisticsType eq 'L'.toString()">
+          set like_count = like_count + #{changedCount} 
+       </if>
+       <if test="statisticsType eq 'B'.toString()">
+          set bookmark_count = bookmark_count + #{changedCount} 
+       </if>
+       <if test="statisticsType eq 'D'.toString()">
+          set download_count = download_count + #{changedCount} 
+       </if>
+       where ref_id=#{refId}
+    </update>
+    
+</mapper> 

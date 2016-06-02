@@ -14,7 +14,12 @@
         <result column="owner_id" property="ownerId" />
         <result column="owner_name" property="ownerName" />
         <result column="image_ind" property="imageInd" />
+        <result column="image_version" property="imageVersion" />
         <result column="sub_category" property="subCategory" />
+        <result column="view_count" property="viewCount" />
+        <result column="like_count" property="likeCount" />
+        <result column="bookmark_count" property="bookmarkCount" />
+        <result column="download_count" property="downloadCount" />
         <result column="created_date" property="createdDate" />
         <result column="updated_date" property="updatedDate" />
         <result column="created_by" property="createdBy" />
@@ -40,7 +45,7 @@
     </select>
 	
 	<select id="loadAllResource" parameterType="map" resultMap="ResourceResultMap">
-        select r.*,u.user_name owner_name from resource r,user u where r.status='VALID'
+        select r.*,s.view_count,s.like_count,s.bookmark_count,s.download_count,u.user_name owner_name from resource r,user u,statistics s where r.status='VALID'
     	 <if test="category != null">
     	 	and (category=#{category} or 'ALL'=#{category})
     	 </if>
@@ -53,7 +58,7 @@
     	 <if test="flagType!= null">
     	 	and exists( select 1 from flag where owner_id=#{userId} and flag_type=#{flagType} and ref_id=r.resource_id)
     	 </if>
-    	 and r.owner_id=u.user_id order by weight desc, created_date desc limit #{_startRowIndex}, #{_pageSize}
+    	 and r.resource_id=s.ref_id and r.owner_id=u.user_id order by weight desc, created_date desc limit #{_startRowIndex}, #{_pageSize}
     </select>
     
 	<insert id="addResource" parameterType="map">
@@ -81,7 +86,7 @@
     </select>
 
 	<update id="setImageInd" parameterType="string">
-        update resource set image_ind='Y' where resource_id=#{resourceId}
+        update resource set image_ind='Y',image_version=image_version+1 where resource_id=#{resourceId}
     </update>
 
     

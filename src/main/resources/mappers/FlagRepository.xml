@@ -11,13 +11,13 @@
     </resultMap>
 
 	<insert id="addFlag" parameterType="map">
-        insert into flag(ref_id,flag_type,owner_id) values(#{refId},#{flagType},#{userId}) where not exist
-        select 1 from flag where ref_id=#{refId} and flag_type=#{flagType} and owner_id=#{userId}
+        insert into flag(ref_id,flag_type,owner_id) select #{refId},#{flagType},#{userId} from dual where not exists
+        (select 1 from flag where ref_id=#{refId} and flag_type=#{flagType} and owner_id=#{userId})
     </insert>
 
 	<delete id="deleteFlag" >
         <![CDATA[
-        delete from feedback where ref_id=#{refId} and flag_type=#{flagType} and owner_id=#{userId}
+        delete from flag where ref_id=#{refId} and flag_type=#{flagType} and owner_id=#{userId}
         ]]>
     </delete>
     

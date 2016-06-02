@@ -27,12 +27,13 @@ public class ResouceLoadProcessor {
 		if(!this.isAuthenticatedUser()){
 			resource.setDownloadPassword("XXXXXXXXX");
 		}
+		String imageVersion = "?version="+resource.getImageVersion();
 		
 		if(appConfiguration.isUseCloudStorage()){
 			if(BooleanFlag.getInstance(resource.getImageInd()).booleanValue()){
 				String resourceId = resource.getId();
-				resource.setImageUrl(appConfiguration.getCloudStorageImgUploadPath()+"resources/R00000"+resourceId+"_md.png");
-				resource.setImageSmUrl(appConfiguration.getCloudStorageImgUploadPath()+"resources/R00000"+resourceId+"_sm.png");
+				resource.setImageUrl(appConfiguration.getCloudStorageImgUploadPath()+"resources/R00000"+resourceId+"_md.png"+imageVersion);
+				resource.setImageSmUrl(appConfiguration.getCloudStorageImgUploadPath()+"resources/R00000"+resourceId+"_sm.png"+imageVersion);
 			}else{
 				resource.setImageUrl("/img/portfolio-page-5/default.png");
 			}
@@ -40,8 +41,8 @@ public class ResouceLoadProcessor {
 		}else{
 			if(BooleanFlag.getInstance(resource.getImageInd()).booleanValue()){
 				String resourceId = resource.getId();
-				resource.setImageUrl("/static/resources/R00000"+resourceId+"_md.png");
-				resource.setImageSmUrl("/static/resources/R00000"+resourceId+"_sm.png");
+				resource.setImageUrl("/static/resources/R00000"+resourceId+"_md.png"+imageVersion);
+				resource.setImageSmUrl("/static/resources/R00000"+resourceId+"_sm.png"+imageVersion);
 			}else{
 				resource.setImageUrl("/img/portfolio-page-5/default.png");
 			}

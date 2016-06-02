@@ -28,7 +28,12 @@ public @Data class Resource {
 	private String ownerName;
 	private Integer weight;
 	private String imageInd;
+	private String imageVersion;
 	private String imageUrl;
 	private String imageSmUrl;
+	private Integer viewCount;
+	private Integer likeCount;
+	private Integer bookmarkCount;
+	private Integer downloadCount;
 
 }

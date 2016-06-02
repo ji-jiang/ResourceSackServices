@@ -10,7 +10,7 @@ public enum UserRole {
 		  if (StringUtils.isBlank(userRole))
 			  resultUserRole = UserRole.ANONYMOUS;
 	      else {
-	          resultUserRole = UserRole.valueOf(userRole);
+	          resultUserRole = UserRole.valueOf(userRole.toUpperCase());
 	      } 
 		  
 		  if(userRole == null){
