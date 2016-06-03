@@ -24,6 +24,7 @@ public interface UserRepository {
 	public void updateUserLoginInfo(User user);
 	public User loadUserByOAtuth(User user);
 	public User loadUserByAccessTokenAndOauthType(Map<String,Object> authMap);
+	public int updateUserName(Map<String,Object> userMap);
 
 }
 

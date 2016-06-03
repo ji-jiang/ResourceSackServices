@@ -62,6 +62,7 @@ public class UserProfileController extends BaseController{
 			
 			profileMap.put("userId", userSession.getUserId());
 			profileMap.put("userRole", userSession.getUserRole());
+			profileMap.put("origUserName", userSession.getUserName());
 			
 			profileService.updateProfile(profileMap);
 

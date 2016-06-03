@@ -13,5 +13,6 @@ public interface ProfileRepository {
 	public Profile loadProfileByUserId(String userId);
 	public int addProfile(User user);
 	public int updateProfile(Map<String,Object> profileMap);
+	
 	public List<Profile> loadAllContributorProfile(Map<String,Object> requestMap);
 }

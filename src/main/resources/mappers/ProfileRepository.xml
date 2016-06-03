@@ -22,7 +22,7 @@
     </select>
 
 	<insert id="addProfile" parameterType="com.techmask.ressack.usermanager.domain.User">
-        insert into profile(user_id) values( #{userId})
+        insert into profile(user_id) values( #{id})
     </insert>
 
 	<update id="updateProfile" >

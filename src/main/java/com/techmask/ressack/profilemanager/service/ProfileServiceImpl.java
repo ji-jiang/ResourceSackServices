@@ -11,13 +11,15 @@ import com.techmask.ressack.core.error.AppException;
 import com.techmask.ressack.profilemanager.domain.Profile;
 import com.techmask.ressack.profilemanager.repository.ProfileRepository;
 import com.techmask.ressack.usermanager.domain.User;
+import com.techmask.ressack.usermanager.service.UserService;
 
 @Service
 public class ProfileServiceImpl implements ProfileService{
 
 	@Autowired
 	ProfileRepository profileRepository;
-	
+	@Autowired
+	UserService userService;
 
 	
 	@Override
@@ -30,8 +32,16 @@ public class ProfileServiceImpl implements ProfileService{
 	@Override
 	public void updateProfile(Map<String, Object> profileMap) {
 		int rs = profileRepository.updateProfile(profileMap);
+		
+		String origUserName = (String)profileMap.get("origUserName");
+		String userName = (String)profileMap.get("userName");
+		
 		if(rs==0){
 			throw new AppException(AppException.PERMISSION_DENIED_ERROR);
+		}else{
+			if(userName!=null && origUserName!=null &&!userName.equals(origUserName)){
+				userService.updateUserName(profileMap);
+			}
 		}
 		
 	}

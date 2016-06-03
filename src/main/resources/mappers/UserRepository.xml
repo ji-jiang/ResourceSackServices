@@ -43,6 +43,10 @@
        update user set last_login_date=now() where user_id=#{id}
     </update>
     
+    <update id="updateUserName" parameterType="map">
+       update user set user_name where user_id=#{userId}
+    </update>
+    
     <select id="loadUserByOAtuth" parameterType="com.techmask.ressack.usermanager.domain.User" resultMap="UserResultMap">
         select * from user where oauth_id=#{oauthId} and oauth_type=#{oauthType}
     </select>

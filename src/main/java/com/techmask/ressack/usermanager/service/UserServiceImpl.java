@@ -80,4 +80,9 @@ public class UserServiceImpl implements UserService {
 		return userRepository.loadUserByAccessTokenAndOauthType(authMap);
 	}
 
+	@Override
+	public void updateUserName(Map<String, Object> userMap) {
+		userRepository.updateUserName(userMap);
+	}
+
 }
