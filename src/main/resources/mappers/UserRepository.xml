@@ -44,7 +44,7 @@
     </update>
     
     <update id="updateUserName" parameterType="map">
-       update user set user_name where user_id=#{userId}
+       update user set user_name=#{userName} where user_id=#{userId}
     </update>
     
     <select id="loadUserByOAtuth" parameterType="com.techmask.ressack.usermanager.domain.User" resultMap="UserResultMap">
