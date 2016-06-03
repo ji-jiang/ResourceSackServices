@@ -9,11 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 
-import com.techmask.ressack.core.busobjs.UserRole;
 import com.techmask.ressack.core.configuration.AppConfiguration;
 import com.techmask.ressack.core.data.PageHelper;
 import com.techmask.ressack.core.error.AppException;
 import com.techmask.ressack.core.error.ValidationException;
+import com.techmask.ressack.core.security.UserRole;
 import com.techmask.ressack.core.utils.NumberUtils;
 import com.techmask.ressack.core.utils.ValidateUtils;
 import com.techmask.ressack.resourcemanager.domain.Resource;

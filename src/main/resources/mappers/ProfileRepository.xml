@@ -6,7 +6,7 @@
         <id column="profile_id" property="id" />
         <result column="user_id" property="userId" />
         <result column="job_title" property="jobTitle" />
-        <result column="company_name" property="flagType" />
+        <result column="company_name" property="companyName" />
         <result column="description" property="desc" />
 		<result column="user_name" property="userName" />		
     </resultMap>
@@ -34,8 +34,6 @@
         where profile_id=#{id} and user_id=#{userId}
         ]]>
     </update>
-    
-    
 
     
 </mapper> 

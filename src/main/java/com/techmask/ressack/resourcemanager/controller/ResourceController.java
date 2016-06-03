@@ -21,10 +21,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.techmask.ressack.core.busobjs.UserRole;
 import com.techmask.ressack.core.configuration.AppConfiguration;
 import com.techmask.ressack.core.controller.BaseController;
 import com.techmask.ressack.core.error.ValidationException;
+import com.techmask.ressack.core.security.UserRole;
 import com.techmask.ressack.core.session.UserSession;
 import com.techmask.ressack.core.session.UserSessionManager;
 import com.techmask.ressack.core.storagemanager.service.StorageService;
