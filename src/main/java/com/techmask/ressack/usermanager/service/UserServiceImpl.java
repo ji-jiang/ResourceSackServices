@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.techmask.ressack.core.security.UserRole;
+import com.techmask.ressack.profilemanager.service.ProfileService;
 import com.techmask.ressack.usermanager.domain.User;
 import com.techmask.ressack.usermanager.repository.UserRepository;
 
@@ -17,6 +18,8 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private ProfileService profileService;
 
 	@Override
 	public User loadUserById(String userId) {
@@ -35,6 +38,7 @@ public class UserServiceImpl implements UserService {
 		}
 
 		userRepository.addUser(user);
+		profileService.addProfile(user);
 
 		return user;
 	}

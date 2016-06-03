@@ -56,8 +56,11 @@
     	 	and ('ALL'=#{keywords} or MATCH (r.title) AGAINST(#{keywords}))
     	 </if>
     	 <if test="flagType!= null">
-    	 	and exists( select 1 from flag where owner_id=#{userId} and flag_type=#{flagType} and ref_id=r.resource_id)
+    	 	and exists( select 1 from flag where owner_id=#{ownerId} and flag_type=#{flagType} and ref_id=r.resource_id)
     	 </if>
+    	 <if test="resourceOwnerId!= null">
+            and r.owner_id=#{resourceOwnerId}
+       	 </if>
     	 and r.resource_id=s.ref_id and r.owner_id=u.user_id order by weight desc, created_date desc limit #{_startRowIndex}, #{_pageSize}
     </select>
     

@@ -143,8 +143,6 @@ public class ResourceServiceImpl implements ResourceService {
 				throw new ValidationException("error.resource.notOwnResource");
 			}
 		}
-		
-		
 
 	}
 
@@ -170,6 +168,28 @@ public class ResourceServiceImpl implements ResourceService {
 
 		return resources;
 	}
+	
+	@Override
+	public List<Resource> loadAllUserResource(Map<String, Object> requestMap) {
+		List<Resource> resources = null;
+		PageHelper.preparePageQuery(requestMap);
+
+		String filterType = (String) requestMap.get("filterType");
+		String ownerId = (String) requestMap.get("ownerId");
+
+		
+		if(filterType.equalsIgnoreCase("own")){
+			requestMap.put("resourceOwnerId", ownerId);
+		}else{
+			requestMap.put("flagType", filterType);
+		}
+
+		resources = resourceRepository.loadAllResource(requestMap);
+		postProcessResources(resources, requestMap);
+
+		return resources;
+	}
+
 
 	@Override
 	public List<Resource> loadAllResourceByKeywords(Map<String, Object> requestMap) {
@@ -208,5 +228,7 @@ public class ResourceServiceImpl implements ResourceService {
 		resourceRepository.setImageInd(resourceId);
 
 	}
+
+
 
 }

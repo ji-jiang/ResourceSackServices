@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.techmask.ressack.profilemanager.repository.ProfileRepository">
+   <resultMap id="ProfileResultMap" type="com.techmask.ressack.profilemanager.domain.Profile">
+        <id column="profile_id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="job_title" property="jobTitle" />
+        <result column="company_name" property="flagType" />
+        <result column="description" property="desc" />
+		<result column="user_name" property="userName" />		
+    </resultMap>
+    
+    <select id="loadProfileByUserId" resultMap="ProfileResultMap" parameterType="string">
+        select p.*,u.user_name,u.role from user u,profile p where u.user_id=#{userId} and u.user_id=p.user_id
+    </select>
+    
+    <select id="loadAllContributorProfile" resultMap="ProfileResultMap" parameterType="map">
+        select p.*,u.user_name,u.role from user u,profile p where u.user_id=#{userId} and u.user_id=p.user_id
+        and u.role in ('CORE','CONTRIBUTOR')
+        limit #{_startRowIndex}, #{_pageSize}
+    </select>
+
+	<insert id="addProfile" parameterType="com.techmask.ressack.usermanager.domain.User">
+        insert into profile(user_id) values( #{userId})
+    </insert>
+
+	<update id="updateProfile" >
+        <![CDATA[
+        update profile
+        set job_title=#{jobTitle},
+        company_name=#{companyName},
+        description=#{desc}
+        where profile_id=#{id} and user_id=#{userId}
+        ]]>
+    </update>
+    
+    
+
+    
+</mapper> 

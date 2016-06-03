@@ -200,6 +200,37 @@ public class ResourceController extends BaseController {
 		return resultMap;
 
 	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/user/{ownerId}/{filterType}/{pageNo}")
+	public Map<String, Object> loadAllUserResource(HttpServletRequest request, 
+			@PathVariable("ownerId") String ownerId,
+			@PathVariable("filterType") String filterType,
+			@PathVariable("pageNo") String pageNo) {
+
+		Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
+		Map<String, Object> requestMap = new LinkedHashMap<String, Object>();
+		
+		requestMap.put("filterType", filterType);
+		requestMap.put("ownerId", ownerId);
+		requestMap.put("pageNo", pageNo);
+		
+		UserSession userSession = UserSessionManager.getInstance().getUserSession(request);
+		requestMap.put("userId", userSession.getUserId());
+
+		try {
+			
+			List<Resource> resources = resourceService
+					.loadAllUserResource(requestMap);
+			resultMap.put("resources", resources);
+
+		} catch (ValidationException ve) {
+			return this.handleValidationExcpetion(ve, resultMap);
+		} catch (Exception e) {
+			return this.handleException(e, resultMap);
+		}
+
+		return resultMap;
+	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/{category}/{subCategory}/{pageNo}")
 	public Map<String, Object> loadAllResource(HttpServletRequest request, 
@@ -235,33 +266,5 @@ public class ResourceController extends BaseController {
 
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/flag/{flagType}/{pageNo}")
-	public Map<String, Object> loadAllResourceByFlag(HttpServletRequest request, 
-			@PathVariable("flagType") String flagType,
-			@PathVariable("pageNo") String pageNo) {
-
-		Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
-		Map<String, Object> requestMap = new LinkedHashMap<String, Object>();
-		
-		requestMap.put("flagType", flagType);
-		requestMap.put("pageNo", pageNo);
-		
-		UserSession userSession = UserSessionManager.getInstance().getUserSession(request);
-		requestMap.put("userId", userSession.getUserId());
-
-		try {
-
-			List<Resource> resources = resourceService
-					.loadAllResource(requestMap);
-			resultMap.put("resources", resources);
-
-		} catch (ValidationException ve) {
-			return this.handleValidationExcpetion(ve, resultMap);
-		} catch (Exception e) {
-			return this.handleException(e, resultMap);
-		}
-
-		return resultMap;
-
-	}
+	
 }
