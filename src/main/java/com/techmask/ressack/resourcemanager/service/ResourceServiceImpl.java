@@ -37,6 +37,18 @@ public class ResourceServiceImpl implements ResourceService {
 	public Resource loadResourceById(String resourceId) {
 		return resourceRepository.loadResourceById(resourceId);
 	}
+	
+	@Override
+	public Resource loadResourceById(String resourceId,String userId) {
+		Resource resource =  resourceRepository.loadResourceById(resourceId);
+		Map<String,Object> requestMap = new HashMap<String,Object>();
+		requestMap.put("userId", userId);
+		
+		ResouceLoadProcessor rlp = new ResouceLoadProcessor(requestMap, appConfiguration);
+		rlp.postProcessResource(resource);
+		
+		return resource;
+	}
 
 	@Override
 	public Map<String, Object> addResource(Map<String, Object> resourceMap) {

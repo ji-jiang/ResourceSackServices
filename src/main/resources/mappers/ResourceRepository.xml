@@ -85,7 +85,8 @@
 
     
     <select id="loadResourceById" parameterType="string" resultMap="ResourceResultMap">
-        select * from resource where resource_id=#{resourceId}
+        select r.*,s.view_count,s.like_count,s.bookmark_count,s.download_count,u.user_name owner_name from resource r,user u,statistics s 
+        where r.status='VALID' and r.resource_id=s.ref_id and r.owner_id=u.user_id and resource_id=#{resourceId}
     </select>
 
 	<update id="setImageInd" parameterType="string">

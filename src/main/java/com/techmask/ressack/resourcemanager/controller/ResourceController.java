@@ -169,6 +169,28 @@ public class ResourceController extends BaseController {
 
 
 	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/{resourceId}")
+	public Map<String, Object> loadResourceDetail(HttpServletRequest request, 
+			@PathVariable("resourceId") String resourceId) {
+
+		Map<String, Object> resultMap = new LinkedHashMap<String, Object>();	
+	
+		UserSession userSession = UserSessionManager.getInstance().getUserSession(request);
+
+		try {
+			Resource resource = resourceService.loadResourceById(resourceId, userSession.getUserId());
+			resultMap.put("resource", resource);
+
+		} catch (ValidationException ve) {
+			return this.handleValidationExcpetion(ve, resultMap);
+		} catch (Exception e) {
+			return this.handleException(e, resultMap);
+		}
+
+		return resultMap;
+
+	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/search/{keywords}/{pageNo}")
 	public Map<String, Object> loadAllResourceByKeywords(HttpServletRequest request, 
