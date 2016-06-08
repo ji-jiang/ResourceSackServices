@@ -15,6 +15,6 @@ public interface UserService {
     public List<User> loadAllUser();
     public User loadUserByOAtuth(User user);
     public User loadUserByAccessTokenAndOauthType(String tokenKey,String oauthType);
-    public void updateUserName(Map<String,Object> userMap);
+    public void updateUserNameAndEmail(Map<String,Object> userMap);
 
 }

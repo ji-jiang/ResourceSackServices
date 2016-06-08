@@ -65,7 +65,11 @@
     </select>
     
 	<insert id="addResource" parameterType="map">
-        insert into resource(title,description,category,sub_category,tags,status,orig_url,download_url,download_password,download_times,payment_type,payment_amount,owner_id,created_by,updated_by)values(#{title},#{desc},#{category},#{subCategory},#{tags},'VALID',#{origUrl},#{downloadUrl},#{downloadPassword},0,'NA',null,#{userId},#{userName},#{userName})
+        insert into resource(
+           type,title,description,category,sub_category,tags,status,orig_url,
+           download_url,download_password,download_times,payment_type,payment_amount,owner_id,created_by,updated_by)
+           values(#{type},#{title},#{desc},#{category},#{subCategory},#{tags},'VALID',#{origUrl},
+           #{downloadUrl},#{downloadPassword},0,'NA',null,#{userId},#{userName},#{userName})
     </insert>
     
     <update id="updateResource" parameterType="map">

@@ -5,5 +5,6 @@ public interface UserSessionIds {
 	public static final String USER_ID = "_userId";
 	public static final String USER_NAME = "_userName";
 	public static final String USER_ROLE = "_userRole";
+	public static final String USER_EMAIL = "_userEmail";
 
 }

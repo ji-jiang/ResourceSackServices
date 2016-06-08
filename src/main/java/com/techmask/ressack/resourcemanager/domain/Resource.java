@@ -35,5 +35,6 @@ public @Data class Resource {
 	private Integer likeCount;
 	private Integer bookmarkCount;
 	private Integer downloadCount;
+	private String type;
 
 }

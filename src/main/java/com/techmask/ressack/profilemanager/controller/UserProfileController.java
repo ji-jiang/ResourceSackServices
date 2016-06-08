@@ -34,10 +34,11 @@ public class UserProfileController extends BaseController{
 			) {
 
 		Map<String, Object> resultMap = new LinkedHashMap<String, Object>();	
+		UserSession userSession = UserSessionManager.getInstance().getUserSession(request);
 
 		try {
 
-			Profile profile = profileService.loadProfileByUserId(userId);
+			Profile profile = profileService.loadProfileByUserId(userSession.getUserId(), userId);
 			resultMap.put("profile", profile);
 
 		} catch (ValidationException ve) {
@@ -63,6 +64,7 @@ public class UserProfileController extends BaseController{
 			profileMap.put("userId", userSession.getUserId());
 			profileMap.put("userRole", userSession.getUserRole());
 			profileMap.put("origUserName", userSession.getUserName());
+			profileMap.put("origUserEmail", userSession.getUserEmail());
 			
 			profileService.updateProfile(profileMap);
 

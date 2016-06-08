@@ -9,6 +9,7 @@ public interface UserSession {
     public String getUserId();
     public String getUserName();
     public String getUserRole();
+    public String getUserEmail();
     public boolean has(String key);
     public Object get(String key);
     public Iterator<String> getKeyNames();

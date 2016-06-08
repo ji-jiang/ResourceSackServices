@@ -16,6 +16,7 @@ import com.techmask.ressack.core.error.ValidationException;
 import com.techmask.ressack.core.security.UserRole;
 import com.techmask.ressack.core.utils.NumberUtils;
 import com.techmask.ressack.core.utils.ValidateUtils;
+import com.techmask.ressack.resourcemanager.busobjs.ResourceType;
 import com.techmask.ressack.resourcemanager.domain.Resource;
 import com.techmask.ressack.resourcemanager.repository.ResourceRepository;
 import com.techmask.ressack.statisticsmanager.service.StatisticsService;
@@ -97,6 +98,10 @@ public class ResourceServiceImpl implements ResourceService {
 		String downloadUrl = (String) resourceMap.get("downloadUrl");
 		String downloadPassword = (String) resourceMap.get("downloadPassword");
 		String tags = (String) resourceMap.get("tags");
+		String type = (String)resourceMap.get("type");
+		
+		//check and set resource type based the enum types
+		resourceMap.put("type", ResourceType.getInstance(type).name());
 
 		ValidateUtils.validateField(errorMsg, "title", title, true, 50);
 		ValidateUtils.validateField(errorMsg, "category", category, true, 20);
@@ -106,6 +111,8 @@ public class ResourceServiceImpl implements ResourceService {
 		ValidateUtils.validateField(errorMsg, "downloadUrl", downloadUrl, false, 100);
 		ValidateUtils.validateField(errorMsg, "downloadPassword", downloadPassword, false, 100);
 		ValidateUtils.validateField(errorMsg, "tags", tags, false, 100);
+		
+		
 
 		if (errorMsg.length() > 0) {
 			throw new ValidationException(errorMsg.toString());

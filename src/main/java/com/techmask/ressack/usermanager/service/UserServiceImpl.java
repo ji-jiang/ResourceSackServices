@@ -81,8 +81,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void updateUserName(Map<String, Object> userMap) {
-		userRepository.updateUserName(userMap);
+	public void updateUserNameAndEmail(Map<String, Object> userMap) {
+		userRepository.updateUserNameAndEmail(userMap);
 	}
 
 }

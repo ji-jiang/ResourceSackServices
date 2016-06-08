@@ -35,6 +35,7 @@ public abstract class BaseUserSession implements UserSession {
     		set(UserSessionIds.USER_ID, user.getId());
             set(UserSessionIds.USER_NAME, user.getUserName());
             set(UserSessionIds.USER_ROLE,user.getRole());
+            set(UserSessionIds.USER_EMAIL,user.getEmail());
     	}
         
     }
@@ -50,9 +51,14 @@ public abstract class BaseUserSession implements UserSession {
     }  
     
     public String getUserRole() {
-        String userId = (String)get(UserSessionIds.USER_ROLE);   
-        return userId;
+        String userRole = (String)get(UserSessionIds.USER_ROLE);   
+        return userRole;
     }
+    
+    public String getUserEmail() { 
+        String userEmail = (String)get(UserSessionIds.USER_EMAIL);    
+        return userEmail;
+    } 
 
     public long getCreationTime() {        
         return creationTime;
