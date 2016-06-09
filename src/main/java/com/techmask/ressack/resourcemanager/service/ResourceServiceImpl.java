@@ -176,6 +176,11 @@ public class ResourceServiceImpl implements ResourceService {
 		if (StringUtils.isBlank(category)) {
 			category = "ALL";
 			requestMap.put("category", category);
+			
+		}
+		
+		if(!category.equalsIgnoreCase("C")){
+			requestMap.put("resourceType", "R");
 		}
 		if (StringUtils.isBlank(subCategory)) {
 			subCategory = "ALL";

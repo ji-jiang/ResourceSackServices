@@ -61,6 +61,9 @@
     	 <if test="resourceOwnerId!= null">
             and r.owner_id=#{resourceOwnerId}
        	 </if>
+       	 <if test="resourceType!= null">
+            and r.type=#{resourceType}
+       	 </if>
     	 and r.resource_id=s.ref_id and r.owner_id=u.user_id order by weight desc, created_date desc limit #{_startRowIndex}, #{_pageSize}
     </select>
     
