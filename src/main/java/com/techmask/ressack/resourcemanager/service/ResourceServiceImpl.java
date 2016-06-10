@@ -205,8 +205,13 @@ public class ResourceServiceImpl implements ResourceService {
 		String ownerId = (String) requestMap.get("ownerId");
 
 		
-		if(filterType.equalsIgnoreCase("own")){
+		if(filterType.equalsIgnoreCase("ownResource")){
 			requestMap.put("resourceOwnerId", ownerId);
+			requestMap.put("resourceType", ResourceType.R.name());
+			
+		}else if(filterType.equalsIgnoreCase("ownCraft")){
+			requestMap.put("resourceOwnerId", ownerId);
+			requestMap.put("resourceType", ResourceType.C.name());
 		}else{
 			requestMap.put("flagType", filterType);
 		}
