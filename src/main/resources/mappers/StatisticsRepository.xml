@@ -21,6 +21,9 @@
        <if test="statisticsType eq 'D'.toString()">
           set download_count = download_count + #{changedCount} 
        </if>
+       <if test="statisticsType eq 'C'.toString()">
+          set comment_count = comment_count + #{changedCount} 
+       </if>
        where ref_id=#{refId}
     </update>
     

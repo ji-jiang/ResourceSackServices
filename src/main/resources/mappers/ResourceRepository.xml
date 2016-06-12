@@ -20,6 +20,7 @@
         <result column="like_count" property="likeCount" />
         <result column="bookmark_count" property="bookmarkCount" />
         <result column="download_count" property="downloadCount" />
+        <result column="comment_count" property="commentCount" />
         <result column="created_date" property="createdDate" />
         <result column="updated_date" property="updatedDate" />
         <result column="created_by" property="createdBy" />
@@ -45,7 +46,8 @@
     </select>
 	
 	<select id="loadAllResource" parameterType="map" resultMap="ResourceResultMap">
-        select r.*,s.view_count,s.like_count,s.bookmark_count,s.download_count,u.user_name owner_name from resource r,user u,statistics s where r.status='VALID'
+        select r.*,s.view_count,s.like_count,s.bookmark_count,s.download_count,s.comment_count,u.user_name owner_name 
+        from resource r,user u,statistics s where r.status='VALID'
     	 <if test="category != null">
     	 	and (category=#{category} or 'ALL'=#{category})
     	 </if>

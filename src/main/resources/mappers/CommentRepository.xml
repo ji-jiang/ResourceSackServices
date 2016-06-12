@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.techmask.ressack.commentmanager.repository.CommentRepository">
+     <resultMap id="CommentResultMap" type="com.techmask.ressack.commentmanager.domain.Comment">
+        <id column="comment_id" property="id" />        
+        <result column="owner_id" property="ownerId" />
+        <result column="ref_id" property="refId" />
+      	<result column="parent_id" property="parentId" />
+        <result column="created_date" property="createdDate" />
+		<result column="owner_name" property="ownerName" />
+		<result column="ref_title" property="refTitle" />
+    </resultMap>
+
+	<insert id="addComment" parameterType="map">
+        insert into comment(comment,rating,owner_id,ref_id,parent_id ) 
+        values(#{comment},#{rating},#{userId},#{refId},#{parentId})
+    </insert>
+    
+    <insert id="deleteComment" parameterType="map">
+        delete from comment where comment_id=${commentId} and owner_id=${userId}
+    </insert>
+
+	<select id="loadAllCommentByRefId" parameterType="string" resultMap="CommentResultMap">
+        <![CDATA[
+        select c.*,u.user_name owner_name,r.title ref_title from comment c,resource r,user u 
+        where c.ref_id=r.resource_id and c.owner_id=u.user_id and ref_id=#{refId}
+        ]]>
+    </select>
+
+    
+</mapper> 
