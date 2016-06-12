@@ -9,7 +9,9 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix="app")
 public class AppConfiguration {
 	private String env;
-	private int maxResouceAddCount;
+	private int maxResouceAddCount=3;
+	private int maxContributorResouceAddCount=10;
+	private int maxCoreResouceAddCount=20;
 	private int maxFeedbackAddCount;
 	private String resourceImageUploadPath;
 	private boolean useCloudStorage;
@@ -64,6 +66,22 @@ public class AppConfiguration {
 
 	public void setCloudStorageImgUploadPath(String cloudStorageImgUploadPath) {
 		this.cloudStorageImgUploadPath = cloudStorageImgUploadPath;
+	}
+
+	public int getMaxContributorResouceAddCount() {
+		return maxContributorResouceAddCount;
+	}
+
+	public void setMaxContributorResouceAddCount(int maxContributorResouceAddCount) {
+		this.maxContributorResouceAddCount = maxContributorResouceAddCount;
+	}
+
+	public int getMaxCoreResouceAddCount() {
+		return maxCoreResouceAddCount;
+	}
+
+	public void setMaxCoreResouceAddCount(int maxCoreResouceAddCount) {
+		this.maxCoreResouceAddCount = maxCoreResouceAddCount;
 	}
 
 	

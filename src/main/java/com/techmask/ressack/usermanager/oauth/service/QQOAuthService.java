@@ -3,13 +3,17 @@ package com.techmask.ressack.usermanager.oauth.service;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.scribe.builder.api.DefaultApi20;
-import org.scribe.model.*;
+import org.scribe.model.OAuthConfig;
+import org.scribe.model.OAuthRequest;
+import org.scribe.model.Response;
+import org.scribe.model.Token;
+import org.scribe.model.Verb;
 import org.scribe.oauth.OAuth20ServiceImpl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONPath;
+import com.techmask.ressack.core.security.UserRole;
 import com.techmask.ressack.usermanager.domain.User;
-import com.techmask.ressack.usermanager.domain.UserRole;
 import com.techmask.ressack.usermanager.oauth.config.OAuthTypes;
 
 public class QQOAuthService extends OAuth20ServiceImpl implements CustomOAuthService {
@@ -66,7 +70,7 @@ public class QQOAuthService extends OAuth20ServiceImpl implements CustomOAuthSer
 		user.setUserName(JSONPath.eval(userInfo, "$.nickname").toString());
 		user.setHeadImgUrl(JSONPath.eval(userInfo, "$.figureurl").toString());
 		
-		user.setRole(UserRole.USER.toString());
+		user.setRole(UserRole.USER.name());
 		return user;
 	}
 

@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.techmask.ressack.core.security.UserRole;
 import com.techmask.ressack.usermanager.domain.User;
-import com.techmask.ressack.usermanager.domain.UserRole;
 import com.techmask.ressack.usermanager.repository.UserRepository;
 import com.techmask.ressack.usermanager.service.UserService;
 
@@ -70,9 +70,7 @@ public class UserController {
 	@RequestMapping(method = RequestMethod.POST)
 	public Map<String, Object> addUser(@RequestBody Map<String, Object> userMap) {
 		User user = new User();
-
-
-		user.setRole(UserRole.valueOf((String)userMap.get("role")).name());
+		user.setRole(UserRole.getInstance((String)userMap.get("role")).name());
 		
 		userService.addUser(user);
 

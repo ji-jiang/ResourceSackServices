@@ -55,6 +55,7 @@ public class ResourceController extends BaseController {
 			
 			resourceMap.put("userId", userSession.getUserId());
 			resourceMap.put("userName", userSession.getUserName());
+			resourceMap.put("userRole", userSession.getUserRole());
 			
 			resourceMap = resourceService.addResource(resourceMap);
 

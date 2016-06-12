@@ -83,6 +83,7 @@ public class ResourceServiceImpl implements ResourceService {
 	protected void validateAddOrUpdateResource(Map<String, Object> resourceMap, boolean isAddResource) {
 
 		String userId = (String) resourceMap.get("userId");
+
 		UserRole userRole = UserRole.getInstance((String) resourceMap.get("userRole"));
 		if (StringUtils.isBlank(userId)) {
 			throw new AppException(AppException.PERMISSION_DENIED_ERROR);
@@ -133,8 +134,17 @@ public class ResourceServiceImpl implements ResourceService {
 
 		if(isAddResource){
 			int newCreatedCount = resourceRepository.getNewCreatedCount(resourceMap);
-			int maxResouceAddCount = appConfiguration.getMaxResouceAddCount();
-			int remainAddCount = maxResouceAddCount - newCreatedCount - 1;
+
+			int maxResourceAddCount = 0;
+			if(userRole.isCore()){
+				maxResourceAddCount = appConfiguration.getMaxCoreResouceAddCount();
+			}else if(userRole.isContributor()){
+				maxResourceAddCount = appConfiguration.getMaxContributorResouceAddCount();
+			}else if(userRole.isUser()){
+				maxResourceAddCount = appConfiguration.getMaxResouceAddCount();
+			}
+			
+			int remainAddCount = maxResourceAddCount - newCreatedCount - 1;
 
 
 			if (remainAddCount < 0) {
