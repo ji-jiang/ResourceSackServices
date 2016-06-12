@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.techmask.ressack.core.busobjs.BooleanFlag;
 import com.techmask.ressack.core.busobjs.ResultCode;
 import com.techmask.ressack.core.controller.BaseController;
 import com.techmask.ressack.core.error.ValidationException;
@@ -92,8 +93,8 @@ public class OAuthController extends BaseController {
 			String tokenKey = accessToken.getToken();
 			User user = null;
 			user = userService.loadUserByAccessTokenAndOauthType(tokenKey, type);
-
-			if (user == null) {
+			
+			if (user == null || BooleanFlag.getInstance(user.getReloadInd()).booleanValue()) {
 				User userAuthInfo = oAuthService.getOAuthUser(accessToken);
 				user = userService.loadUserByOAtuth(userAuthInfo);
 				userAuthInfo.setLastLoginDate(new Date());
@@ -103,6 +104,9 @@ public class OAuthController extends BaseController {
 					// refresh token
 					user.setTokenKey(tokenKey);
 					user.setLastLoginDate(new Date());
+					user.setHeadImgUrl(userAuthInfo.getHeadImgUrl());
+					user.setReloadInd("N");
+					
 					user = userService.updateUser(user);
 				}
 			} else {

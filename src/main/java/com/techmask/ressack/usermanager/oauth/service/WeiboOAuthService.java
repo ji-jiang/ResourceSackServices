@@ -68,7 +68,7 @@ public class WeiboOAuthService extends OAuth20ServiceImpl implements CustomOAuth
 		Object userInfo = JSON.parse(userInfoResponse.getBody());
 		user.setOauthName(JSONPath.eval(userInfo, "$.screen_name").toString());
 		user.setUserName(JSONPath.eval(userInfo, "$.screen_name").toString());
-		user.setHeadImgUrl(JSONPath.eval(userInfo, "$.profile_image_url").toString());
+		user.setHeadImgUrl(JSONPath.eval(userInfo, "$.avatar_large").toString());
 
 		user.setRole(UserRole.USER.name());
 		return user;

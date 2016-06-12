@@ -26,11 +26,13 @@ public @Data class Resource {
 	private String updatedBy;
 	private Integer ownerId;
 	private String ownerName;
+	private String ownerAvatarUrl;
 	private Integer weight;
 	private String imageInd;
 	private String imageVersion;
 	private String imageUrl;
 	private String imageSmUrl;
+	
 	private Integer viewCount;
 	private Integer likeCount;
 	private Integer bookmarkCount;

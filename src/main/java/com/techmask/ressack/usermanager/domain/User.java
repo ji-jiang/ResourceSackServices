@@ -24,5 +24,6 @@ public @Data class User extends BaseUser {
 	private String oauthName;
 	private String headImgUrl;
 	private Date lastLoginDate;
+	private String reloadInd;
 
 }

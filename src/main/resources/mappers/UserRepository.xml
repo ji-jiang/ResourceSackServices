@@ -13,6 +13,7 @@
         <result column="oauth_name" property="oauthName" />
         <result column="head_img_url" property="headImgUrl" />
         <result column="last_login_date" property="lastLoginDate" />
+        <result column="reload_ind" property="reloadInd" />
     </resultMap>
 
 	<select id="loadAllUser" resultMap="UserResultMap">
@@ -32,7 +33,7 @@
     </select>
     
     <update id="updateUser" parameterType="com.techmask.ressack.usermanager.domain.User">
-       update user set token_key=#{tokenKey},last_login_date=#{lastLoginDate} where user_id=#{id}
+       update user set token_key=#{tokenKey},last_login_date=#{lastLoginDate},head_img_url=#{headImgUrl} where user_id=#{id}
     </update>
 
 	<update id="invalidateUser" parameterType="string">

@@ -40,6 +40,7 @@ public class GitHubOAuthService extends OAuth20ServiceImpl implements CustomOAut
 		user.setOauthId(JSONPath.eval(result, "$.id").toString());
 		user.setOauthName(JSONPath.eval(result, "$.login").toString());
 		user.setUserName(JSONPath.eval(result, "$.login").toString());
+		user.setHeadImgUrl(JSONPath.eval(result, "$.avatar_url").toString());
 		user.setTokenKey(accessToken.getToken());
 		user.setRole(UserRole.USER.name());
 		

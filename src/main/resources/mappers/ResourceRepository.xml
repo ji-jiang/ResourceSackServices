@@ -13,6 +13,7 @@
         <result column="payment_amount" property="paymentAmount" />
         <result column="owner_id" property="ownerId" />
         <result column="owner_name" property="ownerName" />
+        <result column="owner_avatar_url" property="ownerAvatarUrl" />
         <result column="image_ind" property="imageInd" />
         <result column="image_version" property="imageVersion" />
         <result column="sub_category" property="subCategory" />
@@ -46,7 +47,8 @@
     </select>
 	
 	<select id="loadAllResource" parameterType="map" resultMap="ResourceResultMap">
-        select r.*,s.view_count,s.like_count,s.bookmark_count,s.download_count,s.comment_count,u.user_name owner_name 
+        select r.*,s.view_count,s.like_count,s.bookmark_count,
+        s.download_count,s.comment_count,u.user_name owner_name,u.head_img_url owner_avatar_url 
         from resource r,user u,statistics s where r.status='VALID'
     	 <if test="category != null">
     	 	and (category=#{category} or 'ALL'=#{category})

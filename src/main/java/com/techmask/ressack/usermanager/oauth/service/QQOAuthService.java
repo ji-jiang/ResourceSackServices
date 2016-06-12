@@ -64,11 +64,18 @@ public class QQOAuthService extends OAuth20ServiceImpl implements CustomOAuthSer
 		if(logger.isDebugEnabled()){
 			logger.debug("qq get userInfoResponse response is: "+userInfoResponse.getBody());
 		}
+
 		Object userInfo = JSON.parse(userInfoResponse.getBody());
 		
 		user.setOauthName(JSONPath.eval(userInfo, "$.nickname").toString());
 		user.setUserName(JSONPath.eval(userInfo, "$.nickname").toString());
-		user.setHeadImgUrl(JSONPath.eval(userInfo, "$.figureurl").toString());
+		
+		String figureurl = JSONPath.eval(userInfo, "$.figureurl_qq_1").toString();
+		Object figureurl2 = JSONPath.eval(userInfo, "$.figureurl_qq_2");
+		if(figureurl2!=null){
+			figureurl = figureurl2.toString();
+		}
+		user.setHeadImgUrl(figureurl);
 		
 		user.setRole(UserRole.USER.name());
 		return user;
