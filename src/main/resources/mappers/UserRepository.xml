@@ -40,7 +40,7 @@
 		update user set
 		token_key=#{tokenKey},last_login_date=#{lastLoginDate},head_img_url=#{headImgUrl}
 
-		<if test="reloadInd null">
+		<if test="reloadInd!=null">
 			,reload_ind=#{reloadInd}
 		</if>
 		where user_id=#{id}
