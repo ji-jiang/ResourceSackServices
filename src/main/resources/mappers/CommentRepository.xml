@@ -9,6 +9,7 @@
       	<result column="parent_id" property="parentId" />
         <result column="created_date" property="createdDate" />
 		<result column="owner_name" property="ownerName" />
+		<result column="owner_avatar_url" property="ownerAvatarUrl" />
 		<result column="ref_title" property="refTitle" />
     </resultMap>
 
@@ -23,14 +24,14 @@
 
 	<select id="loadAllCommentByRefId" parameterType="string" resultMap="CommentResultMap">
         <![CDATA[
-        select c.*,u.user_name owner_name,r.title ref_title from comment c,resource r,user u 
+        select c.*,u.user_name owner_name,u.head_img_url owner_avatar_url ,r.title ref_title from comment c,resource r,user u 
         where c.ref_id=r.resource_id and c.owner_id=u.user_id and ref_id=#{refId}
         ]]>
     </select>
     
     <select id="loadLatestAddedComment" parameterType="map" resultMap="CommentResultMap">
         <![CDATA[
-        select c.*,u.user_name owner_name,r.title ref_title from comment c,resource r,user u 
+        select c.*,u.user_name owner_name,u.head_img_url owner_avatar_url, r.title ref_title from comment c,resource r,user u 
         where c.ref_id=r.resource_id and c.owner_id=u.user_id and c.owner_id=#{userId} and comment_id=LAST_INSERT_ID()
         ]]>
     </select>

@@ -17,6 +17,7 @@ public @Data class Comment {
 	private String parentId;
 	private Date createdDate;
 	private String ownerName;
+	private String ownerAvatarUrl;
 	private String refTitle;
 	private List<Comment> childComments;
 }
