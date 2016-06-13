@@ -12,4 +12,5 @@ public interface CommentRepository {
 	List<Comment> loadAllCommentByRefId(String refId);
 	public int addComment(Map<String,Object> commentMap);
 	public int deleteComment(Map<String,Object> commentMap);
+	public Comment loadLatestAddedComment(Map<String,Object> commentMap);
 }

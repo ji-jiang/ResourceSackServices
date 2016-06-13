@@ -38,6 +38,8 @@ public @Data class Resource {
 	private Integer bookmarkCount;
 	private Integer downloadCount;
 	private Integer commentCount;
+	private Integer ratingCount;
+	private Double rating;
 	private String type;
 
 }

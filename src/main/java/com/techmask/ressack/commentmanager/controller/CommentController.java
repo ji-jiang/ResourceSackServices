@@ -37,8 +37,9 @@ public class CommentController extends BaseController {
 			UserSession userSession = UserSessionManager.getInstance().getUserSession(request);
 			commentMap.put("userId", userSession.getUserId());
 
-			commentService.addComment(commentMap);
+			Comment comment = commentService.addComment(commentMap);
 
+			resultMap.put("comment", comment);
 			resultMap.put(RESULT_CODE, "SUCCESS");
 
 		} catch (ValidationException ve) {

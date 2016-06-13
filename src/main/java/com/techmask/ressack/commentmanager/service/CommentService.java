@@ -8,6 +8,6 @@ import com.techmask.ressack.commentmanager.domain.Comment;
 
 public interface CommentService {
 	List<Comment> loadAllCommentByRefId(String refId);
-	public void addComment(Map<String,Object> commentMap);
+	public Comment addComment(Map<String,Object> commentMap);
 	public void deleteComment(Map<String,Object> commentMap);
 }

@@ -22,6 +22,7 @@
         <result column="bookmark_count" property="bookmarkCount" />
         <result column="download_count" property="downloadCount" />
         <result column="comment_count" property="commentCount" />
+        <result column="rating_count" property="ratingCount" />
         <result column="created_date" property="createdDate" />
         <result column="updated_date" property="updatedDate" />
         <result column="created_by" property="createdBy" />
@@ -47,7 +48,7 @@
     </select>
 	
 	<select id="loadAllResource" parameterType="map" resultMap="ResourceResultMap">
-        select r.*,s.view_count,s.like_count,s.bookmark_count,
+        select r.*,s.view_count,s.like_count,s.bookmark_count,s.rating_count,s.rating,
         s.download_count,s.comment_count,u.user_name owner_name,u.head_img_url owner_avatar_url 
         from resource r,user u,statistics s where r.status='VALID'
     	 <if test="category != null">

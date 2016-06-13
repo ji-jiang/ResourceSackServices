@@ -1,6 +1,7 @@
 package com.techmask.ressack.commentmanager.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,13 +33,23 @@ public class CommentServiceImpl implements CommentService{
 	}
 
 	@Override
-	public void addComment(Map<String, Object> commentMap) {
+	public Comment addComment(Map<String, Object> commentMap) {
 		vlaidateAddComment(commentMap);
 		commentRepository.addComment(commentMap);
+		Comment comment = commentRepository.loadLatestAddedComment(commentMap);
 		
 		commentMap.put("changedCount", 1);
+		
 		commentMap.put("statisticsType", "C");
+		if(comment.getRating()!=null && comment.getRating().intValue()>0){
+			commentMap.put("ratingInd" , "Y");
+			commentMap.put("rating",comment.getRating());
+		}
 		statisticsService.updateStatistics(commentMap);
+		
+		
+		
+		return comment;
 	}
 
 	@Override
@@ -72,6 +83,7 @@ public class CommentServiceImpl implements CommentService{
 			}
 			
 		}
+		Collections.reverse(resultComments);
 		return resultComments;
 	}
 	
