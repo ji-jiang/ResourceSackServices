@@ -261,8 +261,9 @@ public class ResourceController extends BaseController {
 			@PathVariable("category") String category,
 			@PathVariable("subCategory") String subCategory,
 			@PathVariable("pageNo") String pageNo,
-			@RequestParam("orderInd") String orderInd,
-			@RequestParam("resourceInd") String resourceInd) {
+			@RequestParam(value="orderInd", required=false) String orderInd,
+			@RequestParam(value="resourceInd", required=false) String resourceInd,
+			@RequestParam(value="periodInd", required=false) String periodInd) {
 
 		Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
 		Map<String, Object> requestMap = new LinkedHashMap<String, Object>();
@@ -273,13 +274,17 @@ public class ResourceController extends BaseController {
 		}
 		if(StringUtils.isBlank(resourceInd)){
 			resourceInd = "ALL";
-		}		
+		}
+		if(StringUtils.isBlank(periodInd)){
+			periodInd = "ALL";
+		}
 		
 		requestMap.put("category", category);
 		requestMap.put("subCategory", subCategory);
 		requestMap.put("pageNo", pageNo);
 		requestMap.put("orderInd", orderInd);
 		requestMap.put("resourceInd", resourceInd);
+		requestMap.put("periodInd", periodInd);
 		
 		UserSession userSession = UserSessionManager.getInstance().getUserSession(request);
 		

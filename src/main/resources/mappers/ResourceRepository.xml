@@ -71,10 +71,18 @@
        	 </if>
        	 <choose>
        	 	<when test="resourceInd eq 'DOWNLOAD'.toString()">
-       	 		r.download_url is not null	
+       	 		and r.download_url is not null	
        	 	</when>
        	 	<when test="resourceInd eq 'RECOMMEND'.toString()">
-       	 		r.download_url is null	
+       	 		and r.download_url is null	
+       	 	</when>
+       	 </choose>
+       	 <choose>
+       	 	<when test="periodInd eq 'WEEK'.toString()">
+       	 		and r.created_date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+       	 	</when>
+       	 	<when test="periodInd eq 'MONTH'.toString()">
+       	 		and r.created_date >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
        	 	</when>
        	 </choose>
        	
