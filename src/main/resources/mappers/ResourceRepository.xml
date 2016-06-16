@@ -58,7 +58,7 @@
     	 	and (sub_category=#{subCategory} or 'ALL'=#{subCategory})
     	 </if>
     	 <if test="keywords!= null">
-    	 	and ('ALL'=#{keywords} or MATCH (r.title) AGAINST(#{keywords}))
+    	 	and ('ALL'=#{keywords} or r.title like CONCAT('%',#{keywords},'%') or r.tags like CONCAT('%',#{keywords},'%') )
     	 </if>
     	 <if test="flagType!= null">
     	 	and exists( select 1 from flag where owner_id=#{ownerId} and flag_type=#{flagType} and ref_id=r.resource_id)
