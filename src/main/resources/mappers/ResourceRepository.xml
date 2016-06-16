@@ -69,7 +69,35 @@
        	 <if test="resourceType!= null">
             and r.type=#{resourceType}
        	 </if>
-    	 and r.resource_id=s.ref_id and r.owner_id=u.user_id order by weight desc, created_date desc limit #{_startRowIndex}, #{_pageSize}
+       	 <choose>
+       	 	<when test="resourceInd eq 'DOWNLOAD'.toString()">
+       	 		r.download_url is not null	
+       	 	</when>
+       	 	<when test="resourceInd eq 'RECOMMEND'.toString()">
+       	 		r.download_url is null	
+       	 	</when>
+       	 </choose>
+       	
+    	 and r.resource_id=s.ref_id and r.owner_id=u.user_id 
+    	 order by weight desc, 
+       	 <choose>
+       	 	<when test="orderInd eq 'LATEST'.toString()">
+       	 		r.created_date desc	
+       	 	</when>
+       	 	<when test="orderInd eq 'DOWNLOAD'.toString()">
+       	 		s.download_count desc	
+       	 	</when>
+       	 	<when test="orderInd eq 'RATING'.toString()">
+       	 		s.rating desc	
+       	 	</when>
+       	 	<when test="orderInd eq 'POPULAR'.toString()">
+       	 		(s.like_count+s.bookmark_count+s.comment_count) desc	
+       	 	</when>
+       	 	<otherwise>
+                r.created_date desc
+            </otherwise>
+       	 </choose>
+    	 limit #{_startRowIndex}, #{_pageSize}
     </select>
     
 	<insert id="addResource" parameterType="map">

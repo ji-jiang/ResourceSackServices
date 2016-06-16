@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.imgscalr.Scalr;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -259,14 +260,26 @@ public class ResourceController extends BaseController {
 	public Map<String, Object> loadAllResource(HttpServletRequest request, 
 			@PathVariable("category") String category,
 			@PathVariable("subCategory") String subCategory,
-			@PathVariable("pageNo") String pageNo) {
+			@PathVariable("pageNo") String pageNo,
+			@RequestParam("orderInd") String orderInd,
+			@RequestParam("resourceInd") String resourceInd) {
 
 		Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
 		Map<String, Object> requestMap = new LinkedHashMap<String, Object>();
 		
+		
+		if(StringUtils.isBlank(orderInd)){
+			orderInd = "LATEST";
+		}
+		if(StringUtils.isBlank(resourceInd)){
+			resourceInd = "ALL";
+		}		
+		
 		requestMap.put("category", category);
 		requestMap.put("subCategory", subCategory);
 		requestMap.put("pageNo", pageNo);
+		requestMap.put("orderInd", orderInd);
+		requestMap.put("resourceInd", resourceInd);
 		
 		UserSession userSession = UserSessionManager.getInstance().getUserSession(request);
 		
