@@ -14,4 +14,5 @@ public @Data class Profile {
 	private String role;
 	private String userName;
 	private String email;
+	private String headImgUrl;
 }

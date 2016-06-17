@@ -9,15 +9,16 @@
         <result column="company_name" property="companyName" />
         <result column="description" property="desc" />
 		<result column="user_name" property="userName" />
-		<result column="email" property="email" />				
+		<result column="email" property="email" />		
+		<result column="head_img_url" property="headImgUrl" />		
     </resultMap>
     
     <select id="loadProfileByUserId" resultMap="ProfileResultMap" parameterType="string">
-        select p.*,u.user_name,u.role,u.email from user u,profile p where u.user_id=#{userId} and u.user_id=p.user_id
+        select p.*,u.user_name,u.role,u.email,u.head_img_url from user u,profile p where u.user_id=#{userId} and u.user_id=p.user_id
     </select>
     
     <select id="loadAllContributorProfile" resultMap="ProfileResultMap" parameterType="map">
-        select p.*,u.user_name,u.role from user u,profile p where u.user_id=#{userId} and u.user_id=p.user_id
+        select p.*,u.user_name,u.role,u.head_img_url from user u,profile p where u.user_id=#{userId} and u.user_id=p.user_id
         and u.role in ('CORE','CONTRIBUTOR')
         limit #{_startRowIndex}, #{_pageSize}
     </select>
