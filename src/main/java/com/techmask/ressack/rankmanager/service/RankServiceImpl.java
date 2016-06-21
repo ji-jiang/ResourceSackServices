@@ -1,6 +1,5 @@
 package com.techmask.ressack.rankmanager.service;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,7 +43,7 @@ public class RankServiceImpl implements RankService{
 	}
 
 	@Override
-	@Scheduled(fixedRate=10000)
+	@Scheduled(cron="0 0/60 * * * ?")
 	public void processRankCalculate() {
 		Map<String, Object> requestMap = new HashMap<String, Object>();
 		requestMap.put("yearWeek",0);

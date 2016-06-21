@@ -24,7 +24,7 @@ public class AccountServiceImpl implements AccountService{
 	}
 
 	@Override
-	@Scheduled(fixedRate=20000)
+	@Scheduled(cron="0 55 23 * * SUN")
 	public void processAccountCalculate() {
 		Map<String,Object> requestMap = new HashMap<String,Object>();
 		requestMap.put("yearWeek",0);
