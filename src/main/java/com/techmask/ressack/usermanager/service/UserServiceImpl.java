@@ -8,6 +8,7 @@ import org.eclipse.jetty.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.techmask.ressack.accountmanager.service.AccountService;
 import com.techmask.ressack.core.security.UserRole;
 import com.techmask.ressack.profilemanager.service.ProfileService;
 import com.techmask.ressack.usermanager.domain.User;
@@ -20,6 +21,8 @@ public class UserServiceImpl implements UserService {
 	private UserRepository userRepository;
 	@Autowired
 	private ProfileService profileService;
+	@Autowired
+	private AccountService accountService;
 
 	@Override
 	public User loadUserById(String userId) {
@@ -39,6 +42,7 @@ public class UserServiceImpl implements UserService {
 
 		userRepository.addUser(user);
 		profileService.addProfile(user);
+		accountService.addAccount(user);
 
 		return user;
 	}
@@ -56,9 +60,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<User> loadAllUser() {
-
-		System.out.println(userRepository.loadAllUser());
-
 		return userRepository.loadAllUser();
 	}
 

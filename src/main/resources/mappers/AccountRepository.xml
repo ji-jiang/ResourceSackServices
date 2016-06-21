@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.techmask.ressack.accountmanager.repository.AccountRepository">
+   
+
+	<insert id="addAccount" parameterType="com.techmask.ressack.usermanager.domain.User">
+        insert into account(user_id) select user_id from user where token_key=#{tokenKey} and oauth_id=#{oauthId}
+    </insert>
+    
+    <insert id="addWithdrawRequest" parameterType="map">
+        insert into withdraw_request(user_id,account_id,apply_amount,status,updated_by) values(#{userId},#{accountId},#{applyAmount},#{status},#{userName})
+    </insert>
+
+    <update id="processAccountCalculate" parameterType="map">
+        { CALL sp_process_account(#{yearWeek}) }
+    </update>
+        
+    <select id="getPendingWithdrawRequestCount" resultType="int" parameterType="map" >
+        SELECT count(*) from withdraw_request where user_id=#{userId} and status='PENDING'
+    </select>
+</mapper> 

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.techmask.ressack.rankmanager.repository.RankRepository">
+   <resultMap id="RankResultMap" type="com.techmask.ressack.rankmanager.domain.Rank">        
+        <result column="user_id" property="userId" />
+        <result column="user_name" property="userName" />
+        <result column="head_img_url" property="headImgUrl" />
+        <result column="resource_count" property="resourceCount" />
+        <result column="craft_count" property="craftCount" />
+        <result column="comment_count" property="commentCount" />
+        <result column="like_count" property="likeCount" />
+        <result column="download_count" property="downloadCount" />
+        <result column="total_score" property="totalScore" />
+    </resultMap>
+
+	<update id="processRankCalculate" parameterType="map">
+        { CALL sp_process_rank(#{yearWeek}) }
+    </update>
+    
+    <select id="loadAllRankByYearWeek" resultMap="RankResultMap" parameterType="map">
+        select r.*,u.user_name,u.head_img_url from rank r,user u where r.user_id=u.user_id 
+        <choose>
+       	 	<when test="yearWeekInd eq 'LASTWEEK'.toString()">
+       	 		and r.year_week= yearweek(DATE_SUB(CURDATE(), INTERVAL 7 DAY))
+       	 	</when>
+       	 	<when test="resourceInd eq 'THISWEEK'.toString()">
+       	 		and r.year_week= yearweek(CURDATE())
+       	 	</when>
+       	 </choose>
+    </select>
+    
+    <select id="loadAllRank" resultMap="RankResultMap" parameterType="map">
+        select u.user_id, u.user_name,u.head_img_url, sum(r.resource_count) resource_count, sum(r.craft_count) craft_count,sum(comment_count) comment_count, sum(like_count) like_count,sum(download_count) download_count,sum(total_score) total_score 
+			from rank r, user u
+			where r.user_id=u.user_id
+			group by u.user_id
+    </select>
+
+    
+</mapper> 
