@@ -11,6 +11,7 @@ public @Data class Rank {
 	private String rankId;	
 	private String userId;
 	private String userName;
+	private String role;
 	private String headImgUrl;
 	private Integer resourceCount;
 	private Integer craftCount;

@@ -19,22 +19,26 @@
     </update>
     
     <select id="loadAllRankByYearWeek" resultMap="RankResultMap" parameterType="map">
-        select r.*,u.user_name,u.head_img_url from rank r,user u where r.user_id=u.user_id 
+        select r.*,u.user_name,u.head_img_url,u.role from rank r,user u where r.user_id=u.user_id 
         <choose>
        	 	<when test="yearWeekInd eq 'LASTWEEK'.toString()">
        	 		and r.year_week= yearweek(DATE_SUB(CURDATE(), INTERVAL 7 DAY))
        	 	</when>
-       	 	<when test="resourceInd eq 'THISWEEK'.toString()">
+       	 	<when test="yearWeekInd eq 'THISWEEK'.toString()">
        	 		and r.year_week= yearweek(CURDATE())
        	 	</when>
        	 </choose>
+       	 order by r.amount desc
     </select>
     
     <select id="loadAllRank" resultMap="RankResultMap" parameterType="map">
-        select u.user_id, u.user_name,u.head_img_url, sum(r.resource_count) resource_count, sum(r.craft_count) craft_count,sum(comment_count) comment_count, sum(like_count) like_count,sum(download_count) download_count,sum(total_score) total_score 
+        select u.user_id, u.user_name,u.role,u.head_img_url, sum(r.resource_count) resource_count,
+         sum(r.craft_count) craft_count,sum(comment_count) comment_count, sum(like_count) like_count,sum(download_count) download_count,
+         sum(total_score) total_score,sum(amount) amount 
 			from rank r, user u
 			where r.user_id=u.user_id
 			group by u.user_id
+			order by sum(amount) desc
     </select>
 
     

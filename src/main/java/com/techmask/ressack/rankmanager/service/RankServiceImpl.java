@@ -22,19 +22,29 @@ public class RankServiceImpl implements RankService{
 	
 	@Override
 	public List<Rank> loadAllRankByYearWeek(Map<String, Object> requestMap) {		
+		List<Rank> ranks = null;
+		
 		String yearWeekInd = (String)requestMap.get("yearWeekInd");
 
 		
-		if(!StringUtils.isBlank(yearWeekInd) ){
+		if(StringUtils.isBlank(yearWeekInd) ){
 			yearWeekInd = "THISWEEK";
 		}else{
 			yearWeekInd = yearWeekInd.toUpperCase();
-			if(!yearWeekInd.equalsIgnoreCase("THISWEEK") && (!yearWeekInd.equalsIgnoreCase("LASTWEEK"))){
+			if(!yearWeekInd.equalsIgnoreCase("THISWEEK") && (!yearWeekInd.equalsIgnoreCase("LASTWEEK")) && (!yearWeekInd.equalsIgnoreCase("OVERALL"))){
 				yearWeekInd = "THISWEEK";
 			}
 		}
+		requestMap.put("yearWeekInd",yearWeekInd);
 		
-		return rankRepository.loadAllRankByYearWeek(requestMap);
+		if(yearWeekInd.equalsIgnoreCase("OVERALL")){
+			ranks= rankRepository.loadAllRank(requestMap);
+		}else{
+			ranks= rankRepository.loadAllRankByYearWeek(requestMap);
+		}
+		
+		return ranks;
+		
 	}
 
 	@Override

@@ -10,11 +10,13 @@
         <result column="description" property="desc" />
 		<result column="user_name" property="userName" />
 		<result column="email" property="email" />		
-		<result column="head_img_url" property="headImgUrl" />		
+		<result column="head_img_url" property="headImgUrl" />
+		<result column="total_income" property="totalIncome" />		
     </resultMap>
     
     <select id="loadProfileByUserId" resultMap="ProfileResultMap" parameterType="string">
-        select p.*,u.user_name,u.role,u.email,u.head_img_url from user u,profile p where u.user_id=#{userId} and u.user_id=p.user_id
+        select p.*,a.balance,a.total_income,u.user_name,u.role,u.email,u.head_img_url from user u,profile p,account a where u.user_id=#{userId}
+         and u.user_id=p.user_id and u.user_id=a.user_id
     </select>
     
     <select id="loadAllContributorProfile" resultMap="ProfileResultMap" parameterType="map">
