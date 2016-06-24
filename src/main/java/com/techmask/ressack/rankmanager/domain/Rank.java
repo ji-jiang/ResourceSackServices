@@ -17,6 +17,7 @@ public @Data class Rank {
 	private Integer craftCount;
 	private Integer commentCount;
 	private Integer likeCount;
+	private Integer bookmarkCount;
 	private Integer downloadCount;
 	private Integer totalScore;
 	private BigDecimal amount;
