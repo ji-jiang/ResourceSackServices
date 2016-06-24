@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.techmask.ressack.accountmanager.service.AccountService;
 import com.techmask.ressack.core.security.UserRole;
+import com.techmask.ressack.core.utils.StringUtils;
 import com.techmask.ressack.profilemanager.service.ProfileService;
 import com.techmask.ressack.usermanager.domain.User;
 import com.techmask.ressack.usermanager.repository.UserRepository;
@@ -36,6 +37,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User addUser(User user) {
+		
+		validateAddOrUpdateUser(user);
+		
 		if (StringUtil.isBlank(user.getRole())) {
 			user.setRole(UserRole.USER.name());
 		}
@@ -49,6 +53,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User updateUser(User user) {
+		validateAddOrUpdateUser(user);
+		
 		userRepository.updateUser(user);
 		return user;
 	}
@@ -83,7 +89,19 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void updateUserNameAndEmail(Map<String, Object> userMap) {
+		String userName = StringUtils.filterOffUtf8Mb4((String)userMap.get("userName"));
+		userMap.put("userName", userName);
+		
 		userRepository.updateUserNameAndEmail(userMap);
+	}
+	
+	
+	protected void validateAddOrUpdateUser(User user){
+		String userName = StringUtils.filterOffUtf8Mb4(user.getUserName());
+		String oauthName = StringUtils.filterOffUtf8Mb4(user.getOauthName());
+		
+		user.setUserName(userName);
+		user.setOauthName(oauthName);
 	}
 
 }
