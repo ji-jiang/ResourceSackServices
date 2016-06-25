@@ -56,16 +56,21 @@ public class AccountServiceImpl implements AccountService {
 	protected void validatePerformWithdrawRequest(Account account, Map<String, Object> requestMap) {
 		StringBuffer errorMsg = new StringBuffer();
 
-		Integer applyAmount = (Integer) requestMap.get("applyAmount");
+		String strApplyAmount = (String) requestMap.get("applyAmount");
 		String accountInfo = (String) requestMap.get("accountInfo");
 
-		
+		ValidateUtils.validateField(errorMsg, "applyAmount", strApplyAmount, true, 8);
 		ValidateUtils.validateField(errorMsg, "accountInfo", accountInfo, true, 200);
 
 		if (errorMsg.length() > 0) {
 			throw new ValidationException(errorMsg.toString());
 		}
-		
+
+		if (!NumberUtils.isNumber(strApplyAmount)) {
+			throw new ValidationException("error.applyAmount.formatError");
+		}
+
+		float applyAmount = NumberUtils.createFloat(strApplyAmount).floatValue();
 		if (applyAmount < 50) {
 			throw new ValidationException("error.applyAmount.lessThanLimit");
 		}
