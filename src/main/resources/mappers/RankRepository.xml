@@ -23,10 +23,10 @@
         select r.*,u.user_name,u.head_img_url,u.role from rank r,user u where r.user_id=u.user_id 
         <choose>
        	 	<when test="yearWeekInd eq 'LASTWEEK'.toString()">
-       	 		and r.year_week= yearweek(DATE_SUB(CURDATE(), INTERVAL 7 DAY))
+       	 		and r.year_week= yearweek(DATE_SUB(CURDATE(), INTERVAL 7 DAY),1)
        	 	</when>
        	 	<when test="yearWeekInd eq 'THISWEEK'.toString()">
-       	 		and r.year_week= yearweek(CURDATE())
+       	 		and r.year_week= yearweek(CURDATE(),1)
        	 	</when>
        	 </choose>
        	 order by r.amount desc
