@@ -9,6 +9,7 @@
         <result column="company_name" property="companyName" />
         <result column="description" property="desc" />
 		<result column="user_name" property="userName" />
+		<result column="account_info" property="accountInfo" />
 		<result column="email" property="email" />		
 		<result column="head_img_url" property="headImgUrl" />
 		<result column="total_income" property="totalIncome" />		

@@ -60,10 +60,11 @@ public class CodingOAuthService extends OAuth20ServiceImpl implements CustomOAut
 	
 	@Override
 	public User getOAuthUser(Token accessToken) {
+		System.out.println(accessToken);
 		OAuthRequest request = new OAuthRequest(Verb.GET, CODING_GET_USER_URL);
 		this.signRequest(accessToken, request);
 		Response response = request.send();
-		
+
 		User user = new User();
 		JSONObject  data = (JSONObject) JSON.parse(response.getBody());
 		Object result=data.get("data");

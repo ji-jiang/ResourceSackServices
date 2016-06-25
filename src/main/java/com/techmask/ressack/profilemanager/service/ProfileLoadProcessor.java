@@ -15,6 +15,7 @@ public class ProfileLoadProcessor {
 		if(profile!=null){
 			boolean isOwnProfile = (userId!=null && profile.getUserId()!=null && userId.equals(profile.getUserId()));
 			if(!isOwnProfile){
+				profile.setAccountInfo(null);
 				profile.setEmail(null);
 				profile.setBalance(null);
 			}

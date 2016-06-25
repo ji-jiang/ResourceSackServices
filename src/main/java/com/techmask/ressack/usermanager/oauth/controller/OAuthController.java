@@ -87,7 +87,7 @@ public class OAuthController extends BaseController {
 
 		Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
 		try {
-
+			
 			CustomOAuthService oAuthService = oAuthServices.getOAuthService(type);
 			Token accessToken = oAuthService.getAccessToken(null, new Verifier(code));
 			String tokenKey = accessToken.getToken();

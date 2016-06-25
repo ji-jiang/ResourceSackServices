@@ -19,4 +19,5 @@ public @Data class Profile {
 	private String headImgUrl;
 	private BigDecimal totalIncome;
 	private BigDecimal balance;
+	private String accountInfo;
 }

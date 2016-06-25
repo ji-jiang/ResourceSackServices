@@ -2,14 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.techmask.ressack.accountmanager.repository.AccountRepository">
-   
+   <resultMap id="AccountResultMap" type="com.techmask.ressack.accountmanager.domain.Account">
+        <id column="account_id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="total_income" property="totalIncome" />
+        <result column="total_withdraw" property="totalWithdraw" />
+        <result column="created_date" property="createdDate" />
+		<result column="updated_date" property="updatedDate" />
+		<result column="account_info" property="accountInfo" />
+    </resultMap>
 
 	<insert id="addAccount" parameterType="com.techmask.ressack.usermanager.domain.User">
         insert into account(user_id) select user_id from user where token_key=#{tokenKey} and oauth_id=#{oauthId}
     </insert>
     
     <insert id="addWithdrawRequest" parameterType="map">
-        insert into withdraw_request(user_id,account_id,apply_amount,status,updated_by) values(#{userId},#{accountId},#{applyAmount},#{status},#{userName})
+        insert into withdraw_request(user_id,account_id,account_info,email,apply_amount,updated_by) values(#{userId},#{accountId},#{accountInfo},#{email},#{applyAmount},#{userName})
     </insert>
 
     <update id="processAccountCalculate" parameterType="map">
@@ -18,5 +26,15 @@
         
     <select id="getPendingWithdrawRequestCount" resultType="int" parameterType="map" >
         SELECT count(*) from withdraw_request where user_id=#{userId} and status='PENDING'
+    </select>
+    
+    <update id="updateAccountInfo" parameterType="map">
+       <![CDATA[
+        update account set account_info = #{accountInfo} where user_id=#{userId} 
+        ]]>
+    </update>
+    
+    <select id="loadAccountByUserId" resultMap="AccountResultMap" parameterType="map" >
+        SELECT * from account where user_id=#{userId}
     </select>
 </mapper> 

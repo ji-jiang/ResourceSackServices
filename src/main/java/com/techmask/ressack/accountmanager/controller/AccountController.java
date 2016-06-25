@@ -6,9 +6,11 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.techmask.ressack.accountmanager.service.AccountService;
 import com.techmask.ressack.core.controller.BaseController;
@@ -16,6 +18,9 @@ import com.techmask.ressack.core.error.ValidationException;
 import com.techmask.ressack.core.session.UserSession;
 import com.techmask.ressack.core.session.UserSessionManager;
 
+@RestController
+@Configuration
+@RequestMapping("/account")
 public class AccountController extends BaseController{
 	
 	@Autowired
