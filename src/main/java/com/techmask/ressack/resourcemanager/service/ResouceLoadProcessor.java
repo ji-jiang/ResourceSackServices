@@ -48,6 +48,18 @@ public class ResouceLoadProcessor {
 			}
 		}
 		
+		String origAdviceUrl =resource.getOrigUrl();
+		if(!StringUtils.isBlank(origAdviceUrl)){
+			if(origAdviceUrl.indexOf("?")<=0){
+				origAdviceUrl+="?";
+			}
+			if(origAdviceUrl.indexOf("&")>0){
+				origAdviceUrl+="&";
+			}
+			origAdviceUrl+="utm_source=jijiangshe";
+			resource.setOrigAdviceUrl(origAdviceUrl);
+		}
+		
 		
 	}
 	

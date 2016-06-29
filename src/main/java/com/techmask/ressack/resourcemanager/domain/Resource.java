@@ -13,6 +13,7 @@ public @Data class Resource {
 	private String desc;
 	private String tags;
 	private String origUrl;
+	private String origAdviceUrl;
 	private String downloadUrl;
 	private String downloadPassword;
 	private String paymentType;
