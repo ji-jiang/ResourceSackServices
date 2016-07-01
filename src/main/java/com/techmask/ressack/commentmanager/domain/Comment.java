@@ -1,5 +1,6 @@
 package com.techmask.ressack.commentmanager.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -7,7 +8,10 @@ import org.springframework.data.annotation.Id;
 
 import lombok.Data;
 
-public @Data class Comment {
+public @Data class Comment implements Serializable{
+
+	private static final long serialVersionUID = -789982110063785024L;
+	
 	@Id
 	private String id;
 	private Integer rating;

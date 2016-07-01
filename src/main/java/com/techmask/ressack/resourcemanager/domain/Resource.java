@@ -1,12 +1,16 @@
 package com.techmask.ressack.resourcemanager.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import org.springframework.data.annotation.Id;
 
 import lombok.Data;
 
-public @Data class Resource {
+public @Data class Resource implements Serializable{
+
+	private static final long serialVersionUID = 931226250881355472L;
+	
 	@Id
 	private String id;
 	private String title;

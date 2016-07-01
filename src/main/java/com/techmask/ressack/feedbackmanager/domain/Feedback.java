@@ -1,11 +1,15 @@
 package com.techmask.ressack.feedbackmanager.domain;
 
+import java.io.Serializable;
+
 import org.springframework.data.annotation.Id;
 
 import lombok.Data;
 
 
-public @Data class Feedback {
+public @Data class Feedback implements Serializable{
+	
+	private static final long serialVersionUID = -922769323988689491L;
 	
 	@Id
 	private String feedbackId;
