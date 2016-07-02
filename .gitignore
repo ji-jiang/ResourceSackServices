@@ -30,3 +30,5 @@ src/main/resources/application.properties
 
 bfg-1.12.12.jar
 src/main/resources/application.properties
+
+src/main/resources/redis.properties
