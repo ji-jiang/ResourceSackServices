@@ -11,6 +11,8 @@ public class ResouceLoadProcessor {
 	private AppConfiguration appConfiguration;
 	private Map<String, Object> requestMap;
 	private boolean isAuthenticatedUser = false;
+	
+	private static final String QINIU_THUMBNAIL_100 = "?imageMogr2/thumbnail/250x"; 
 
 	public ResouceLoadProcessor(Map<String, Object> requestMap,AppConfiguration appConfiguration) {
 		this.setRequestMap(requestMap);
@@ -33,7 +35,7 @@ public class ResouceLoadProcessor {
 			if(BooleanFlag.getInstance(resource.getImageInd()).booleanValue()){
 				String resourceId = resource.getId();
 				resource.setImageUrl(appConfiguration.getCloudStorageImgUploadPath()+"resources/R00000"+resourceId+"_md.png"+imageVersion);
-				resource.setImageSmUrl(appConfiguration.getCloudStorageImgUploadPath()+"resources/R00000"+resourceId+"_sm.png"+imageVersion);
+				resource.setImageSmUrl(appConfiguration.getCloudStorageImgUploadPath()+"resources/R00000"+resourceId+"_md.png"+QINIU_THUMBNAIL_100);
 			}else{
 				resource.setImageUrl("/img/portfolio-page-5/default.png");
 			}
@@ -41,10 +43,10 @@ public class ResouceLoadProcessor {
 		}else{
 			if(BooleanFlag.getInstance(resource.getImageInd()).booleanValue()){
 				String resourceId = resource.getId();
-				resource.setImageUrl("/static/resources/R00000"+resourceId+"_md.png"+imageVersion);
-				resource.setImageSmUrl("/static/resources/R00000"+resourceId+"_sm.png"+imageVersion);
+				resource.setImageUrl(appConfiguration.getHostUrl()+"/static/resources/R00000"+resourceId+"_md.png"+imageVersion);
+				resource.setImageSmUrl(appConfiguration.getHostUrl()+"/static/resources/R00000"+resourceId+"_sm.png"+imageVersion);
 			}else{
-				resource.setImageUrl("/img/portfolio-page-5/default.png");
+				resource.setImageUrl(appConfiguration.getHostUrl()+"/img/portfolio-page-5/default.png");
 			}
 		}
 		

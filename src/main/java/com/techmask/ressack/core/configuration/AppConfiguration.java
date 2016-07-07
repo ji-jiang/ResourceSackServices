@@ -16,6 +16,8 @@ public class AppConfiguration {
 	private String resourceImageUploadPath;
 	private boolean useCloudStorage;
 	private String cloudStorageImgUploadPath;
+	private String rssFileUploadPath;
+	private String hostUrl;
 
 	public Environment getEnv() {
 		if(env == null){
@@ -82,6 +84,22 @@ public class AppConfiguration {
 
 	public void setMaxCoreResouceAddCount(int maxCoreResouceAddCount) {
 		this.maxCoreResouceAddCount = maxCoreResouceAddCount;
+	}
+
+	public String getHostUrl() {
+		return hostUrl;
+	}
+
+	public void setHostUrl(String hostUrl) {
+		this.hostUrl = hostUrl;
+	}
+
+	public String getRssFileUploadPath() {
+		return rssFileUploadPath;
+	}
+
+	public void setRssFileUploadPath(String rssFileUploadPath) {
+		this.rssFileUploadPath = rssFileUploadPath;
 	}
 
 	

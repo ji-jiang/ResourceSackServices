@@ -19,11 +19,15 @@ import com.rometools.rome.feed.synd.SyndFeedImpl;
 import com.rometools.rome.feed.synd.SyndImage;
 import com.rometools.rome.feed.synd.SyndImageImpl;
 import com.rometools.rome.io.SyndFeedOutput;
+import com.techmask.ressack.core.configuration.AppConfiguration;
 import com.techmask.ressack.resourcemanager.domain.Resource;
 import com.techmask.ressack.resourcemanager.service.ResourceService;
 
 @Service
 public class RssServiceImpl implements RssService {
+	
+	@Autowired
+	private AppConfiguration appConfiguration;
 
 	@Autowired
 	private ResourceService resourceService;
@@ -48,12 +52,14 @@ public class RssServiceImpl implements RssService {
 			SyndEntry entry = new SyndEntryImpl();
 			entry.setAuthor(resource.getOwnerName());
 			entry.setTitle(resource.getTitle());
-			String resourceDetailUrl = "http://jijiangshe.com/resource/" + resource.getId();
+			String resourceDetailUrl = appConfiguration.getHostUrl() +"/resource/"+ resource.getId();
 			entry.setUri(resourceDetailUrl);
 			entry.setLink(resourceDetailUrl);
 			entry.setPublishedDate(resource.getCreatedDate());
 			
-			String imageUrl = "http://jijiangshe.com/"+ resource.getImageUrl();
+			
+			String imageUrl = resource.getImageSmUrl(); 
+					
 						
 			SyndContent content = new SyndContentImpl();
 			content.setType("text/html");
@@ -68,7 +74,7 @@ public class RssServiceImpl implements RssService {
 		feed.setEntries(entries);
 		SyndFeedOutput out = new SyndFeedOutput();
 		try {
-			String rssFileName = "D:/xampp/htdocs/rss/jijiangshe.xml";			
+			String rssFileName = appConfiguration.getRssFileUploadPath()+"resources.xml";			
 			File rssFile = new File(rssFileName);
 			
 			if(!rssFile.exists()){
