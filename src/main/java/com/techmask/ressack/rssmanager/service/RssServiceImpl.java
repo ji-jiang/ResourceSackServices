@@ -20,6 +20,8 @@ import com.rometools.rome.feed.synd.SyndImage;
 import com.rometools.rome.feed.synd.SyndImageImpl;
 import com.rometools.rome.io.SyndFeedOutput;
 import com.techmask.ressack.core.configuration.AppConfiguration;
+import com.techmask.ressack.core.log.LogUtils;
+import com.techmask.ressack.resourcemanager.busobjs.ResourceCategory;
 import com.techmask.ressack.resourcemanager.domain.Resource;
 import com.techmask.ressack.resourcemanager.service.ResourceService;
 
@@ -35,7 +37,24 @@ public class RssServiceImpl implements RssService {
 	@Override
 	@Scheduled(cron = "0 0/1 * * * ?")
 	public void processRssFeeds() {
+		//for all
+		prepareRssFeeds(null);
+		prepareRssFeeds(ResourceCategory.DESIGN);
+		prepareRssFeeds(ResourceCategory.DEVELOPMENT);
+		prepareRssFeeds(ResourceCategory.MOBILE);
+		prepareRssFeeds(ResourceCategory.TOOLS);
+	}
+	
+	
+	protected void prepareRssFeeds(ResourceCategory resourceCategory){
 		Map<String, Object> requestMap = new HashMap();
+		
+		if(resourceCategory!=null){
+			requestMap.put("category", resourceCategory.name());
+		}
+
+		
+		
 		List<Resource> resources = resourceService.loadAllResourceForRssFeed(requestMap);
 
 		SyndFeed feed = new SyndFeedImpl();
@@ -74,7 +93,11 @@ public class RssServiceImpl implements RssService {
 		feed.setEntries(entries);
 		SyndFeedOutput out = new SyndFeedOutput();
 		try {
-			String rssFileName = appConfiguration.getRssFileUploadPath()+"resources.xml";			
+			String rssFileName = appConfiguration.getRssFileUploadPath();
+			if(resourceCategory!=null){
+				rssFileName+=resourceCategory.name().toLowerCase()+"-";			
+			}
+			rssFileName+="resources.xml";
 			File rssFile = new File(rssFileName);
 			
 			if(!rssFile.exists()){
@@ -82,9 +105,8 @@ public class RssServiceImpl implements RssService {
 			}
 			out.output(feed, rssFile, true);
 		} catch (Exception e) {
-			e.printStackTrace();
+			LogUtils.error("error processing rss feeds",e);
 		}
-
 	}
 
 }
