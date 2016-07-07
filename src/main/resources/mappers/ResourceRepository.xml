@@ -109,6 +109,19 @@
     	 limit #{_startRowIndex}, #{_pageSize}
     </select>
     
+    <select id="loadAllResourceForRssFeed" parameterType="map" resultMap="ResourceResultMap">
+    	 select r.*,u.user_name owner_name from resource r,user u   
+    	 where  r.status='VALID' and r.owner_id=u.user_id    	 
+    	 <if test="category != null">
+    	 	and (category=#{category} or 'ALL'=#{category})
+    	 </if>
+    	 <if test="subCategory != null">
+    	 	and (sub_category=#{subCategory} or 'ALL'=#{subCategory})
+    	 </if>    	 
+    	 order by r.created_date desc
+    	 limit 20
+    </select>
+    
 	<insert id="addResource" parameterType="map">
         insert into resource(
            type,title,description,category,sub_category,tags,status,orig_url,

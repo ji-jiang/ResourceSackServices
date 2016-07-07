@@ -231,6 +231,13 @@ public class ResourceServiceImpl implements ResourceService {
 
 		return resources;
 	}
+	
+	@Override
+	public List<Resource> loadAllResourceForRssFeed(Map<String, Object> requestMap) {
+		List<Resource> resources = resourceRepository.loadAllResourceForRssFeed(requestMap);
+		postProcessResources(resources, requestMap);
+		return resources;
+	}
 
 
 	@Override
@@ -268,9 +275,6 @@ public class ResourceServiceImpl implements ResourceService {
 	@Override
 	public void setResourceImageInd(String resourceId) {
 		resourceRepository.setImageInd(resourceId);
-
 	}
-
-
 
 }

@@ -19,6 +19,7 @@ public interface ResourceRepository {
 	public int updateResource(Map<String,Object> resourceMap);
 	public Resource loadResourceById(String resourceId);
 	public int setImageInd(String resourceId);
+	public List<Resource> loadAllResourceForRssFeed(Map<String, Object> requestMap);
 
 	
 }
