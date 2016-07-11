@@ -44,7 +44,7 @@ public class ResouceLoadProcessor {
 			if(BooleanFlag.getInstance(resource.getImageInd()).booleanValue()){
 				String resourceId = resource.getId();
 				resource.setImageUrl(appConfiguration.getHostUrl()+"/static/resources/R00000"+resourceId+"_md.png"+imageVersion);
-				resource.setImageSmUrl(appConfiguration.getHostUrl()+"/static/resources/R00000"+resourceId+"_sm.png"+imageVersion);
+				resource.setImageSmUrl(appConfiguration.getHostUrl()+"/static/resources/R00000"+resourceId+"_md.png"+imageVersion);
 			}else{
 				resource.setImageUrl(appConfiguration.getHostUrl()+"/img/portfolio-page-5/default.png");
 			}

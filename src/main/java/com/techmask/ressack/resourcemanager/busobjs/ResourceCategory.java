@@ -23,4 +23,21 @@ public enum ResourceCategory {
 		return resouceCategory;
 	}
 	
+	public String getCNDesc(){
+		String desc = "";
+		if(this.name().equalsIgnoreCase(DESIGN.name())){
+			desc = "设计";
+		}else if(this.name().equalsIgnoreCase(DEVELOPMENT.name())){
+			desc = "开发";
+		}else if(this.name().equalsIgnoreCase(MOBILE.name())){
+			desc = "移动开发";
+		}else if(this.name().equalsIgnoreCase(TOOLS.name())){
+			desc = "工具";
+		}else if(this.name().equalsIgnoreCase(CRAFT.name())){
+			desc = "作品";
+		}
+		
+		return desc;
+	}
+	
 }
