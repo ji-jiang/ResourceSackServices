@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.techmask.ressack.codetablemanager.repository.CodeTableRepository">
+	
+	<cache type="org.mybatis.caches.redis.RedisCache" />
+	
+	<resultMap id="CodeFieldMap" type="com.techmask.ressack.core.codetablemanager.domain.CodeField">
+        <id column="field_id" property="fieldId" />
+        <result column="field_name" property="fieldName" />
+        <result column="load_script" property="loadScript" />
+        <result column="field_desc" property="fieldDesc" />        
+    </resultMap>
+    
+	<resultMap id="CodeMap" type="com.techmask.ressack.core.codetablemanager.domain.Code">
+        <id column="code_id" property="codeId" />
+        <result column="code_type" property="codeType" />
+        <result column="code_desc" property="codeDesc" />                
+    </resultMap>    
+
+
+	<select id="loadCodeFieldByFieldName" parameterType="string" resultMap="CodeFieldMap">
+        <![CDATA[
+        SELECT * from common_field where field_name=#{fieldName}
+        ]]>
+    </select>
+    
+    <select id="loadAllCodeByCodeType" parameterType="string" resultMap="CodeMap">
+        <![CDATA[
+        SELECT * from common_code where code_type=#{codeType}
+        ]]>
+    </select>
+
+    
+</mapper> 

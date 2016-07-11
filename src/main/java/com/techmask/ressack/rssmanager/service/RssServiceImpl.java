@@ -7,18 +7,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import com.rometools.rome.feed.synd.SyndCategory;
+import com.rometools.rome.feed.synd.SyndCategoryImpl;
 import com.rometools.rome.feed.synd.SyndContent;
 import com.rometools.rome.feed.synd.SyndContentImpl;
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndEntryImpl;
 import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.feed.synd.SyndFeedImpl;
-import com.rometools.rome.feed.synd.SyndImage;
-import com.rometools.rome.feed.synd.SyndImageImpl;
 import com.rometools.rome.io.SyndFeedOutput;
 import com.techmask.ressack.core.configuration.AppConfiguration;
 import com.techmask.ressack.core.log.LogUtils;
@@ -76,6 +77,16 @@ public class RssServiceImpl implements RssService {
 			entry.setUri(resourceDetailUrl);
 			entry.setLink(resourceDetailUrl);
 			entry.setPublishedDate(resource.getCreatedDate());
+			
+			
+			ResourceCategory category = ResourceCategory.getInstance(resource.getCategory());
+			if(category!=null){
+				List<SyndCategory> categories = new ArrayList<>();
+				SyndCategory syndCategory = new SyndCategoryImpl();
+				syndCategory.setName(category.getCNDesc());
+				categories.add(syndCategory);
+				entry.setCategories(categories);
+			}
 
 			String imageUrl = resource.getImageSmUrl();
 
