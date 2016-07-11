@@ -37,7 +37,7 @@ public class RssServiceImpl implements RssService {
 	private ResourceService resourceService;
 
 	@Override
-	@Scheduled(cron = "0 0/1 * * * ?")
+	@Scheduled(cron = "0 0/60 * * * ?")
 	public void processRssFeeds() {
 		// for all
 		prepareRssFeeds(null);
