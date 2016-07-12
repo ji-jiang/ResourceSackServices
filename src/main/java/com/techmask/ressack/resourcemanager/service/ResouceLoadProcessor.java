@@ -12,7 +12,7 @@ public class ResouceLoadProcessor {
 	private Map<String, Object> requestMap;
 	private boolean isAuthenticatedUser = false;
 	
-	private static final String QINIU_THUMBNAIL_100 = "?imageMogr2/thumbnail/250x"; 
+	private static final String QINIU_THUMBNAIL_250 = "?imageMogr2/thumbnail/250x"; 
 
 	public ResouceLoadProcessor(Map<String, Object> requestMap,AppConfiguration appConfiguration) {
 		this.setRequestMap(requestMap);
@@ -35,7 +35,7 @@ public class ResouceLoadProcessor {
 			if(BooleanFlag.getInstance(resource.getImageInd()).booleanValue()){
 				String resourceId = resource.getId();
 				resource.setImageUrl(appConfiguration.getCloudStorageImgUploadPath()+"resources/R00000"+resourceId+"_md.png"+imageVersion);
-				resource.setImageSmUrl(appConfiguration.getCloudStorageImgUploadPath()+"resources/R00000"+resourceId+"_md.png"+QINIU_THUMBNAIL_100);
+				resource.setImageSmUrl(appConfiguration.getCloudStorageImgUploadPath()+"resources/R00000"+resourceId+"_md.png"+QINIU_THUMBNAIL_250);
 			}else{
 				resource.setImageUrl("/img/portfolio-page-5/default.png");
 			}
