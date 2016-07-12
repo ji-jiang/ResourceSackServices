@@ -1,5 +1,7 @@
 package com.techmask.ressack.resourcemanager.busobjs;
 
+import com.techmask.ressack.core.codetablemanager.util.CodeTableUtils;
+
 public enum ResourceCategory {
 	DESIGN,DEVELOPMENT,MOBILE,TOOLS,CRAFT;
 	
@@ -25,17 +27,8 @@ public enum ResourceCategory {
 	
 	public String getCNDesc(){
 		String desc = "";
-		if(this.name().equalsIgnoreCase(DESIGN.name())){
-			desc = "设计";
-		}else if(this.name().equalsIgnoreCase(DEVELOPMENT.name())){
-			desc = "开发";
-		}else if(this.name().equalsIgnoreCase(MOBILE.name())){
-			desc = "移动开发";
-		}else if(this.name().equalsIgnoreCase(TOOLS.name())){
-			desc = "工具";
-		}else if(this.name().equalsIgnoreCase(CRAFT.name())){
-			desc = "作品";
-		}
+
+		desc = CodeTableUtils.getCodeDesc("RESOURCE_CATEGORY", this.name());
 		
 		return desc;
 	}

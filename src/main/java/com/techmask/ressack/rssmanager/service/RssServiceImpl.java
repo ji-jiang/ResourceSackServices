@@ -21,6 +21,7 @@ import com.rometools.rome.feed.synd.SyndEntryImpl;
 import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.feed.synd.SyndFeedImpl;
 import com.rometools.rome.io.SyndFeedOutput;
+import com.techmask.ressack.core.codetablemanager.util.CodeTableUtils;
 import com.techmask.ressack.core.configuration.AppConfiguration;
 import com.techmask.ressack.core.log.LogUtils;
 import com.techmask.ressack.resourcemanager.busobjs.ResourceCategory;
@@ -85,6 +86,13 @@ public class RssServiceImpl implements RssService {
 				SyndCategory syndCategory = new SyndCategoryImpl();
 				syndCategory.setName(category.getCNDesc());
 				categories.add(syndCategory);
+				
+				String subCategory = CodeTableUtils.getCodeDesc("RESOURCE_SUB_CATEGORY", category.name()+"_"+resource.getSubCategory());
+				SyndCategory syndSubCategory = new SyndCategoryImpl();
+				syndSubCategory.setName(subCategory);
+				categories.add(syndSubCategory);
+				
+				
 				entry.setCategories(categories);
 			}
 
