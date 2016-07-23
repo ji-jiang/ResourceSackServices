@@ -57,7 +57,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		} else {
 			http.httpBasic().and().authorizeRequests()
 					.antMatchers(HttpMethod.GET,new String[]{"/","/resource/**","/oauth/**","/flag/**","/profile/**","/contributor/**","/comment/**","/rank/**"})
-					.permitAll().anyRequest().authenticated()
+					.permitAll()
+					.antMatchers(new String[]{"/statistics/view/**"}).permitAll()
+					.anyRequest().authenticated()
 					.and()
 					.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessHandler(logoutSuccessHandler)
 					.and()
