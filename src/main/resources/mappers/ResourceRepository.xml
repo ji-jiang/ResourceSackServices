@@ -23,6 +23,7 @@
         <result column="bookmark_count" property="bookmarkCount" />
         <result column="download_count" property="downloadCount" />
         <result column="comment_count" property="commentCount" />
+        <result column="view_count" property="viewCount" />
         <result column="rating_count" property="ratingCount" />
         <result column="created_date" property="createdDate" />
         <result column="updated_date" property="updatedDate" />
@@ -49,7 +50,7 @@
     </select>
 	
 	<select id="loadAllResource" parameterType="map" resultMap="ResourceResultMap">
-        select r.*,s.view_count,s.like_count,s.bookmark_count,s.rating_count,s.rating,
+        select r.*,s.view_count,s.like_count,s.bookmark_count,s.rating_count,s.view_count,s.rating,
         s.download_count,s.comment_count,u.user_name owner_name,u.head_img_url owner_avatar_url 
         from resource r,user u,statistics s where r.status='VALID'
     	 <if test="category != null">
@@ -158,6 +159,8 @@
         update resource set image_ind='Y',image_version=image_version+1 where resource_id=#{resourceId}
     </update>
 
-    
+   	<update id="flushCache" >
+        update resource set updated_date=now() where 1=2
+    </update> 
     
 </mapper> 

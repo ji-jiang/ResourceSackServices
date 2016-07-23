@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.techmask.ressack.core.configuration.AppConfiguration;
@@ -275,6 +276,12 @@ public class ResourceServiceImpl implements ResourceService {
 	@Override
 	public void setResourceImageInd(String resourceId) {
 		resourceRepository.setImageInd(resourceId);
+	}
+
+	@Override
+	@Scheduled(cron="0 0/10 * * * ?")
+	public void flushCache() {
+		resourceRepository.flushCache();
 	}
 
 }

@@ -24,6 +24,9 @@
        <if test="statisticsType eq 'C'.toString()">
           set comment_count = comment_count + #{changedCount} 
        </if>
+       <if test="statisticsType eq 'V'.toString()">
+          set view_count = view_count + #{changedCount} 
+       </if>
        <if test="ratingInd eq 'Y'.toString()">
           , rating_count = rating_count + 1 , rating = FORMAT((rating*(rating_count-1)+#{rating})/(rating_count),1)
        </if>

@@ -18,4 +18,5 @@ public interface ResourceService {
     public List<Resource> loadAllUserResource(Map<String, Object> requestMap);
     public List<Resource> loadAllResourceByKeywords(Map<String, Object> requestMap);
     public List<Resource> loadAllResourceForRssFeed(Map<String, Object> requestMap);
+    public void flushCache();
 }

@@ -20,6 +20,6 @@ public interface ResourceRepository {
 	public Resource loadResourceById(String resourceId);
 	public int setImageInd(String resourceId);
 	public List<Resource> loadAllResourceForRssFeed(Map<String, Object> requestMap);
-
+	public void flushCache();
 	
 }
