@@ -101,7 +101,7 @@
        	 		s.rating desc	
        	 	</when>
        	 	<when test="orderInd eq 'POPULAR'.toString()">
-       	 		(s.like_count+s.bookmark_count+s.comment_count) desc	
+       	 		(s.like_count+s.bookmark_count+s.comment_count+s.view_count) desc	
        	 	</when>
        	 	<otherwise>
                 r.created_date desc
