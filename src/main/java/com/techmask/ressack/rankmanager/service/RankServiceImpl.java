@@ -53,7 +53,7 @@ public class RankServiceImpl implements RankService{
 	}
 
 	@Override
-	@Scheduled(cron="0 0/60 * * * ?")
+	@Scheduled(cron="0 0/60 10-20 * * ?")
 	public void processRankCalculate() {
 		Map<String, Object> requestMap = new HashMap<String, Object>();
 		requestMap.put("yearWeek",0);
