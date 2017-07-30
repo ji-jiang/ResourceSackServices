@@ -209,7 +209,7 @@
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
 				<excludes>
-					<exclude>**/*.*</exclude>
+					<exclude>**/logback.xml</exclude>
 				</excludes>
 			</resource>
 		</resources>
