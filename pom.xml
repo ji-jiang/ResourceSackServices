@@ -210,6 +210,7 @@
 				<filtering>true</filtering>
 				<excludes>
 					<exclude>**/logback.xml</exclude>
+					<exclude>**/*.properties</exclude>
 				</excludes>
 			</resource>
 		</resources>
