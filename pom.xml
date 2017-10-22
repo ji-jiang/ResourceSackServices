@@ -220,7 +220,8 @@
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
 				<excludes>
-					<exclude>**/*.*</exclude>
+					<exclude>**/logback.xml</exclude>
+					<exclude>**/*.properties</exclude>
 				</excludes>
 			</resource>
 		</resources>
